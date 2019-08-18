@@ -38,7 +38,11 @@ public class Stats
         Stats stat3 = new Stats(new HashMap<>());
         for (var key : this.stats.keySet())
         {
-            stat3.stats.replace(key, this.stats.get(key) - stat2.stats.get(key));
+            int newStat = this.stats.get(key) - stat2.stats.get(key);
+            if (newStat < 0)
+                newStat = 0;
+
+            stat3.stats.replace(key, newStat);
         }
         return stat3;
     }

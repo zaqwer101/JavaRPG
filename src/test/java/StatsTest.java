@@ -66,4 +66,20 @@ public class StatsTest
             System.out.println(key + ": " + stats3.getStat(key) + " == " + (stats1.getStat(key) + stats2.getStat(key)));
         }
     }
+
+    @Test
+    public void subtractionTest()
+    {
+        System.out.println("Testing subtraction...");
+        Stats stats3 = stats1.sub(stats2);
+
+        for (var key : Stats.allStats)
+        {
+            int subStat = stats1.getStat(key) - stats2.getStat(key);
+            if (subStat < 0)
+                subStat = 0;
+            assertEquals(subStat, stats3.getStat(key));
+            System.out.println(key + ": " + stats3.getStat(key) + " == " + subStat);
+        }
+    }
 }
