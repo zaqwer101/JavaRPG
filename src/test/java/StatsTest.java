@@ -1,4 +1,5 @@
 import Game.Stats;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,11 +16,17 @@ public class StatsTest
     HashMap<String, Integer> params1 = new HashMap<>();
     HashMap<String, Integer> params2 = new HashMap<>();
 
+    @After
+    public void over()
+    {
+        System.out.println("------------------------------------");
+    }
+
     @Before
     public void init()
     {
         // заполняем таблицы случайными корректными значениями
-        System.out.println("Putting stats...\n------------------------------------");
+        System.out.println("Putting stats...");
         for (var key : Stats.allStats)
         {
             params1.put(key, new Random().nextInt(100));
@@ -29,17 +36,34 @@ public class StatsTest
         }
         stats1 = new Stats(params1);
         stats2 = new Stats(params2);
-
-        System.out.println("Before task completed");
     }
 
     @Test
     public void constructorTest()
     {
+        System.out.println("Testing constructor and getter...");
         for (var key : Stats.allStats)
         {
             assertEquals(params1.get(key), stats1.getStat(key));
+            System.out.println(params1.get(key) + " == " + stats1.getStat(key));
             assertEquals(params2.get(key), stats2.getStat(key));
+            System.out.println(params2.get(key) + " == " + stats2.getStat(key));
+        }
+    }
+
+    @Test
+    public void addStatsTest()
+    {
+        System.out.println("Testing addition...");
+        Stats stats3 = stats1.add(stats2);
+
+        for (var key : Stats.allStats)
+        {
+            assertEquals(
+                    stats3.getStat(key),
+                    stats1.getStat(key) + stats2.getStat(key)
+            );
+            System.out.println(key + ": " + stats3.getStat(key) + " == " + (stats1.getStat(key) + stats2.getStat(key)));
         }
     }
 }
