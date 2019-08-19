@@ -7,7 +7,7 @@ public class Stats
 {
     public static String[] allStats = {
             "agility", "strength", "intelligence",
-            "baseHP", "maxHp", "hp",
+            "baseHp", "maxHp", "hp",
             "armorRate",
             "criticalRate", "evasionRate", "armorRate",
             "criticalChance", "evasionChance", "armorBlock",
@@ -83,7 +83,13 @@ public class Stats
 
     public void recountStats()
     {
-        int maxHp = getStat("baseHp") * getStat("level") + getStat("strength") * 8;
-        if (getStat("hp") > getStat("maxHp")) setStat("hp", getStat("maxHp"));
+        int maxHp = stats.get("baseHp") * stats.get("level") + stats.get("strength") * 8;
+        stats.replace("maxHp", maxHp);
+        if (getStat("hp") > stats.get("maxHp")) stats.replace("hp", stats.get("maxHp"));
+
+        int armorBlock = (int)Math.round(100 * (
+                (0.052 * stats.get("armorRate")) / (0.9 + 0.048 * Math.abs(stats.get("armorRate")))
+                ));
+        stats.replace("armorBlock", armorBlock);
     }
 }
