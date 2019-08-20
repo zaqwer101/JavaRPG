@@ -8,6 +8,7 @@ public class Stats
     public static String[] allStats = {
             "agility", "strength", "intelligence",
             "baseHp", "maxHp", "hp",
+            "mana", "maxMana",
             "armorRate",
             "criticalRate", "evasionRate", "armorRate",
             "criticalChance", "evasionChance", "armorBlock",
@@ -87,13 +88,28 @@ public class Stats
     // setStat здесь использовать нельзя
     public void recountStats()
     {
+        //////
+        // hp
+        //////
         int maxHp = stats.get("baseHp") * stats.get("level") + stats.get("strength") * 8;
         stats.replace("maxHp", maxHp);
-        if (getStat("hp") > stats.get("maxHp")) stats.replace("hp", stats.get("maxHp"));
+        if (stats.get("hp") > stats.get("maxHp")) stats.replace("hp", stats.get("maxHp"));
 
+        //////
+        // armor
+        //////
         int armorBlock = (int)Math.round(100 * (
                 (0.052 * stats.get("armorRate")) / (0.9 + 0.048 * Math.abs(stats.get("armorRate")))
                 ));
         stats.replace("armorBlock", armorBlock);
+
+        //////
+        // mana
+        //////
+        int maxMana = stats.get("intelligence") * 12;
+        stats.replace("maxMana", maxMana);
+        if (stats.get("mana") > stats.get("maxMana")) stats.replace("mana", stats.get("maxMana"));
+
+        // TODO: Дописать расчёт остальных параметров
     }
 }

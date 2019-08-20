@@ -39,7 +39,7 @@ public class StatsTest
     }
 
     @Test
-    public void constructorTest()
+    public void constructorStatsTest()
     {
         System.out.println("Testing constructor and getter...");
         for (var key : Stats.allStats)
@@ -68,7 +68,7 @@ public class StatsTest
     }
 
     @Test
-    public void subtractionTest()
+    public void subStatsTest()
     {
         System.out.println("Testing subtraction...");
         Stats stats3 = stats1.sub(stats2);
@@ -84,16 +84,21 @@ public class StatsTest
     }
 
     @Test
-    public void recountTest()
+    public void recountStatsTest()
     {
         stats1.setStat("armorRate", 10);
         stats1.setStat("strength", 10);
+        stats1.setStat("intelligence", 10);
         stats1.setStat("level", 5);
         stats1.setStat("baseHp", 50);
         stats1.setStat("hp", 1000);
+        stats1.setStat("mana", 1000);
 
         assertEquals(38, stats1.getStat("armorBlock"));
         assertEquals(330, stats1.getStat("maxHp"));
         assertEquals(stats1.getStat("maxHp"), stats1.getStat("hp"));
+        assertEquals(120, stats1.getStat("maxMana"));
+        assertEquals(stats1.getStat("maxMana"), stats1.getStat("mana"));
+
     }
 }
