@@ -92,7 +92,6 @@ public class StatsTest
         stats1.setStat("baseHp", 50);
         stats1.setStat("hp", 1000);
 
-        stats1.recountStats();
         assertEquals(38, stats1.getStat("armorBlock"));
         assertEquals(330, stats1.getStat("maxHp"));
         assertEquals(stats1.getStat("maxHp"), stats1.getStat("hp"));

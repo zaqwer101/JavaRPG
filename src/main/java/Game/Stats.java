@@ -46,6 +46,7 @@ public class Stats
         {
             stat3.stats.replace(key, this.stats.get(key) + stat2.stats.get(key));
         }
+        recountStats();
         return stat3;
     }
 
@@ -60,6 +61,7 @@ public class Stats
 
             stat3.stats.replace(key, newStat);
         }
+        recountStats();
         return stat3;
     }
 
@@ -76,11 +78,13 @@ public class Stats
         if(Arrays.asList(allStats).contains(stat))
         {
             this.stats.replace(stat, value);
+            recountStats();
             return 0;
         }
         return 1;
     }
 
+    // setStat здесь использовать нельзя
     public void recountStats()
     {
         int maxHp = stats.get("baseHp") * stats.get("level") + stats.get("strength") * 8;
