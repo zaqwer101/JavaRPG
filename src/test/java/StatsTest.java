@@ -86,7 +86,6 @@ public class StatsTest
     @Test
     public void recountStatsTest()
     {
-        stats1.setStat("armorRate", 10);
         stats1.setStat("strength", 10);
         stats1.setStat("intelligence", 10);
         stats1.setStat("level", 5);
@@ -94,7 +93,6 @@ public class StatsTest
         stats1.setStat("hp", 1000);
         stats1.setStat("mana", 1000);
 
-        assertEquals(38, stats1.getStat("armorBlock"));
         assertEquals(330, stats1.getStat("maxHp"));
         assertEquals(stats1.getStat("maxHp"), stats1.getStat("hp"));
         assertEquals(120, stats1.getStat("maxMana"));

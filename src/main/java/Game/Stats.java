@@ -9,9 +9,8 @@ public class Stats
             "agility", "strength", "intelligence",
             "baseHp", "maxHp", "hp",
             "mana", "maxMana",
-            "armorRate",
-            "criticalRate", "evasionRate", "armorRate",
-            "criticalChance", "evasionChance", "armorBlock",
+            "criticalRate", "evasionRate",
+            "criticalChance", "evasionChance",
             "level", "exp", "exp_to_level"
     };
 
@@ -94,14 +93,6 @@ public class Stats
         int maxHp = stats.get("baseHp") * stats.get("level") + stats.get("strength") * 8;
         stats.replace("maxHp", maxHp);
         if (stats.get("hp") > stats.get("maxHp")) stats.replace("hp", stats.get("maxHp"));
-
-        //////
-        // armor
-        //////
-        int armorBlock = (int)Math.round(100 * (
-                (0.052 * stats.get("armorRate")) / (0.9 + 0.048 * Math.abs(stats.get("armorRate")))
-                ));
-        stats.replace("armorBlock", armorBlock);
 
         //////
         // mana
