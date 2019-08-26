@@ -44,33 +44,6 @@ class Creature {
     + getResists() : Resists
 }
 
-abstract class Item {
-    - weight : int
-    - size : int
-
-    + getWeight() : int
-    + getSize() : int
-}
-
-interface IUsable {
-    'Использовать предметы можно не только на себя, но и на других, если позволяет радиус'
-    + use(target: Creature)
-    + getUseCost() : int
-}
-
-interface IMovable {
-    'Переместить на определённое количество клеток по x и y'
-    + move(x: int, y: int)
-
-    'Переместить в определённую клетку'
-    + teleport(x: int, y: int)
-
-    'Может ли объект передвигаться в данный момент'
-    + isMovable() : boolean
-}
-
-interface IEquipable {
-}
 
 abstract class Potion {
     'Базовая сила действия зелья'
@@ -102,6 +75,38 @@ class Position {
     - x, y : int
     + getDistance(destination : Position) : int
 }
+
+abstract class Item {
+    - weight : int
+    - size : int
+
+    + getWeight() : int
+    + getSize() : int
+}
+
+interface IUsable {
+    'Использовать предметы можно не только на себя, но и на других, если позволяет радиус'
+    + use(target: Creature)
+    + getUseCost() : int
+}
+
+interface IMovable {
+    'Переместить на определённое количество клеток по x и y'
+    + move(x: int, y: int)
+
+    'Переместить в определённую клетку'
+    + teleport(x: int, y: int)
+
+    'Может ли объект передвигаться в данный момент'
+    + isMovable() : boolean
+}
+
+interface IEquipable {
+}
+
+interface IAttackable {
+    + takeDamage() : int
+ }
 
 
 @enduml
