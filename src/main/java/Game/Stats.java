@@ -3,6 +3,9 @@ package Game;
 import java.util.Arrays;
 import java.util.HashMap;
 
+/**
+ * Класс для хранения информации о характеристиках
+ */
 public class Stats
 {
     public static String[] allStats = {
