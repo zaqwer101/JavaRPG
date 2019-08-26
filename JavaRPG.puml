@@ -1,0 +1,102 @@
+@startuml
+
+WorldObject <-- Creature
+WorldObject <-- Item
+
+Item <-- Potion
+Item <-- Equipment
+
+IUsable <-- Potion
+
+Potion <-- HealingPotion
+
+IEquipable <-- Equipment
+Equipment <-- Armor
+Equipment <-- Weapon
+
+class WorldObject {
+    - {static} maxid : int
+    - id : int
+    - name : int
+    - icon : int
+
+    + getID() : int
+    + getName() : string
+
+    'Отображаемая иконка объекта на карте'
+    + getIcon() : char
+}
+
+class Creature {
+    'Это удобнее, так как для доспехов и прочего можно прибавочные статы также хранить в классе Stats'
+    'и при надевании/использовании предмета просто прибавлять одно к другому'
+    - mainStats : Stats
+    - additionalStats : Stats
+    - resists : Resists
+    'Текущие баффы/дебаффы на существе'
+    - effects : ArrayList<Effect>
+    - attacksList : ArrayList<Attack>
+
+    'Возможные виды атак существа'
+    + getAttacks() : ArrayList<Attack>
+    + attack(target: Creature, attack: Attack)
+    + getStats() : Stats
+    + getResists() : Resists
+}
+
+abstract class Item {
+    - weight : int
+    - size : int
+
+    + getWeight() : int
+    + getSize() : int
+}
+
+interface IUsable {
+    'Использовать предметы можно не только на себя, но и на других, если позволяет радиус'
+    + use(target: Creature)
+    + getUseCost() : int
+}
+
+interface IMovable {
+    'Переместить на определённое количество клеток по x и y'
+    + move(x: int, y: int)
+
+    'Переместить в определённую клетку'
+    + teleport(x: int, y: int)
+
+    'Может ли объект передвигаться в данный момент'
+    + isMovable() : boolean
+}
+
+interface IEquipable {
+}
+
+abstract class Potion {
+    'Базовая сила действия зелья'
+    - value : int
+
+    'Уровень зелья'
+    - level : int
+}
+
+class HealingPotion {
+    + HealingPotion(level: int, value: int, useCost: int)
+}
+
+class Equipment {
+    'статы, которые даёт элемент снаряжения'
+    - stats : Stats
+}
+
+class Armor {
+    - armor : int
+}
+
+class Weapon {
+    - damage : int
+    - attack : Attack
+}
+
+
+@enduml
