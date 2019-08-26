@@ -98,5 +98,10 @@ class Weapon {
     - attack : Attack
 }
 
+class Position {
+    - x, y : int
+    + getDistance(destination : Position) : int
+}
+
 
 @enduml
