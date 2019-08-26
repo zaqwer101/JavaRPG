@@ -44,6 +44,13 @@ class Creature {
     + getResists() : Resists
 }
 
+class Stats {
+    + add(stat : Stats) : Stats
+    + sub(stat : Stats) : Stats
+    + getStat(stat : String) : int
+    + setStat(stat : String, value : int)
+    + recountStats()
+}
 
 abstract class Potion {
     'Базовая сила действия зелья'
