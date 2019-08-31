@@ -6,6 +6,12 @@ package Game;
 public class Position {
     private int x, y;
 
+    public Position(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
     public int getX()
     {
         return x;
@@ -30,8 +36,10 @@ public class Position {
 
     public int getDistance(Position position)
     {
-        return (int) Math.sqrt(
-                Math.pow(this.x - position.x, 2) + Math.pow(this.y - position.y, 2)
-        );
+        int x2 = (int) Math.pow(this.x - position.x, 2);
+        int y2 = (int) Math.pow(this.y - position.y, 2);
+        int distance = (int) Math.sqrt(x2 + y2);
+
+        return distance;
     }
 }
