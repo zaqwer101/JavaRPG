@@ -4,7 +4,7 @@ import Game.Creature;
 import Game.Interfaces.IEffect;
 
 public abstract class Effect implements IEffect {
-    private int duration;
+    int duration;
 
     public Effect(int duration)
     {

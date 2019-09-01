@@ -19,6 +19,7 @@ public class Creature extends WorldObject
         super(name, icon);
         resists = new Resists(new HashMap());
         stats = new Stats();
+        effects = new ArrayList<>();
         stats.setStat("level", 1);
         stats.setStat("expToLevel", 100);
         stats.setStat("strength", 1);
@@ -36,14 +37,14 @@ public class Creature extends WorldObject
 
     public void recountEffects()
     {
-        for (var effect : effects)
+        for (int i = 0; i < effects.size(); i++)
         {
-            effect.apply(this);
+            effects.get(i).apply(this);
 
             // если длительность = -100, эффект без длительности
-            if(effect.getDuration() <= 0 && effect.getDuration() != -100)
+            if(effects.get(i).getDuration() <= 0 && effects.get(i).getDuration() != -100)
             {
-                effects.remove(effect);
+                effects.remove(effects.get(i));
             }
         }
     }

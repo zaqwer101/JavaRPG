@@ -59,11 +59,8 @@ public class StatsTest
 
         for (var key : Stats.allStats)
         {
-            assertEquals(
-                    stats3.getStat(key),
-                    stats1.getStat(key) + stats2.getStat(key)
-            );
             System.out.println(key + ": " + stats3.getStat(key) + " == " + (stats1.getStat(key) + stats2.getStat(key)));
+            assertEquals(stats1.getStat(key) + stats2.getStat(key), stats3.getStat(key));
         }
     }
 

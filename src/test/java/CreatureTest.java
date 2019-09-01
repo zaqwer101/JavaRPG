@@ -1,4 +1,5 @@
 import Game.Creature;
+import Game.Effects.Bleeding;
 import Game.Resists;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,6 +25,8 @@ public class CreatureTest {
     @Test
     public void damageEffectTest()
     {
-
+        dummy.addEffect(new Bleeding(1, 2));
+        dummy.recountEffects();
+        assertEquals(6, dummy.getHp()[0]);
     }
 }

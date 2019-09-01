@@ -1,5 +1,7 @@
 package Game;
 
+import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -14,6 +16,11 @@ public class Stats {
             "criticalRate", "evasionRate",
             "criticalChance", "evasionChance",
             "level", "exp", "expToLevel"
+    };
+
+    // Статы, которые нельзя складывать/вычитать друг из друга при сложении/вычитании объектов
+    public static String[] nonFoldingStats = {
+        "expToLevel", "level"
     };
 
     private HashMap<String, Integer> stats;
@@ -43,7 +50,8 @@ public class Stats {
     public Stats add(Stats stat2) {
         Stats stat3 = new Stats(new HashMap<>());
         for (var key : this.stats.keySet()) {
-            stat3.stats.replace(key, this.stats.get(key) + stat2.stats.get(key));
+            if (!Arrays.asList(nonFoldingStats).contains(key))
+                stat3.stats.replace(key, this.stats.get(key) + stat2.stats.get(key));
         }
         recountStats();
         return stat3;
@@ -52,11 +60,13 @@ public class Stats {
     public Stats sub(Stats stat2) {
         Stats stat3 = new Stats(new HashMap<>());
         for (var key : this.stats.keySet()) {
-            int newStat = this.stats.get(key) - stat2.stats.get(key);
-            if (newStat < 0)
-                newStat = 0;
+            if (!Arrays.asList(nonFoldingStats).contains(key)) {
+                int newStat = this.stats.get(key) - stat2.stats.get(key);
+                if (newStat < 0)
+                    newStat = 0;
 
-            stat3.stats.replace(key, newStat);
+                stat3.stats.replace(key, newStat);
+            }
         }
         recountStats();
         return stat3;
