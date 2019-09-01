@@ -6,7 +6,7 @@ import java.util.HashMap;
  * Сопротивления типам урона объекта
  */
 public class Resists {
-    public enum DamageType { PHYSICAL, FIRE }
+    public enum DamageType { PHYSICAL, FIRE, PURE }
 
     private HashMap<DamageType, Integer> resists;
 
@@ -20,9 +20,10 @@ public class Resists {
                 this.resists.put(type, 0);
             }
         }
+        resists.replace(DamageType.PURE, 0);
     }
 
-    public Resists()
+    private Resists()
     {
         this.resists = new HashMap<>();
         for (var type : DamageType.values())

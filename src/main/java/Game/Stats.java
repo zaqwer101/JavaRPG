@@ -6,8 +6,7 @@ import java.util.HashMap;
 /**
  * Класс для хранения информации о характеристиках
  */
-public class Stats
-{
+public class Stats {
     public static String[] allStats = {
             "agility", "strength", "intelligence",
             "baseHp", "maxHp", "hp",
@@ -19,45 +18,40 @@ public class Stats
 
     private HashMap<String, Integer> stats;
 
-    public Stats(HashMap<String, Integer> stats)
-    {
+    public Stats(HashMap<String, Integer> stats) {
         this.stats = stats;
-        for (var key : allStats)
-        {
-            if (!this.stats.containsKey(key))
-            {
-                int defaultStat = 0;
-                switch (key)
-                {
-                    case "level":
-                    {
-                        defaultStat = 1;
-                        break;
-                    }
-                }
-                this.stats.put(key, defaultStat);
+        for (var key : allStats) {
+            if (!this.stats.containsKey(key)) {
+                this.stats.put(key, 0);
 
             }
         }
         recountStats();
     }
 
-    public Stats add(Stats stat2)
-    {
+    public Stats() {
+        this.stats = new HashMap<>();
+        for (var key : allStats) {
+            if (!this.stats.containsKey(key)) {
+                this.stats.put(key, 0);
+
+            }
+        }
+        recountStats();
+    }
+
+    public Stats add(Stats stat2) {
         Stats stat3 = new Stats(new HashMap<>());
-        for (var key : this.stats.keySet())
-        {
+        for (var key : this.stats.keySet()) {
             stat3.stats.replace(key, this.stats.get(key) + stat2.stats.get(key));
         }
         recountStats();
         return stat3;
     }
 
-    public Stats sub(Stats stat2)
-    {
+    public Stats sub(Stats stat2) {
         Stats stat3 = new Stats(new HashMap<>());
-        for (var key : this.stats.keySet())
-        {
+        for (var key : this.stats.keySet()) {
             int newStat = this.stats.get(key) - stat2.stats.get(key);
             if (newStat < 0)
                 newStat = 0;
@@ -68,18 +62,15 @@ public class Stats
         return stat3;
     }
 
-    public int getStat(String stat)
-    {
-        if(stats.keySet().contains(stat))
+    public int getStat(String stat) {
+        if (stats.keySet().contains(stat))
             return this.stats.get(stat);
         else
             return -1;
     }
 
-    public int setStat(String stat, int value)
-    {
-        if(Arrays.asList(allStats).contains(stat))
-        {
+    public int setStat(String stat, int value) {
+        if (Arrays.asList(allStats).contains(stat)) {
             this.stats.replace(stat, value);
             recountStats();
             return 0;
@@ -88,8 +79,7 @@ public class Stats
     }
 
     // setStat здесь использовать нельзя
-    public void recountStats()
-    {
+    public void recountStats() {
         //////
         // hp
         //////

@@ -1,15 +1,30 @@
 package Game;
 
 import Game.Interfaces.IEffect;
-
+import Game.Resists.DamageType;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class Creature
+public class Creature extends WorldObject
 {
     ArrayList<IEffect> effects;
-    Stats mainStats, additionalStats;
-    Resists mainResists, additionalResists;
+    Stats stats;
+    Resists resists;
     Position position;
+
+    public Creature(String name, char icon) {
+        super(name, icon);
+        resists = new Resists(new HashMap());
+        stats = new Stats();
+        stats.setStat("level", 1);
+        stats.setStat("expToLevle", 100);
+        stats.setStat("strength", 10);
+        stats.setStat("agility", 10);
+        stats.setStat("intelligence", 10);
+        stats.setStat("baseHp", 20);
+        stats.setStat("hp", stats.getStat("maxHp"));
+        stats.recountStats();
+    }
 
     public Position getPosition()
     {
@@ -32,14 +47,13 @@ public class Creature
 
     public Stats getStats()
     {
-        mainStats.recountStats();
-        additionalStats.recountStats();
-        return mainStats.add(additionalStats);
+        stats.recountStats();
+        return stats;
     }
 
     public Resists getResists()
     {
-        return mainResists.add(additionalResists);
+        return resists;
     }
 
     /**
@@ -53,4 +67,18 @@ public class Creature
                 getStats().getStat("maxhp")
         };
     }
+
+    public void addEffect(IEffect effect)
+    {
+        effects.add(effect);
+    }
+
+    public void takeDamage(int amount, DamageType type)
+    {
+        getStats().setStat("hp",
+                getStats().getStat("hp") - (amount - amount * (resists.getResist(type) / 100))
+                );
+    }
+
+    //TODO получение уровня, получение экспы, различные атаки
 }
