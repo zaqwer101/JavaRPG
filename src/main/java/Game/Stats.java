@@ -14,7 +14,7 @@ public class Stats
             "mana", "maxMana",
             "criticalRate", "evasionRate",
             "criticalChance", "evasionChance",
-            "level", "exp", "exp_to_level"
+            "level", "exp", "expToLevel"
     };
 
     private HashMap<String, Integer> stats;
