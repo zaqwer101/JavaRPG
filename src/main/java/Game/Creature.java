@@ -12,16 +12,19 @@ public class Creature extends WorldObject
     Resists resists;
     Position position;
 
+    /* Дефолтное существо имеет всех статов по 1
+    = 8 hp
+     */
     public Creature(String name, char icon) {
         super(name, icon);
         resists = new Resists(new HashMap());
         stats = new Stats();
         stats.setStat("level", 1);
-        stats.setStat("expToLevle", 100);
-        stats.setStat("strength", 10);
-        stats.setStat("agility", 10);
-        stats.setStat("intelligence", 10);
-        stats.setStat("baseHp", 20);
+        stats.setStat("expToLevel", 100);
+        stats.setStat("strength", 1);
+        stats.setStat("agility", 1);
+        stats.setStat("intelligence", 1);
+        stats.setStat("baseHp", 0);
         stats.setStat("hp", stats.getStat("maxHp"));
         stats.recountStats();
     }
