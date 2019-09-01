@@ -5,8 +5,9 @@ import Game.Interfaces.IEffect;
 
 public abstract class Effect implements IEffect {
     int duration;
+    String name;
 
-    public Effect(int duration)
+    public Effect(int duration, String name)
     {
         this.duration = duration;
     }
@@ -14,5 +15,10 @@ public abstract class Effect implements IEffect {
     @Override
     public int getDuration() {
         return duration;
+    }
+
+    public String getName()
+    {
+        return name;
     }
 }

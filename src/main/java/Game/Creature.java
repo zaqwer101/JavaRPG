@@ -44,6 +44,7 @@ public class Creature extends WorldObject
             // если длительность = -100, эффект без длительности
             if(effects.get(i).getDuration() <= 0 && effects.get(i).getDuration() != -100)
             {
+                effects.get(i).remove(this);
                 effects.remove(effects.get(i));
             }
         }
