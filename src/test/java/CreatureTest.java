@@ -35,11 +35,11 @@ public class CreatureTest {
     @Test
     public void damageEffectTest()
     {
-        int steps = 2;
+        int steps = 3;
         int damage = 1;
         dummy.addEffect(new Bleeding(3, damage));
 
-        for (int i = 0; i < steps; i++ )
+        for (int i = 1; i < steps; i++ )
         {
             dummy.turn();
             assertEquals(dummy.getHp()[1] - (i * damage), dummy.getHp()[0]);
