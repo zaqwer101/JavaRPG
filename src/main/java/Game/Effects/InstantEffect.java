@@ -4,11 +4,11 @@ import Game.Creature;
 import Game.JavaRPG;
 import Game.Resists.DamageType;
 
-public class InstantDamage extends Effect
+public class InstantEffect extends Effect
 {
     int amount;
     DamageType type;
-    public InstantDamage(String name, DamageType type, int amount)
+    public InstantEffect(String name, DamageType type, int amount)
     {
         super(name);
         this.type = type;

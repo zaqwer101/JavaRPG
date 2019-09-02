@@ -10,11 +10,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CreatureTest {
     Creature dummy;
-
+    Creature target;
     @Before
     public void init()
     {
         dummy = new Creature("Dummy", '$', new Position(0, 0));
+        target = new Creature("Target", 'D', new Position(1, 1));
     }
 
     @Test
@@ -36,7 +37,6 @@ public class CreatureTest {
     @Test
     public void attackTest()
     {
-        Creature target = new Creature("target", 'D', new Position(1, 1));
         dummy.addAttack(new MeleeAttack(5));
         dummy.useAttack(0, target);
         assertEquals(3, target.getHp()[0]);
