@@ -1,5 +1,7 @@
+import Game.Attacks.MeleeAttack;
 import Game.Creature;
 import Game.Effects.Bleeding;
+import Game.Position;
 import Game.Resists;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +14,7 @@ public class CreatureTest {
     @Before
     public void init()
     {
-        dummy = new Creature("Dummy", '$');
+        dummy = new Creature("Dummy", '$', new Position(0, 0));
     }
 
     @Test
@@ -29,5 +31,14 @@ public class CreatureTest {
         dummy.addEffect(new Bleeding(1, 2));
         dummy.recountEffects();
         assertEquals(6, dummy.getHp()[0]);
+    }
+
+    @Test
+    public void attackTest()
+    {
+        Creature target = new Creature("target", 'D', new Position(1, 1));
+        dummy.addAttack(new MeleeAttack(5));
+        dummy.useAttack(0, target);
+        assertEquals(3, target.getHp()[0]);
     }
 }

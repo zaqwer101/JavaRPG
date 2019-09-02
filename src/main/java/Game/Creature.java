@@ -1,5 +1,6 @@
 package Game;
 
+import Game.Attacks.Attack;
 import Game.Effects.PeriodicEffect;
 import Game.Interfaces.IEffect;
 import Game.Resists.DamageType;
@@ -12,12 +13,15 @@ public class Creature extends WorldObject
     private Stats stats;
     private Resists resists;
     private Position position;
+    private ArrayList<Attack> attacks;
 
     /* Дефолтное существо имеет всех статов по 1
     = 8 hp
      */
-    public Creature(String name, char icon) {
+    public Creature(String name, char icon, Position position) {
         super(name, icon);
+        this.position = position;
+        attacks = new ArrayList<>();
         resists = new Resists(new HashMap());
         stats = new Stats();
         effects = new ArrayList<>();
@@ -86,5 +90,33 @@ public class Creature extends WorldObject
                 );
     }
 
-    //TODO получение уровня, получение экспы, различные атаки
+    public void addAttack(Attack attack)
+    {
+        for (var a : attacks)
+        {
+            if (attack.getName().equals(a.getName()))
+            {
+                attacks.add(attacks.indexOf(a), attack);
+                return;
+            }
+        }
+        attacks.add(attack);
+    }
+
+    public Attack[] getAttacks()
+    {
+        return (Attack[]) attacks.toArray();
+    }
+
+    public void useAttack(Attack attack, Creature target)
+    {
+        attacks.get(attacks.indexOf(attack)).attack(this, target);
+    }
+
+    public void useAttack(int index, Creature target)
+    {
+        attacks.get(index).attack(this, target);
+    }
+
+    //TODO получение уровня, получение экспы
 }

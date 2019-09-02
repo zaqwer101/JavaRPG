@@ -11,6 +11,8 @@ public class InstantDamage extends Effect
     public InstantDamage(String name, DamageType type, int amount)
     {
         super(name);
+        this.type = type;
+        this.amount = amount;
     }
     @Override
     public void apply(Creature target)

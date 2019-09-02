@@ -1,5 +1,6 @@
 package Game.Attacks;
 
+import Game.Creature;
 import Game.Effects.InstantDamage;
 import Game.Interfaces.IEffect;
 import Game.Resists.DamageType;

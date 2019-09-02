@@ -35,4 +35,9 @@ public abstract class Attack {
             }
         }
     }
+
+    public String getName()
+    {
+        return name;
+    }
 }
