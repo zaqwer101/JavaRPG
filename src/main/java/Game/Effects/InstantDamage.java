@@ -6,9 +6,11 @@ import Game.Resists.DamageType;
 
 public class InstantDamage extends InstantEffect
 {
+    DamageType type;
     public InstantDamage(String name, DamageType type, int amount)
     {
-        super(name, type, amount);
+        super(name, amount);
+        this.type = type;
     }
 
     @Override

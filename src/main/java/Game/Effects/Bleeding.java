@@ -1,7 +1,6 @@
 package Game.Effects;
 
 import Game.Creature;
-import Game.Interfaces.IEffect;
 import Game.Resists;
 
 import static Game.JavaRPG.log;
