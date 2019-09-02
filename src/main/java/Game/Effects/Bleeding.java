@@ -6,7 +6,7 @@ import Game.Resists;
 
 import static Game.JavaRPG.log;
 
-public class Bleeding extends Effect
+public class Bleeding extends PeriodicEffect
 {
     int amount;
     public Bleeding(int duration, int amount) {
@@ -22,7 +22,7 @@ public class Bleeding extends Effect
 
     @Override
     public void remove(Creature target) {
-        log("Кровотечение с " + target.getName() + " снято");
+        log("Кровотечение у " + target.getName() + " прекратилось");
     }
 
 

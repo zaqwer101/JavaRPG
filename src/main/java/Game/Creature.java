@@ -1,5 +1,6 @@
 package Game;
 
+import Game.Effects.PeriodicEffect;
 import Game.Interfaces.IEffect;
 import Game.Resists.DamageType;
 import java.util.ArrayList;
@@ -7,10 +8,10 @@ import java.util.HashMap;
 
 public class Creature extends WorldObject
 {
-    ArrayList<IEffect> effects;
-    Stats stats;
-    Resists resists;
-    Position position;
+    private ArrayList<PeriodicEffect> effects;
+    private Stats stats;
+    private Resists resists;
+    private Position position;
 
     /* Дефолтное существо имеет всех статов по 1
     = 8 hp
@@ -73,7 +74,7 @@ public class Creature extends WorldObject
         };
     }
 
-    public void addEffect(IEffect effect)
+    public void addEffect(PeriodicEffect effect)
     {
         effects.add(effect);
     }

@@ -4,17 +4,11 @@ import Game.Creature;
 import Game.Interfaces.IEffect;
 
 public abstract class Effect implements IEffect {
-    int duration;
     String name;
 
-    public Effect(int duration, String name)
+    public Effect(String name)
     {
-        this.duration = duration;
-    }
-
-    @Override
-    public int getDuration() {
-        return duration;
+        this.name = name;
     }
 
     public String getName()
