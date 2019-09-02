@@ -17,7 +17,8 @@ public class Creature extends WorldObject
     /* Дефолтное существо имеет всех статов по 1
     = 8 hp
      */
-    public Creature(String name, char icon, Position position) {
+    public Creature(String name, char icon, Position position)
+    {
         super(name, icon);
         this.position = position;
         attacks = new ArrayList<>();
@@ -34,6 +35,17 @@ public class Creature extends WorldObject
         stats.recountStats();
     }
 
+    public Creature(String name, char icon, Position position, Stats stats)
+    {
+        super(name, icon);
+        this.position = position;
+        attacks = new ArrayList<>();
+        resists = new Resists(new HashMap());
+        this.stats = stats;
+        effects = new ArrayList<>();
+        this.stats.recountStats();
+    }
+
     public Position getPosition()
     {
         return position;
@@ -46,7 +58,7 @@ public class Creature extends WorldObject
             effects.get(i).apply(this);
 
             // если длительность = -100, эффект без длительности
-            if(effects.get(i).getDuration() <= 0 && effects.get(i).getDuration() != -100)
+            if(effects.get(i).getDuration() <= 0 && effects.get(i).getDuration() != PeriodicEffect.FOREVER)
             {
                 effects.get(i).remove(this);
                 effects.remove(effects.get(i));
@@ -58,6 +70,18 @@ public class Creature extends WorldObject
     {
         stats.recountStats();
         return stats;
+    }
+
+    public void addStats(Stats stats)
+    {
+        this.stats = this.stats.add(stats);
+        this.stats.recountStats();
+    }
+
+    public void subStats(Stats stats)
+    {
+        this.stats = this.stats.sub(stats);
+        this.stats.recountStats();
     }
 
     public Resists getResists()

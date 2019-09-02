@@ -4,6 +4,7 @@ import Game.Creature;
 
 public abstract class PeriodicEffect extends Effect
 {
+    public static final int FOREVER = -100;
     int duration;
     public PeriodicEffect(int duration, String name) {
         super(name);

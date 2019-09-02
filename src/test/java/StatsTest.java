@@ -104,6 +104,5 @@ public class StatsTest
         assertEquals(stats1.getStat("maxHp"), stats1.getStat("hp"));
         assertEquals(120, stats1.getStat("maxMana"));
         assertEquals(stats1.getStat("maxMana"), stats1.getStat("mana"));
-
     }
 }

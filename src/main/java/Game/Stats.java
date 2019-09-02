@@ -20,7 +20,7 @@ public class Stats {
 
     // Статы, которые нельзя складывать/вычитать друг из друга при сложении/вычитании объектов
     public static String[] nonFoldingStats = {
-        "expToLevel", "level"
+        "expToLevel", "level", "hp" /* потому что увеличиваться может только максимальное количество хп */
     };
 
     private HashMap<String, Integer> stats;
@@ -53,7 +53,6 @@ public class Stats {
             if (!Arrays.asList(nonFoldingStats).contains(key))
                 stat3.stats.replace(key, this.stats.get(key) + stat2.stats.get(key));
         }
-        recountStats();
         return stat3;
     }
 
@@ -68,7 +67,6 @@ public class Stats {
                 stat3.stats.replace(key, newStat);
             }
         }
-        recountStats();
         return stat3;
     }
 
