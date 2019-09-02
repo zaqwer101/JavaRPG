@@ -11,7 +11,7 @@ import java.util.HashMap;
 public class Stats {
     public static String[] allStats = {
             "agility", "strength", "intelligence",
-            "baseHp", "maxHp", "hp",
+            "baseHp", "additionalHp", "maxHp", "hp",
             "mana", "maxMana",
             "criticalRate", "evasionRate",
             "criticalChance", "evasionChance",
@@ -91,7 +91,7 @@ public class Stats {
         //////
         // hp
         //////
-        int maxHp = stats.get("baseHp") * stats.get("level") + stats.get("strength") * 8;
+        int maxHp = stats.get("baseHp") * stats.get("level") + stats.get("strength") * 8 + stats.get("additionalHp");
         stats.replace("maxHp", maxHp);
         if (stats.get("hp") > stats.get("maxHp")) stats.replace("hp", stats.get("maxHp"));
 

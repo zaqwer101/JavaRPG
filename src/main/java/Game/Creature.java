@@ -97,7 +97,7 @@ public class Creature extends WorldObject
     {
         return new int[] {
                 getStats().getStat("hp"),
-                getStats().getStat("maxhp")
+                getStats().getStat("maxHp")
         };
     }
 
@@ -148,6 +148,12 @@ public class Creature extends WorldObject
     public void useAttack(int index, Creature target)
     {
         attacks.get(index).attack(this, target);
+    }
+
+    public void turn()
+    {
+        this.stats.recountStats();
+        recountEffects();
     }
 
     //TODO получение уровня, получение экспы

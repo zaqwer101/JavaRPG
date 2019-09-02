@@ -3,10 +3,14 @@ import Game.Attacks.VampireBite;
 import Game.Creature;
 import Game.Effects.Bleeding;
 import Game.Effects.InstantHeal;
+import Game.Effects.PeriodicStatsEffect;
 import Game.Position;
 import Game.Resists;
+import Game.Stats;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -62,5 +66,25 @@ public class CreatureTest {
         dummy.useAttack(0, target);
         assertEquals(1, target.getHp()[0]);
         assertEquals(8, dummy.getHp()[0]);
+    }
+
+    @Test
+    public void PeriodicStatsEffectTest()
+    {
+        HashMap<String, Integer> additionalStats = new HashMap<>();
+        additionalStats.put("additionalHp", 10);
+        additionalStats.put("agility", 9);
+
+        dummy.addEffect(new PeriodicStatsEffect(3, "Тестовый бафф", new Stats(additionalStats)));
+
+        for (int i = 0; i < 3; i++)
+        {
+            dummy.turn();
+            assertEquals(10, dummy.getStats().getStat("agility"));
+            assertEquals(18, dummy.getHp()[1]);
+        }
+        dummy.turn();
+        assertEquals(1, dummy.getStats().getStat("agility"));
+        assertEquals(8, dummy.getHp()[1]);
     }
 }

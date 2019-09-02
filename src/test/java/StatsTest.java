@@ -99,8 +99,9 @@ public class StatsTest
         stats1.setStat("baseHp", 50);
         stats1.setStat("hp", 1000);
         stats1.setStat("mana", 1000);
+        stats1.setStat("additionalHp", 10);
 
-        assertEquals(330, stats1.getStat("maxHp"));
+        assertEquals(340, stats1.getStat("maxHp"));
         assertEquals(stats1.getStat("maxHp"), stats1.getStat("hp"));
         assertEquals(120, stats1.getStat("maxMana"));
         assertEquals(stats1.getStat("maxMana"), stats1.getStat("mana"));
