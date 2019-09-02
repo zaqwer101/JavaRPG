@@ -35,9 +35,15 @@ public class CreatureTest {
     @Test
     public void damageEffectTest()
     {
-        dummy.addEffect(new Bleeding(1, 2));
-        dummy.recountEffects();
-        assertEquals(6, dummy.getHp()[0]);
+        int steps = 2;
+        int damage = 1;
+        dummy.addEffect(new Bleeding(3, damage));
+
+        for (int i = 0; i < steps; i++ )
+        {
+            dummy.turn();
+            assertEquals(dummy.getHp()[1] - (i * damage), dummy.getHp()[0]);
+        }
     }
 
     @Test
@@ -77,7 +83,7 @@ public class CreatureTest {
 
         dummy.addEffect(new PeriodicStatsEffect(3, "Тестовый бафф", new Stats(additionalStats)));
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 2; i++)
         {
             dummy.turn();
             assertEquals(10, dummy.getStats().getStat("agility"));

@@ -10,15 +10,23 @@ public class PeriodicStatsEffect extends PeriodicEffect
     {
         super(duration, name);
         this.additionalStats = additionalStats;
+        this.effectType = EffectType.STATS;
     }
+
     @Override
     public void apply(Creature target)
     {
-        target.addStats(additionalStats);
+        if (!applied)
+        {
+            target.addStats(additionalStats);
+            applied = true;
+        }
+        duration--;
     }
     @Override
     public void remove(Creature target)
     {
         target.subStats(additionalStats);
+        applied = false;
     }
 }

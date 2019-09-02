@@ -11,17 +11,20 @@ public class Bleeding extends PeriodicEffect
     public Bleeding(int duration, int amount) {
         super(duration, "Кровотечение");
         this.amount = amount;
+        this.effectType = EffectType.DAMAGE_DEBUFF;
     }
 
     @Override
     public void apply(Creature target) {
         target.takeDamage(amount, Resists.DamageType.PURE);
+        applied = true;
         duration--;
     }
 
     @Override
     public void remove(Creature target) {
         log("Кровотечение у " + target.getName() + " прекратилось");
+        applied = false;
     }
 
 

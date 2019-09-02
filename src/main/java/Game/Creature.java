@@ -1,7 +1,9 @@
 package Game;
 
 import Game.Attacks.Attack;
+import Game.Effects.Effect.EffectType;
 import Game.Effects.PeriodicEffect;
+import Game.Effects.PeriodicStatsEffect;
 import Game.Resists.DamageType;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,6 +53,7 @@ public class Creature extends WorldObject
         return position;
     }
 
+    // TODO: Доделать обработку баффов на статы
     public void recountEffects()
     {
         for (int i = 0; i < effects.size(); i++)
