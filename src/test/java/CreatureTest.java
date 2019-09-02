@@ -1,6 +1,8 @@
 import Game.Attacks.MeleeAttack;
+import Game.Attacks.VampireBite;
 import Game.Creature;
 import Game.Effects.Bleeding;
+import Game.Effects.InstantHeal;
 import Game.Position;
 import Game.Resists;
 import org.junit.Before;
@@ -43,8 +45,22 @@ public class CreatureTest {
     }
 
     @Test
-    public void healTest(){}
+    public void healTest()
+    {
+        dummy.takeDamage(7, Resists.DamageType.PURE);
+        assertEquals(1, dummy.getHp()[0]);
+        new InstantHeal("Heal", 7).apply(dummy);
+        assertEquals(8, dummy.getHp()[0]);
+    }
 
     @Test
-    public void vampirismTest(){}
+    public void vampirismTest()
+    {
+        dummy.takeDamage(7, Resists.DamageType.PURE);
+        assertEquals(1, dummy.getHp()[0]);
+        dummy.addAttack(new VampireBite(7));
+        dummy.useAttack(0, target);
+        assertEquals(1, target.getHp()[0]);
+        assertEquals(8, dummy.getHp()[0]);
+    }
 }
