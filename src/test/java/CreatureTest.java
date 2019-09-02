@@ -41,4 +41,10 @@ public class CreatureTest {
         dummy.useAttack(0, target);
         assertEquals(3, target.getHp()[0]);
     }
+
+    @Test
+    public void healTest(){}
+
+    @Test
+    public void vampirismTest(){}
 }

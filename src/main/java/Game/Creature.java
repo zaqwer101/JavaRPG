@@ -78,6 +78,15 @@ public class Creature extends WorldObject
         };
     }
 
+    public void Heal(int amount)
+    {
+        stats.setStat("hp", stats.getStat("hp") + amount);
+        if (stats.getStat("hp") > stats.getStat("maxHp"))
+        {
+            stats.setStat("hp", stats.getStat("maxHp"));
+        }
+    }
+
     public void addEffect(PeriodicEffect effect)
     {
         effects.add(effect);
