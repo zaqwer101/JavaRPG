@@ -2,7 +2,6 @@ package Game;
 
 import Game.Attacks.Attack;
 import Game.Effects.PeriodicEffect;
-import Game.Interfaces.IEffect;
 import Game.Resists.DamageType;
 import java.util.ArrayList;
 import java.util.HashMap;

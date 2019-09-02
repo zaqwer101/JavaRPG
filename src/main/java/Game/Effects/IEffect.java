@@ -1,4 +1,4 @@
-package Game.Interfaces;
+package Game.Effects;
 
 import Game.Creature;
 

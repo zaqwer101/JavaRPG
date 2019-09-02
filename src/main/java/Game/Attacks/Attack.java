@@ -1,7 +1,7 @@
 package Game.Attacks;
 
 import Game.Creature;
-import Game.Interfaces.IEffect;
+import Game.Effects.IEffect;
 
 import java.util.ArrayList;
 
