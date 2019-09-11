@@ -1,8 +1,7 @@
-import Game.Stats;
+import Game.Core.Stats;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -101,8 +100,7 @@ public class StatsTest
         stats1.setStat("mana", 1000);
         stats1.setStat("additionalHp", 10);
 
-//        assertEquals(340, stats1.getStat("maxHp"));
-        stats1.setStat("hp", stats1.getStat("maxHp"));
+        stats1.setStat("hp", stats1.getStat("maxHp") + 100);
         assertEquals(stats1.getStat("maxHp"), stats1.getStat("hp"));
         assertEquals(120, stats1.getStat("maxMana"));
         assertEquals(stats1.getStat("maxMana"), stats1.getStat("mana"));

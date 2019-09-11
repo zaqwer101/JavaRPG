@@ -1,4 +1,4 @@
-package Game;
+package Game.Core;
 
 public class JavaRPG
 {

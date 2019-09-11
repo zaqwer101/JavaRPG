@@ -1,7 +1,5 @@
 package Game.Attacks;
 
-import Game.Creature;
-import Game.Effects.Effect;
 import Game.Effects.InstantHeal;
 
 public class VampireBite extends MeleeAttack
