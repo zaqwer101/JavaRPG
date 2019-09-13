@@ -1,27 +1,27 @@
 import Game.Attacks.MeleeAttack;
 import Game.Attacks.VampireBite;
-import Game.Core.Creature;
+import Game.Core.*;
 import Game.Effects.Bleeding;
 import Game.Effects.InstantHeal;
 import Game.Effects.PeriodicStatsEffect;
-import Game.Core.Position;
-import Game.Core.Resists;
-import Game.Core.Stats;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class CreatureTest {
     Creature dummy;
     Creature target;
+    Location location;
     @Before
     public void init()
     {
-        dummy = new Creature("Dummy", '$', new Position(0, 0));
-        target = new Creature("Target", 'D', new Position(1, 1));
+        location = new Location(10, 10);
+        dummy = new Creature("Dummy", '$', new Position(0, 0), location);
+        target = new Creature("Target", 'D', new Position(1, 1), location);
     }
 
     @Test
@@ -92,5 +92,34 @@ public class CreatureTest {
         dummy.turn();
         assertEquals(1, dummy.getStats().getStat("agility"));
         assertEquals(8, dummy.getHp()[1]);
+    }
+
+    @Test
+    public void locationTest()
+    {
+        assertEquals(0, dummy.getPosition().getX());
+        assertEquals(0, dummy.getPosition().getY());
+        assertEquals(1, target.getPosition().getX());
+        assertEquals(1, target.getPosition().getY());
+
+        assertEquals(dummy, location.getPosition(0, 0).getMember());
+        assertEquals(target, location.getPosition(target.getPosition().getX(), target.getPosition().getY()).getMember());
+    }
+
+    @Test
+    public void teleportationTest()
+    {
+        try
+        {
+            dummy.teleport(new Position(5, 5));
+        } catch (Exception e)
+        {
+            fail("Точка занята.");
+        }
+
+        assertEquals(null, location.getPosition(0, 0).getMember());
+        assertEquals(dummy, location.getPosition(5, 5));
+        assertEquals(5, dummy.getPosition().getX());
+        assertEquals(5, dummy.getPosition().getY());
     }
 }

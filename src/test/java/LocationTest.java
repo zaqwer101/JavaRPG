@@ -17,11 +17,11 @@ public class LocationTest
     @Test
     public void borders()
     {
-        assertEquals(false, location.getLocation(9, 9).isPassable());
-        assertEquals(false, location.getLocation(0, 9).isPassable());
-        assertEquals(false, location.getLocation(9, 0).isPassable());
-        assertEquals(false, location.getLocation(0, 9).isPassable());
+        assertEquals(false, location.getPosition(9, 9).isPassable());
+        assertEquals(false, location.getPosition(0, 9).isPassable());
+        assertEquals(false, location.getPosition(9, 0).isPassable());
+        assertEquals(false, location.getPosition(0, 9).isPassable());
 
-        assertEquals(true, location.getLocation(5, 1).isPassable());
+        assertEquals(true, location.getPosition(5, 1).isPassable());
     }
 }

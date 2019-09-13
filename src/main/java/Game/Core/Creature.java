@@ -3,6 +3,7 @@ package Game.Core;
 import Game.Attacks.Attack;
 import Game.Effects.PeriodicEffect;
 import Game.Core.Resists.DamageType;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,14 +14,25 @@ public class Creature extends WorldObject
     private Resists resists;
     private Position position;
     private ArrayList<Attack> attacks;
+    private Location location;
 
     /* Дефолтное существо имеет всех статов по 1
     = 8 hp
      */
-    public Creature(String name, char icon, Position position)
+    public Creature(String name, char icon, Position position, Location location)
     {
         super(name, icon);
-        this.position = position;
+        this.location = location;
+        try
+        {
+            teleport(position);
+        } catch (Exception e)
+        {
+            this.location = null;
+            this.position = null;
+            JavaRPG.log("Не удалось разместить " + name + ", позиция занята.");
+        }
+
         attacks = new ArrayList<>();
         resists = new Resists(new HashMap());
         stats = new Stats();
@@ -32,12 +44,14 @@ public class Creature extends WorldObject
         stats.setStat("intelligence", 1);
         stats.setStat("baseHp", 0);
         stats.setStat("hp", stats.getStat("maxHp"));
+
         stats.recountStats();
     }
 
-    public Creature(String name, char icon, Position position, Stats stats)
+    public Creature(String name, char icon, Position position, Stats stats, Location location)
     {
         super(name, icon);
+        this.location = location;
         this.position = position;
         attacks = new ArrayList<>();
         resists = new Resists(new HashMap());
@@ -156,6 +170,23 @@ public class Creature extends WorldObject
         this.stats.recountStats();
         recountEffects();
     }
+
+    public void teleport(Position position) throws Exception
+    {
+        if (location.getPosition(position.getX(), position.getY()).isEmpty())
+        {
+            // location.getPosition(this.getPosition().getX(), this.getPosition().getY()).setMember(null);
+            this.position = position;
+            location.getPosition(position.getX(), position.getY()).setMember(this);
+        } else
+            throw new Exception("Позиция занята");
+    }
+
+    public Location getLocation()
+    {
+        return location;
+    }
+
 
     //TODO получение уровня, получение экспы
 }

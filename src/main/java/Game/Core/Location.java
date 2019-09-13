@@ -22,7 +22,7 @@ public class Location
         }
     }
 
-    public LocationPosition getLocation(int x, int y)
+    public LocationPosition getPosition(int x, int y)
     {
         for (var l : location)
         {

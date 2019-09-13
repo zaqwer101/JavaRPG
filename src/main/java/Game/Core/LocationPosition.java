@@ -36,6 +36,21 @@ public class LocationPosition extends Position
         return passable;
     }
 
+    public boolean isEmpty()
+    {
+        return locationMember == null;
+    }
+
+    public void setMember(Creature member)
+    {
+        this.locationMember = member;
+    }
+
+    public Creature getMember()
+    {
+        return locationMember;
+    }
+
     private void setIcon(char icon)
     {
         this.icon = icon;
