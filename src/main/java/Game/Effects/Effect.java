@@ -1,8 +1,10 @@
 package Game.Effects;
 
 
-public abstract class Effect implements IEffect {
-    public enum EffectType{ NONE, STATS, DAMAGE_DEBUFF };
+import Game.Core.Creature;
+
+public abstract class Effect {
+    public enum EffectType {NONE, STATS, DAMAGE_DEBUFF}
     EffectType effectType;
     String name;
 
@@ -21,4 +23,6 @@ public abstract class Effect implements IEffect {
     {
         return effectType;
     }
+
+    public abstract void apply(Creature target);
 }

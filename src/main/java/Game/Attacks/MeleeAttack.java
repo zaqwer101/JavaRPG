@@ -1,7 +1,7 @@
 package Game.Attacks;
 
+import Game.Effects.Effect;
 import Game.Effects.InstantDamage;
-import Game.Effects.IEffect;
 import Game.Core.Resists.DamageType;
 
 import java.util.ArrayList;
@@ -14,8 +14,8 @@ public class MeleeAttack extends Attack
 {
     public MeleeAttack(int damageAmount)
     {
-        super("Атака ближнего боя", 1, new ArrayList<IEffect>(),
-                new ArrayList<IEffect>(
+        super("Атака ближнего боя", 1, new ArrayList<Effect>(),
+                new ArrayList<Effect>(
                         Arrays.asList(new InstantDamage("Физический урон", DamageType.PHYSICAL, damageAmount))
                 ), damageAmount
         );
