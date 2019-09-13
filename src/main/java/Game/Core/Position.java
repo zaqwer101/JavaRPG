@@ -1,4 +1,4 @@
-package Game;
+package Game.Core;
 
 /**
  * Позиция объекта в игровой локации

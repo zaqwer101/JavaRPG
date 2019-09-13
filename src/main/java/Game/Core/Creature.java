@@ -1,10 +1,8 @@
-package Game;
+package Game.Core;
 
 import Game.Attacks.Attack;
-import Game.Effects.Effect.EffectType;
 import Game.Effects.PeriodicEffect;
-import Game.Effects.PeriodicStatsEffect;
-import Game.Resists.DamageType;
+import Game.Core.Resists.DamageType;
 import java.util.ArrayList;
 import java.util.HashMap;
 

@@ -1,4 +1,4 @@
-package Game;
+package Game.Core;
 
 import java.util.HashMap;
 

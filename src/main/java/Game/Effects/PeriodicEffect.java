@@ -1,6 +1,6 @@
 package Game.Effects;
 
-import Game.Creature;
+import Game.Core.Creature;
 
 public abstract class PeriodicEffect extends Effect
 {

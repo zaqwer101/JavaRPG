@@ -1,7 +1,7 @@
 package Game.Effects;
 
-import Game.Creature;
-import Game.Stats;
+import Game.Core.Creature;
+import Game.Core.Stats;
 
 public class PeriodicStatsEffect extends PeriodicEffect
 {

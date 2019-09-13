@@ -2,7 +2,7 @@ package Game.Attacks;
 
 import Game.Effects.InstantDamage;
 import Game.Effects.IEffect;
-import Game.Resists.DamageType;
+import Game.Core.Resists.DamageType;
 
 import java.util.ArrayList;
 import java.util.Arrays;

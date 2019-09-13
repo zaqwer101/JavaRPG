@@ -1,9 +1,9 @@
 package Game.Effects;
 
-import Game.Creature;
-import Game.Resists;
+import Game.Core.Creature;
+import Game.Core.Resists;
 
-import static Game.JavaRPG.log;
+import static Game.Core.JavaRPG.log;
 
 public class Bleeding extends PeriodicEffect
 {

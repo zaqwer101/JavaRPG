@@ -1,8 +1,8 @@
 package Game.Effects;
 
-import Game.Creature;
-import Game.JavaRPG;
-import Game.Resists.DamageType;
+import Game.Core.Creature;
+import Game.Core.JavaRPG;
+import Game.Core.Resists.DamageType;
 
 public class InstantDamage extends InstantEffect
 {

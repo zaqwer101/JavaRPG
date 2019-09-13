@@ -1,4 +1,4 @@
-import Game.Position;
+import Game.Core.Position;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

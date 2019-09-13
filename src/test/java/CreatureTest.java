@@ -1,12 +1,12 @@
 import Game.Attacks.MeleeAttack;
 import Game.Attacks.VampireBite;
-import Game.Creature;
+import Game.Core.Creature;
 import Game.Effects.Bleeding;
 import Game.Effects.InstantHeal;
 import Game.Effects.PeriodicStatsEffect;
-import Game.Position;
-import Game.Resists;
-import Game.Stats;
+import Game.Core.Position;
+import Game.Core.Resists;
+import Game.Core.Stats;
 import org.junit.Before;
 import org.junit.Test;
 
