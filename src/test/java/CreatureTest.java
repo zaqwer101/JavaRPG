@@ -117,8 +117,13 @@ public class CreatureTest {
             fail(e.getMessage());
         }
 
+        // проверяем, что после телепортации в предыдущей позиции ничего не осталось
         assertEquals(null, location.getPosition(0, 0).getMember());
+
+        // проверяем, что существо корректно разместилось в новой локации
         assertEquals(dummy, location.getPosition(5, 5).getMember());
+
+        // проверяем позицию существа
         assertEquals(5, dummy.getPosition().getX());
         assertEquals(5, dummy.getPosition().getY());
     }
