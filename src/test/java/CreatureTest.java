@@ -41,7 +41,7 @@ public class CreatureTest {
 
         for (int i = 1; i < steps; i++ )
         {
-            dummy.turn();
+            dummy.passTurn();
             assertEquals(dummy.getHp()[1] - (i * damage), dummy.getHp()[0]);
         }
     }
@@ -85,11 +85,11 @@ public class CreatureTest {
 
         for (int i = 0; i < 2; i++)
         {
-            dummy.turn();
+            dummy.passTurn();
             assertEquals(10, dummy.getStats().getStat("agility"));
             assertEquals(18, dummy.getHp()[1]);
         }
-        dummy.turn();
+        dummy.passTurn();
         assertEquals(1, dummy.getStats().getStat("agility"));
         assertEquals(8, dummy.getHp()[1]);
     }
@@ -114,11 +114,11 @@ public class CreatureTest {
             dummy.teleport(new Position(5, 5));
         } catch (Exception e)
         {
-            fail("Точка занята.");
+            fail(e.getMessage());
         }
 
         assertEquals(null, location.getPosition(0, 0).getMember());
-        assertEquals(dummy, location.getPosition(5, 5));
+        assertEquals(dummy, location.getPosition(5, 5).getMember());
         assertEquals(5, dummy.getPosition().getX());
         assertEquals(5, dummy.getPosition().getY());
     }

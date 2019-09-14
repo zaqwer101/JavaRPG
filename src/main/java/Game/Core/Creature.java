@@ -30,7 +30,7 @@ public class Creature extends WorldObject
         {
             this.location = null;
             this.position = null;
-            JavaRPG.log("Не удалось разместить " + name + ", позиция занята.");
+            JavaRPG.log(e.getMessage());
         }
 
         attacks = new ArrayList<>();
@@ -165,7 +165,7 @@ public class Creature extends WorldObject
         attacks.get(index).attack(this, target);
     }
 
-    public void turn()
+    public void passTurn()
     {
         this.stats.recountStats();
         recountEffects();
@@ -175,7 +175,9 @@ public class Creature extends WorldObject
     {
         if (location.getPosition(position.getX(), position.getY()).isEmpty())
         {
-            // location.getPosition(this.getPosition().getX(), this.getPosition().getY()).setMember(null);
+            if(this.position != null)
+                location.getPosition(this.position.getX(), this.position.getY()).setMember(null);
+
             this.position = position;
             location.getPosition(position.getX(), position.getY()).setMember(this);
         } else
