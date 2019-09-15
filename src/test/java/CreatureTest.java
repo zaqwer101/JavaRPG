@@ -1,4 +1,5 @@
 import Game.Actions.AttackAction;
+import Game.Actions.MoveAction;
 import Game.Attacks.Attack;
 import Game.Attacks.MeleeAttack;
 import Game.Attacks.VampireBite;
@@ -144,12 +145,6 @@ public class CreatureTest {
     }
 
     @Test
-    public void moveTest()
-    {
-        // TODO
-    }
-
-    @Test
     public void iconTest()
     {
         assertEquals('$', dummy.getIcon());
@@ -176,5 +171,18 @@ public class CreatureTest {
 
         // все ли действия были выполнены
         assertEquals(0, dummy.getActions().length);
+    }
+
+    @Test
+    public void moveTest()
+    {
+        dummy.addAction(new MoveAction(dummy, 1, new Position(2, 3)));
+        dummy.endTurn();
+        // проверяем, что существо корректно разместилось в новой локации
+        assertEquals(dummy, location.getPosition(2, 3).getMember());
+
+        // проверяем позицию существа
+        assertEquals(2, dummy.getPosition().getX());
+        assertEquals(3, dummy.getPosition().getY());
     }
 }
