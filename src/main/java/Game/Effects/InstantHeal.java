@@ -16,7 +16,7 @@ public class InstantHeal extends InstantEffect
     @Override
     public void apply(Creature target)
     {
-        target.Heal(amount);
+        target.heal(amount);
         JavaRPG.log(target.getName() + " вылечился от эффекта \"" + name + "\" на " + amount);
     }
 }

@@ -4,6 +4,7 @@ import Game.Attacks.Attack;
 import Game.Attacks.MeleeAttack;
 import Game.Attacks.VampireBite;
 import Game.Core.*;
+import Game.Effects.Effect;
 import Game.Effects.PeriodicBleedingEffect;
 import Game.Effects.InstantHeal;
 import Game.Effects.PeriodicStatsEffect;
@@ -40,7 +41,7 @@ public class CreatureTest {
         int damage = 1;
         dummy.addEffect(new PeriodicBleedingEffect(3, damage));
 
-        for (int i = 1; i < steps; i++ )
+        for (int i = 1; i <= steps; i++)
         {
             dummy.endTurn();
             assertEquals(dummy.getHp()[1] - (i * damage), dummy.getHp()[0]);

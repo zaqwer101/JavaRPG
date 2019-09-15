@@ -96,7 +96,15 @@ public class Stats {
         //////
         // hp
         //////
-        int maxHp = stats.get("baseHp") * stats.get("level") + stats.get("strength") * 8 + stats.get("additionalHp");
+        int level;
+        if (stats.get("level") > 0)
+        {
+            level = stats.get("level");
+        } else
+        {
+            level = 1;
+        }
+        int maxHp = stats.get("baseHp") * level + stats.get("strength") * 8 + stats.get("additionalHp");
         stats.replace("maxHp", maxHp);
         if (stats.get("hp") > stats.get("maxHp")) stats.replace("hp", stats.get("maxHp"));
 

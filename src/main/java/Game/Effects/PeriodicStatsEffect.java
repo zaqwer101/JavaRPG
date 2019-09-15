@@ -23,6 +23,7 @@ public class PeriodicStatsEffect extends PeriodicEffect
         {
             target.addStats(additionalStats);
             applied = true;
+            return;
         }
         duration--;
     }

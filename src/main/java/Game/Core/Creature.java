@@ -2,6 +2,7 @@ package Game.Core;
 
 import Game.Actions.Action;
 import Game.Attacks.Attack;
+import Game.Effects.Effect;
 import Game.Effects.PeriodicEffect;
 import Game.Core.Resists.DamageType;
 
@@ -17,6 +18,7 @@ public class Creature extends WorldObject
     private ArrayList<Attack> attacks;
     private Location location;
     private ArrayList<Action> actionQueue;
+    private ArrayList<Effect> onAttackEffects, onTakeDamageEffects; // TODO
     /* Дефолтное существо имеет всех статов по 1
     = 8 hp
      */
@@ -35,7 +37,8 @@ public class Creature extends WorldObject
             JavaRPG.log(e.getMessage());
             return;
         }
-
+        onAttackEffects = new ArrayList<>();
+        onTakeDamageEffects = new ArrayList<>();
         attacks = new ArrayList<>();
         resists = new Resists(new HashMap());
         stats = new Stats();
@@ -75,7 +78,7 @@ public class Creature extends WorldObject
         for (int i = 0; i < effects.size(); i++)
         {
             effects.get(i).apply(this);
-
+            JavaRPG.log(this.getName() + ": " + effects.get(i).getName() + " осталось " + effects.get(i).getDuration() + " ходов");
             // если длительность = -100, эффект без длительности
             if(effects.get(i).getDuration() <= 0 && effects.get(i).getDuration() != PeriodicEffect.FOREVER)
             {
@@ -128,7 +131,7 @@ public class Creature extends WorldObject
         };
     }
 
-    public void Heal(int amount)
+    public void heal(int amount)
     {
         stats.setStat("hp", stats.getStat("hp") + amount);
         if (stats.getStat("hp") > stats.getStat("maxHp"))
@@ -140,10 +143,13 @@ public class Creature extends WorldObject
     public void addEffect(PeriodicEffect effect)
     {
         effects.add(effect);
+        effect.apply(this);
+        JavaRPG.log(getName() + ": наложен эффект " + effect.getName());
     }
 
     public void takeDamage(int amount, DamageType type)
     {
+        int currentHp = getHp()[0];
         getStats().setStat("hp",
                 getStats().getStat("hp") - (amount - amount * (resists.getResist(type) / 100))
                 );
