@@ -49,6 +49,7 @@ public class Creature extends WorldObject
         stats.setStat("baseHp", 0);
         stats.setStat("hp", stats.getStat("maxHp"));
         stats.setStat("speed", 2);
+        stats.setStat("actionPoints", stats.getStat("maxActionPoints"));
 
         stats.recountStats();
     }
@@ -164,7 +165,7 @@ public class Creature extends WorldObject
 
     public Attack[] getAttacks()
     {
-        return (Attack[]) attacks.toArray();
+        return attacks.toArray(new Attack[0]);
     }
 
     /**
@@ -212,9 +213,11 @@ public class Creature extends WorldObject
     public boolean spendActionPoints(int ap)
     {
         int currentAP = stats.getStat("actionPoints");
+
         if (currentAP >= ap)
         {
-            stats.setStat("actionPoints", currentAP - ap);
+            int newAP = currentAP - ap;
+            stats.setStat("actionPoints", newAP);
             return true;
         }
         else

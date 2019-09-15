@@ -106,8 +106,8 @@ public class Stats {
         // action points
         //////
         int actionPoints = stats.get("speed") / 2;
-        stats.put("actionPoints", actionPoints);
         stats.put("maxActionPoints", actionPoints);
+        if (stats.get("actionPoints") > stats.get("maxActionPoints")) stats.replace("actionPoints", stats.get("maxActionPoints"));
 
         // TODO: Дописать расчёт остальных параметров
     }

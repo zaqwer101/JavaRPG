@@ -47,6 +47,15 @@ public class CreatureTest {
     }
 
     @Test
+    public void healTest()
+    {
+        dummy.takeDamage(7, Resists.DamageType.PURE);
+        assertEquals(1, dummy.getHp()[0]);
+        new InstantHeal("Heal", 7).apply(dummy);
+        assertEquals(8, dummy.getHp()[0]);
+    }
+
+    @Test
     public void attackTest()
     {
         dummy.addAttack(new MeleeAttack(5));
@@ -60,15 +69,6 @@ public class CreatureTest {
 
         dummy.performAction();
         assertEquals(3, target.getHp()[0]);
-    }
-
-    @Test
-    public void healTest()
-    {
-        dummy.takeDamage(7, Resists.DamageType.PURE);
-        assertEquals(1, dummy.getHp()[0]);
-        new InstantHeal("Heal", 7).apply(dummy);
-        assertEquals(8, dummy.getHp()[0]);
     }
 
     @Test
