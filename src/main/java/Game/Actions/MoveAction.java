@@ -1,6 +1,7 @@
 package Game.Actions;
 
 import Game.Core.Creature;
+import Game.Core.JavaRPG;
 import Game.Core.Position;
 import Game.Core.WorldObject;
 
@@ -17,6 +18,13 @@ public class MoveAction extends Action
     @Override
     public void use()
     {
-
+        try
+        {
+            ((Creature) user).teleport(destination);
+        }
+        catch (Exception e)
+        {
+            JavaRPG.log(e.getMessage());
+        }
     }
 }

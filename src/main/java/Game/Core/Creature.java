@@ -1,5 +1,6 @@
 package Game.Core;
 
+import Game.Actions.Action;
 import Game.Attacks.Attack;
 import Game.Effects.PeriodicEffect;
 import Game.Core.Resists.DamageType;
@@ -15,6 +16,7 @@ public class Creature extends WorldObject
     private Position position;
     private ArrayList<Attack> attacks;
     private Location location;
+    private ArrayList<Action> actionQueue;
 
     /* Дефолтное существо имеет всех статов по 1
     = 8 hp
@@ -23,6 +25,7 @@ public class Creature extends WorldObject
     {
         super(name, icon);
         this.location = location;
+        this.actionQueue = new ArrayList<>();
         try
         {
             teleport(position);
@@ -67,7 +70,6 @@ public class Creature extends WorldObject
         return position;
     }
 
-    // TODO: Доделать обработку баффов на статы
     public void recountEffects()
     {
         for (int i = 0; i < effects.size(); i++)
@@ -180,8 +182,8 @@ public class Creature extends WorldObject
      */
     public void endTurn()
     {
-        this.stats.setStat("actionPoints", stats.getStat("maxActionPoints"));
-        this.stats.recountStats();
+        stats.setStat("actionPoints", stats.getStat("maxActionPoints"));
+        stats.recountStats();
         recountEffects();
     }
 
@@ -227,6 +229,24 @@ public class Creature extends WorldObject
         }
         else
             return false;
+    }
+
+
+    public void addAction(Action action)
+    {
+        if (spendActionPoints(action.getCost()))
+            actionQueue.add(action);
+        else
+            JavaRPG.log(getName() + ": недостаточно очков дейстий");
+    }
+
+    /**
+     * Выполнить первое действие в списке
+     */
+    public void performAction()
+    {
+        actionQueue.get(0).use();
+        actionQueue.remove(0);
     }
 
 }

@@ -20,9 +20,6 @@ public abstract class AttackAction extends Action
     @Override
     public void use()
     {
-        if (((Creature)user).spendActionPoints(cost))
-            attack.attack((Creature)user, target);
-        else
-            JavaRPG.log(user.getName()+": недостаточно очков действий для атаки");
+        attack.attack((Creature)user, target);
     }
 }

@@ -18,4 +18,9 @@ public abstract class Action
     }
 
     public abstract void use();
+
+    public int getCost()
+    {
+        return cost;
+    }
 }

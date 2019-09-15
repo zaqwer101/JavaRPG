@@ -28,7 +28,6 @@ public class CreatureTest {
     {
         dummy.takeDamage(1, Resists.DamageType.PHYSICAL);
         assertEquals(7, dummy.getHp()[0]);
-
     }
 
     @Test
