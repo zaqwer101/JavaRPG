@@ -165,18 +165,22 @@ public class Creature extends WorldObject
         return (Attack[]) attacks.toArray();
     }
 
-    public void useAttack(Attack attack, Creature target)
+    private void useAttack(Attack attack, Creature target)
     {
         attacks.get(attacks.indexOf(attack)).attack(this, target);
     }
 
-    public void useAttack(int index, Creature target)
+    private void useAttack(int index, Creature target)
     {
         attacks.get(index).attack(this, target);
     }
 
-    public void passTurn()
+    /**
+     * Завершить ход
+     */
+    public void endTurn()
     {
+        this.stats.setStat("actionPoints", stats.getStat("maxActionPoints"));
         this.stats.recountStats();
         recountEffects();
     }
@@ -208,4 +212,21 @@ public class Creature extends WorldObject
     {
         return location;
     }
+
+    /**
+     * Функция проверки, хватает ли очков для совершения действия
+     * @return
+     */
+    public boolean spendActionPoints(int ap)
+    {
+        int currentAP = stats.getStat("actionPoints");
+        if (currentAP >= ap)
+        {
+            stats.setStat("actionPoints", currentAP - ap);
+            return true;
+        }
+        else
+            return false;
+    }
+
 }

@@ -5,7 +5,8 @@ import Game.Effects.Effect;
 
 import java.util.ArrayList;
 
-public abstract class Attack {
+public abstract class Attack
+{
     ArrayList<Effect> onSelf, onTarget;
     int attackDistance;
     String name;

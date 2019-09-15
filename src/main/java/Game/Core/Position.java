@@ -3,7 +3,8 @@ package Game.Core;
 /**
  * Позиция объекта в игровой локации
  */
-public class Position {
+public class Position
+{
     private int x, y;
 
     public Position(int x, int y)

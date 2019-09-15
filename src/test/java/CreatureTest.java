@@ -40,7 +40,7 @@ public class CreatureTest {
 
         for (int i = 1; i < steps; i++ )
         {
-            dummy.passTurn();
+            dummy.endTurn();
             assertEquals(dummy.getHp()[1] - (i * damage), dummy.getHp()[0]);
         }
     }
@@ -84,11 +84,11 @@ public class CreatureTest {
 
         for (int i = 0; i < 2; i++)
         {
-            dummy.passTurn();
+            dummy.endTurn();
             assertEquals(10, dummy.getStats().getStat("agility"));
             assertEquals(18, dummy.getHp()[1]);
         }
-        dummy.passTurn();
+        dummy.endTurn();
         assertEquals(1, dummy.getStats().getStat("agility"));
         assertEquals(8, dummy.getHp()[1]);
     }
