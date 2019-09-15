@@ -167,16 +167,6 @@ public class Creature extends WorldObject
         return (Attack[]) attacks.toArray();
     }
 
-    private void useAttack(Attack attack, Creature target)
-    {
-        attacks.get(attacks.indexOf(attack)).attack(this, target);
-    }
-
-    private void useAttack(int index, Creature target)
-    {
-        attacks.get(index).attack(this, target);
-    }
-
     /**
      * Завершить ход
      */
@@ -230,7 +220,6 @@ public class Creature extends WorldObject
         else
             return false;
     }
-
 
     public void addAction(Action action)
     {
