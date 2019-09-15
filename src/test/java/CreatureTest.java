@@ -9,8 +9,7 @@ import org.junit.Test;
 
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CreatureTest {
     Creature dummy;
@@ -21,7 +20,7 @@ public class CreatureTest {
     {
         location = new Location(10, 10);
         dummy = new Creature("Dummy", '$', new Position(0, 0), location);
-        target = new Creature("Target", 'D', new Position(1, 1), location);
+        target = new Creature("Target", 'T', new Position(1, 1), location);
     }
 
     @Test
@@ -118,7 +117,7 @@ public class CreatureTest {
         }
 
         // проверяем, что после телепортации в предыдущей позиции ничего не осталось
-        assertEquals(null, location.getPosition(0, 0).getMember());
+        assertNull(location.getPosition(0, 0).getMember());
 
         // проверяем, что существо корректно разместилось в новой локации
         assertEquals(dummy, location.getPosition(5, 5).getMember());
@@ -126,5 +125,12 @@ public class CreatureTest {
         // проверяем позицию существа
         assertEquals(5, dummy.getPosition().getX());
         assertEquals(5, dummy.getPosition().getY());
+    }
+
+    @Test
+    public void iconTest()
+    {
+        assertEquals('$', dummy.getIcon());
+        assertEquals(dummy.getIcon(), dummy.getLocation().getPosition(dummy.getPosition().getX(), dummy.getPosition().getY()).getIcon());
     }
 }

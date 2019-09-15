@@ -199,6 +199,4 @@ public class Creature extends WorldObject
     {
         return location;
     }
-
-    //TODO получение уровня, получение экспы
 }

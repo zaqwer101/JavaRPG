@@ -5,9 +5,12 @@ import java.util.ArrayList;
 public class Location
 {
     ArrayList<LocationPosition> location;
-
+    private int sizeX, sizeY;
     public Location(int sizeX, int sizeY)
     {
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
+
         location = new ArrayList<>();
         for (int i = 0; i < sizeY; i++)
         {
@@ -32,6 +35,11 @@ public class Location
             }
         }
         return null;
+    }
+
+    public int[] getSize()
+    {
+        return new int[] {sizeX, sizeY};
     }
 
     public ArrayList<LocationPosition> getLocation()

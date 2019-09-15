@@ -9,12 +9,14 @@ public class LocationPosition extends Position
 {
     char icon;
     boolean passable;
+    private char baseIcon;
     public LocationPosition(int x, int y, boolean passable)
     {
         super(x, y);
         locationMember = null;
         locationItems = new ArrayList<>();
         this.icon = ' ';
+        this.baseIcon = this.icon;
         this.passable = passable;
     }
 
@@ -25,6 +27,7 @@ public class LocationPosition extends Position
         locationMember = null;
         locationItems = new ArrayList<>();
         this.icon = icon;
+        this.baseIcon = this.icon;
         this.passable = passable;
     }
 
@@ -44,6 +47,10 @@ public class LocationPosition extends Position
     public void setMember(Creature member)
     {
         this.locationMember = member;
+        if(member != null)
+            this.icon = member.getIcon();
+        else
+            this.icon = baseIcon;
     }
 
     public Creature getMember()
@@ -54,5 +61,10 @@ public class LocationPosition extends Position
     private void setIcon(char icon)
     {
         this.icon = icon;
+    }
+
+    public char getIcon()
+    {
+        return icon;
     }
 }
