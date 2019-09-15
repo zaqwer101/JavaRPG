@@ -173,5 +173,8 @@ public class CreatureTest {
         assertEquals(1, dummy.getAP()[0]);
 
         dummy.endTurn();
+
+        // все ли действия были выполнены
+        assertEquals(0, dummy.getActions().length);
     }
 }

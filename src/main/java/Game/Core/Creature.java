@@ -167,17 +167,6 @@ public class Creature extends WorldObject
         return attacks.toArray(new Attack[0]);
     }
 
-    /**
-     * Завершить ход
-     */
-    public void endTurn()
-    {
-        doAllActions();
-        stats.setStat("actionPoints", stats.getStat("maxActionPoints"));
-        stats.recountStats();
-        recountEffects();
-    }
-
     public void teleport(Position position) throws Exception
     {
         if (location.getPosition(position.getX(), position.getY()).isEmpty())
@@ -246,10 +235,27 @@ public class Creature extends WorldObject
      */
     public void doAllActions()
     {
-        for (int i = 0; i < actionQueue.size(); i++)
+        int size = actionQueue.size();
+        for (int i = 0; i < size; i++)
         {
-            JavaRPG.log(getName() + ": выполнил действие " + actionQueue.get(i).toString());
+            JavaRPG.log(getName() + ": выполнил действие " + actionQueue.get(0).toString());
             performAction();
         }
+    }
+
+    /**
+     * Завершить ход
+     */
+    public void endTurn()
+    {
+        doAllActions();
+        stats.setStat("actionPoints", stats.getStat("maxActionPoints"));
+        stats.recountStats();
+        recountEffects();
+    }
+
+    public Action[] getActions()
+    {
+        return actionQueue.toArray(new Action[0]);
     }
 }
