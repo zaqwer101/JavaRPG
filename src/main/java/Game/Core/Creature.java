@@ -31,6 +31,7 @@ public class Creature extends WorldObject
             this.location = null;
             this.position = null;
             JavaRPG.log(e.getMessage());
+            return;
         }
 
         attacks = new ArrayList<>();
@@ -184,11 +185,20 @@ public class Creature extends WorldObject
             throw new Exception("Позиция занята");
     }
 
+    /**
+     * Переместить существо на определённое количество клеток
+     * @param x
+     * @param y
+     */
+    public void move(int x, int y)
+    {
+        // TODO: Реализовать после Position.findPath
+    }
+
     public Location getLocation()
     {
         return location;
     }
-
 
     //TODO получение уровня, получение экспы
 }

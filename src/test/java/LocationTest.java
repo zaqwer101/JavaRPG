@@ -2,7 +2,7 @@ import Game.Core.Location;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LocationTest
 {
@@ -17,11 +17,10 @@ public class LocationTest
     @Test
     public void borders()
     {
-        assertEquals(false, location.getPosition(9, 9).isPassable());
-        assertEquals(false, location.getPosition(0, 9).isPassable());
-        assertEquals(false, location.getPosition(9, 0).isPassable());
-        assertEquals(false, location.getPosition(0, 9).isPassable());
-
-        assertEquals(true, location.getPosition(5, 1).isPassable());
+        assertFalse(location.getPosition(9, 9).isPassable());
+        assertFalse(location.getPosition(0, 9).isPassable());
+        assertFalse(location.getPosition(9, 0).isPassable());
+        assertFalse(location.getPosition(0, 9).isPassable());
+        assertTrue(location.getPosition(5, 1).isPassable());
     }
 }

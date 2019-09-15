@@ -42,4 +42,15 @@ public class Position {
 
         return distance;
     }
+
+    /**
+     * Функция поиска пути до точки
+     * @param destination точка назначения
+     * @return набор точек, которые необходимо пройти, чтобы достигнуть назначения
+     */
+    public Position[] findPath(Position destination)
+    {
+        // TODO
+        return null;
+    }
 }
