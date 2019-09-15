@@ -2,6 +2,9 @@ package Game.Effects;
 
 import Game.Core.Creature;
 
+/**
+ * Родитель для всех эффектов, действующих на протяжении нескольких ходов
+ */
 public abstract class PeriodicEffect extends Effect
 {
     public static final int FOREVER = -100;

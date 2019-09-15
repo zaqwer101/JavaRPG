@@ -24,10 +24,7 @@ public class JavaRPG
         Location testSite = new Location(10, 10);
         Creature dummy = new Creature("Dummy", '$', new Position(1,1), testSite);
         Creature target = new Creature("Target", 'T', new Position(5,5), testSite);
-
-        System.out.println(dummy.getClass().toString().split(" ")[1]);
-
-//        while(true)
+        //        while(true)
 //        {
 //            System.out.print("\033[H\033[2J");
 //            System.out.flush();

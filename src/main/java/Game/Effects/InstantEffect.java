@@ -1,5 +1,8 @@
 package Game.Effects;
 
+/**
+ * Родитель для всех инстант-эффектов
+ */
 public abstract class InstantEffect extends Effect
 {
     int amount;

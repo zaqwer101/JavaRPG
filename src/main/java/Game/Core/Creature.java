@@ -17,7 +17,6 @@ public class Creature extends WorldObject
     private ArrayList<Attack> attacks;
     private Location location;
     private ArrayList<Action> actionQueue;
-
     /* Дефолтное существо имеет всех статов по 1
     = 8 hp
      */
@@ -46,9 +45,9 @@ public class Creature extends WorldObject
         stats.setStat("strength", 1);
         stats.setStat("agility", 1);
         stats.setStat("intelligence", 1);
+        stats.setStat("endurance", 1);
         stats.setStat("baseHp", 0);
         stats.setStat("hp", stats.getStat("maxHp"));
-        stats.setStat("speed", 2);
         stats.setStat("actionPoints", stats.getStat("maxActionPoints"));
 
         stats.recountStats();
