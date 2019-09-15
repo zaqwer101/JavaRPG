@@ -45,6 +45,7 @@ public class Creature extends WorldObject
         stats.setStat("intelligence", 1);
         stats.setStat("baseHp", 0);
         stats.setStat("hp", stats.getStat("maxHp"));
+        stats.setStat("speed", 2);
 
         stats.recountStats();
     }
@@ -114,6 +115,14 @@ public class Creature extends WorldObject
         return new int[] {
                 getStats().getStat("hp"),
                 getStats().getStat("maxHp")
+        };
+    }
+
+    public int[] getAP()
+    {
+        return new int[] {
+                getStats().getStat("actionPoints"),
+                getStats().getStat("maxActionPoints")
         };
     }
 

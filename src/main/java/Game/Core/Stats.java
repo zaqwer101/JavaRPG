@@ -13,7 +13,9 @@ public class Stats {
             "mana", "maxMana",
             "criticalRate", "evasionRate",
             "criticalChance", "evasionChance",
-            "level", "exp", "expToLevel"
+            "level", "exp", "expToLevel",
+            "actionPoints", "maxActionPoints",
+            "speed"
     };
 
     // Статы, которые нельзя складывать/вычитать друг из друга при сложении/вычитании объектов
@@ -99,6 +101,13 @@ public class Stats {
         int maxMana = stats.get("intelligence") * 12;
         stats.replace("maxMana", maxMana);
         if (stats.get("mana") > stats.get("maxMana")) stats.replace("mana", stats.get("maxMana"));
+
+        //////
+        // action points
+        //////
+        int actionPoints = stats.get("speed") / 2;
+        stats.put("actionPoints", actionPoints);
+        stats.put("maxActionPoints", actionPoints);
 
         // TODO: Дописать расчёт остальных параметров
     }
