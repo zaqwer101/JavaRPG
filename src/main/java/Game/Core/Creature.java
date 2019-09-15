@@ -1,5 +1,6 @@
 package Game.Core;
 
+import Game.Actions.Action;
 import Game.Attacks.Attack;
 import Game.Effects.PeriodicEffect;
 import Game.Core.Resists.DamageType;
@@ -15,7 +16,7 @@ public class Creature extends WorldObject
     private Position position;
     private ArrayList<Attack> attacks;
     private Location location;
-
+    private ArrayList<Action> actionQueue;
     /* Дефолтное существо имеет всех статов по 1
     = 8 hp
      */
@@ -23,6 +24,7 @@ public class Creature extends WorldObject
     {
         super(name, icon);
         this.location = location;
+        this.actionQueue = new ArrayList<>();
         try
         {
             teleport(position);
@@ -43,8 +45,10 @@ public class Creature extends WorldObject
         stats.setStat("strength", 1);
         stats.setStat("agility", 1);
         stats.setStat("intelligence", 1);
+        stats.setStat("endurance", 1);
         stats.setStat("baseHp", 0);
         stats.setStat("hp", stats.getStat("maxHp"));
+        stats.setStat("actionPoints", stats.getStat("maxActionPoints"));
 
         stats.recountStats();
     }
@@ -66,7 +70,6 @@ public class Creature extends WorldObject
         return position;
     }
 
-    // TODO: Доделать обработку баффов на статы
     public void recountEffects()
     {
         for (int i = 0; i < effects.size(); i++)
@@ -117,6 +120,14 @@ public class Creature extends WorldObject
         };
     }
 
+    public int[] getAP()
+    {
+        return new int[] {
+                getStats().getStat("actionPoints"),
+                getStats().getStat("maxActionPoints")
+        };
+    }
+
     public void Heal(int amount)
     {
         stats.setStat("hp", stats.getStat("hp") + amount);
@@ -153,23 +164,7 @@ public class Creature extends WorldObject
 
     public Attack[] getAttacks()
     {
-        return (Attack[]) attacks.toArray();
-    }
-
-    public void useAttack(Attack attack, Creature target)
-    {
-        attacks.get(attacks.indexOf(attack)).attack(this, target);
-    }
-
-    public void useAttack(int index, Creature target)
-    {
-        attacks.get(index).attack(this, target);
-    }
-
-    public void passTurn()
-    {
-        this.stats.recountStats();
-        recountEffects();
+        return attacks.toArray(new Attack[0]);
     }
 
     public void teleport(Position position) throws Exception
@@ -198,5 +193,69 @@ public class Creature extends WorldObject
     public Location getLocation()
     {
         return location;
+    }
+
+    /**
+     * Функция проверки, хватает ли очков для совершения действия
+     * @return
+     */
+    public boolean spendActionPoints(int ap)
+    {
+        int currentAP = stats.getStat("actionPoints");
+
+        if (currentAP >= ap)
+        {
+            int newAP = currentAP - ap;
+            stats.setStat("actionPoints", newAP);
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public void addAction(Action action)
+    {
+        if (spendActionPoints(action.getCost()))
+            actionQueue.add(action);
+        else
+            JavaRPG.log(getName() + ": недостаточно очков дейстий");
+    }
+
+    /**
+     * Выполнить первое действие в списке
+     */
+    public void performAction()
+    {
+        actionQueue.get(0).use();
+        actionQueue.remove(0);
+    }
+
+    /**
+     * Выполнить все действия в очереди
+     */
+    public void doAllActions()
+    {
+        int size = actionQueue.size();
+        for (int i = 0; i < size; i++)
+        {
+            JavaRPG.log(getName() + ": выполнил действие " + actionQueue.get(0).toString());
+            performAction();
+        }
+    }
+
+    /**
+     * Завершить ход
+     */
+    public void endTurn()
+    {
+        doAllActions();
+        stats.setStat("actionPoints", stats.getStat("maxActionPoints"));
+        stats.recountStats();
+        recountEffects();
+    }
+
+    public Action[] getActions()
+    {
+        return actionQueue.toArray(new Action[0]);
     }
 }

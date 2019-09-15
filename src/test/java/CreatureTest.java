@@ -1,7 +1,10 @@
+import Game.Actions.AttackAction;
+import Game.Actions.MoveAction;
+import Game.Attacks.Attack;
 import Game.Attacks.MeleeAttack;
 import Game.Attacks.VampireBite;
 import Game.Core.*;
-import Game.Effects.Bleeding;
+import Game.Effects.PeriodicBleedingEffect;
 import Game.Effects.InstantHeal;
 import Game.Effects.PeriodicStatsEffect;
 import org.junit.Before;
@@ -28,7 +31,6 @@ public class CreatureTest {
     {
         dummy.takeDamage(1, Resists.DamageType.PHYSICAL);
         assertEquals(7, dummy.getHp()[0]);
-
     }
 
     @Test
@@ -36,21 +38,13 @@ public class CreatureTest {
     {
         int steps = 3;
         int damage = 1;
-        dummy.addEffect(new Bleeding(3, damage));
+        dummy.addEffect(new PeriodicBleedingEffect(3, damage));
 
         for (int i = 1; i < steps; i++ )
         {
-            dummy.passTurn();
+            dummy.endTurn();
             assertEquals(dummy.getHp()[1] - (i * damage), dummy.getHp()[0]);
         }
-    }
-
-    @Test
-    public void attackTest()
-    {
-        dummy.addAttack(new MeleeAttack(5));
-        dummy.useAttack(0, target);
-        assertEquals(3, target.getHp()[0]);
     }
 
     @Test
@@ -63,12 +57,35 @@ public class CreatureTest {
     }
 
     @Test
+    public void attackTest()
+    {
+        dummy.addAttack(new MeleeAttack(5));
+        Attack attack = dummy.getAttacks()[0];
+        dummy.addAction(new AttackAction(dummy, target, 1, attack));
+        // посмотрим, потратились ли очки действий
+        assertEquals(0, dummy.getAP()[0]);
+
+        // это действие не должно добавиться
+        dummy.addAction(new AttackAction(dummy, target, 1, attack));
+
+        dummy.performAction();
+        assertEquals(3, target.getHp()[0]);
+    }
+
+    @Test
     public void vampirismTest()
     {
         dummy.takeDamage(7, Resists.DamageType.PURE);
         assertEquals(1, dummy.getHp()[0]);
         dummy.addAttack(new VampireBite(7));
-        dummy.useAttack(0, target);
+        Attack attack = dummy.getAttacks()[0];
+
+        dummy.addAction(new AttackAction(dummy, target, 1, attack));
+        // посмотрим, потратились ли очки действий
+        assertEquals(0, dummy.getAP()[0]);
+
+        dummy.performAction();
+
         assertEquals(1, target.getHp()[0]);
         assertEquals(8, dummy.getHp()[0]);
     }
@@ -84,11 +101,11 @@ public class CreatureTest {
 
         for (int i = 0; i < 2; i++)
         {
-            dummy.passTurn();
+            dummy.endTurn();
             assertEquals(10, dummy.getStats().getStat("agility"));
             assertEquals(18, dummy.getHp()[1]);
         }
-        dummy.passTurn();
+        dummy.endTurn();
         assertEquals(1, dummy.getStats().getStat("agility"));
         assertEquals(8, dummy.getHp()[1]);
     }
@@ -132,5 +149,40 @@ public class CreatureTest {
     {
         assertEquals('$', dummy.getIcon());
         assertEquals(dummy.getIcon(), dummy.getLocation().getPosition(dummy.getPosition().getX(), dummy.getPosition().getY()).getIcon());
+    }
+
+    @Test
+    public void endTurnTest()
+    {
+        var stats = new Stats();
+        stats.setStat("endurance", 10);
+        dummy.addStats(stats);
+        dummy.endTurn();
+        assertEquals(5, dummy.getAP()[0]);
+
+        dummy.addAttack(new MeleeAttack(5));
+        Attack attack = dummy.getAttacks()[0];
+        dummy.addAction(new AttackAction(dummy, target, 2, attack));
+        dummy.addAction(new AttackAction(dummy, target, 2, attack));
+        dummy.addAction(new AttackAction(dummy, target, 2, attack));
+        assertEquals(1, dummy.getAP()[0]);
+
+        dummy.endTurn();
+
+        // все ли действия были выполнены
+        assertEquals(0, dummy.getActions().length);
+    }
+
+    @Test
+    public void moveTest()
+    {
+        dummy.addAction(new MoveAction(dummy, 1, new Position(2, 3)));
+        dummy.endTurn();
+        // проверяем, что существо корректно разместилось в новой локации
+        assertEquals(dummy, location.getPosition(2, 3).getMember());
+
+        // проверяем позицию существа
+        assertEquals(2, dummy.getPosition().getX());
+        assertEquals(3, dummy.getPosition().getY());
     }
 }

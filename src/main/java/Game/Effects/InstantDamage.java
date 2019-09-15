@@ -4,6 +4,9 @@ import Game.Core.Creature;
 import Game.Core.JavaRPG;
 import Game.Core.Resists.DamageType;
 
+/**
+ * Мгновенный эффект, наносящий урон
+ */
 public class InstantDamage extends InstantEffect
 {
     DamageType type;

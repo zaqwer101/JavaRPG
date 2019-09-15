@@ -8,17 +8,20 @@ import java.util.HashMap;
  */
 public class Stats {
     public static String[] allStats = {
-            "agility", "strength", "intelligence",
+            "agility", "strength", "intelligence", "endurance",
             "baseHp", "additionalHp", "maxHp", "hp",
             "mana", "maxMana",
             "criticalRate", "evasionRate",
             "criticalChance", "evasionChance",
-            "level", "exp", "expToLevel"
+            "level", "exp", "expToLevel",
+            "actionPoints", "maxActionPoints",
+            "moveCost"
     };
 
     // Статы, которые нельзя складывать/вычитать друг из друга при сложении/вычитании объектов
     public static String[] nonFoldingStats = {
-        "expToLevel", "level", "hp" /* потому что увеличиваться может только максимальное количество хп */
+        "expToLevel", "level", "hp", /* потому что увеличиваться может только максимальное количество хп */
+            "actionPoints"
     };
 
     private HashMap<String, Integer> stats;
@@ -72,7 +75,11 @@ public class Stats {
         if (stats.keySet().contains(stat))
             return this.stats.get(stat);
         else
+        {
+            JavaRPG.log("Попытка обратиться к несуществующей характеристике \"" + stat + "\"");
+            System.err.println("Попытка обратиться к несуществующей характеристике \"" + stat + "\"");
             return -1;
+        }
     }
 
     public int setStat(String stat, int value) {
@@ -100,6 +107,17 @@ public class Stats {
         stats.replace("maxMana", maxMana);
         if (stats.get("mana") > stats.get("maxMana")) stats.replace("mana", stats.get("maxMana"));
 
-        // TODO: Дописать расчёт остальных параметров
+        //////
+        // action points
+        //////
+        int actionPoints = stats.get("agility") / 4 + stats.get("endurance") / 2;
+        if (actionPoints < 1) actionPoints = 1; // чтобы у любого существа было хотя бы одно очко действий
+        stats.put("maxActionPoints", actionPoints);
+        if (stats.get("actionPoints") > stats.get("maxActionPoints")) stats.replace("actionPoints", stats.get("maxActionPoints"));
+
+        //////
+        // move cost
+        //////
+
     }
 }

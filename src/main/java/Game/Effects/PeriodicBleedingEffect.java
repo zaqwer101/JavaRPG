@@ -5,10 +5,13 @@ import Game.Core.Resists;
 
 import static Game.Core.JavaRPG.log;
 
-public class Bleeding extends PeriodicEffect
+/**
+ * Периодический эффект получения урона
+ */
+public class PeriodicBleedingEffect extends PeriodicEffect
 {
     int amount;
-    public Bleeding(int duration, int amount) {
+    public PeriodicBleedingEffect(int duration, int amount) {
         super(duration, "Кровотечение");
         this.amount = amount;
         this.effectType = EffectType.DAMAGE_DEBUFF;

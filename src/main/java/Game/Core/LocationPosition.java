@@ -5,6 +5,9 @@ import Game.Items.Item;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Точка игровой локации
+ */
 public class LocationPosition extends Position
 {
     char icon;

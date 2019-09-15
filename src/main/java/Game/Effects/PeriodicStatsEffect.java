@@ -3,6 +3,9 @@ package Game.Effects;
 import Game.Core.Creature;
 import Game.Core.Stats;
 
+/**
+ * Бафф характеристик на некоторое количество ходов
+ */
 public class PeriodicStatsEffect extends PeriodicEffect
 {
     Stats additionalStats;
