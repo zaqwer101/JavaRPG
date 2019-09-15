@@ -172,6 +172,7 @@ public class Creature extends WorldObject
      */
     public void endTurn()
     {
+        doAllActions();
         stats.setStat("actionPoints", stats.getStat("maxActionPoints"));
         stats.recountStats();
         recountEffects();
@@ -240,4 +241,15 @@ public class Creature extends WorldObject
         actionQueue.remove(0);
     }
 
+    /**
+     * Выполнить все действия в очереди
+     */
+    public void doAllActions()
+    {
+        for (int i = 0; i < actionQueue.size(); i++)
+        {
+            JavaRPG.log(getName() + ": выполнил действие " + actionQueue.get(i).toString());
+            performAction();
+        }
+    }
 }

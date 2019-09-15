@@ -20,7 +20,8 @@ public class Stats {
 
     // Статы, которые нельзя складывать/вычитать друг из друга при сложении/вычитании объектов
     public static String[] nonFoldingStats = {
-        "expToLevel", "level", "hp" /* потому что увеличиваться может только максимальное количество хп */
+        "expToLevel", "level", "hp", /* потому что увеличиваться может только максимальное количество хп */
+            "actionPoints"
     };
 
     private HashMap<String, Integer> stats;

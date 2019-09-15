@@ -1,6 +1,7 @@
 package Game.Effects;
 
 import Game.Core.Creature;
+import Game.Core.JavaRPG;
 
 /**
  * Мгновенный эффект, лечащий цель
@@ -16,5 +17,6 @@ public class InstantHeal extends InstantEffect
     public void apply(Creature target)
     {
         target.Heal(amount);
+        JavaRPG.log(target.getName() + " вылечился от эффекта \"" + name + "\" на " + amount);
     }
 }

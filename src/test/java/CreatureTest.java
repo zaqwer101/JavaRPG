@@ -146,7 +146,7 @@ public class CreatureTest {
     @Test
     public void moveTest()
     {
-
+        // TODO
     }
 
     @Test
@@ -154,5 +154,24 @@ public class CreatureTest {
     {
         assertEquals('$', dummy.getIcon());
         assertEquals(dummy.getIcon(), dummy.getLocation().getPosition(dummy.getPosition().getX(), dummy.getPosition().getY()).getIcon());
+    }
+
+    @Test
+    public void endTurnTest()
+    {
+        var stats = new Stats();
+        stats.setStat("endurance", 10);
+        dummy.addStats(stats);
+        dummy.endTurn();
+        assertEquals(5, dummy.getAP()[0]);
+
+        dummy.addAttack(new MeleeAttack(5));
+        Attack attack = dummy.getAttacks()[0];
+        dummy.addAction(new AttackAction(dummy, target, 2, attack));
+        dummy.addAction(new AttackAction(dummy, target, 2, attack));
+        dummy.addAction(new AttackAction(dummy, target, 2, attack));
+        assertEquals(1, dummy.getAP()[0]);
+
+        dummy.endTurn();
     }
 }

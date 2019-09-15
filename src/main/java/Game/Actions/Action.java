@@ -23,4 +23,21 @@ public abstract class Action
     {
         return cost;
     }
+
+    @Override
+    public String toString()
+    {
+        switch (type)
+        {
+            case ACTION_MOVE:
+            {
+                return "Action.Move";
+            }
+            case ACTION_ATTACK:
+            {
+                return "Action.Attack";
+            }
+        }
+        return "Action.???";
+    }
 }
