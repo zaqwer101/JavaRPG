@@ -1,3 +1,5 @@
+import Game.Actions.AttackAction;
+import Game.Attacks.Attack;
 import Game.Attacks.MeleeAttack;
 import Game.Attacks.VampireBite;
 import Game.Core.*;
@@ -48,7 +50,15 @@ public class CreatureTest {
     public void attackTest()
     {
         dummy.addAttack(new MeleeAttack(5));
-        dummy.useAttack(0, target);
+        Attack attack = dummy.getAttacks()[0];
+        dummy.addAction(new AttackAction(dummy, target, 1, attack));
+        // посмотрим, потратились ли очки действий
+        assertEquals(0, dummy.getAP()[0]);
+
+        // это действие не должно добавиться
+        dummy.addAction(new AttackAction(dummy, target, 1, attack));
+
+        dummy.performAction();
         assertEquals(3, target.getHp()[0]);
     }
 
@@ -67,7 +77,14 @@ public class CreatureTest {
         dummy.takeDamage(7, Resists.DamageType.PURE);
         assertEquals(1, dummy.getHp()[0]);
         dummy.addAttack(new VampireBite(7));
-        dummy.useAttack(0, target);
+        Attack attack = dummy.getAttacks()[0];
+
+        dummy.addAction(new AttackAction(dummy, target, 1, attack));
+        // посмотрим, потратились ли очки действий
+        assertEquals(0, dummy.getAP()[0]);
+
+        dummy.performAction();
+
         assertEquals(1, target.getHp()[0]);
         assertEquals(8, dummy.getHp()[0]);
     }

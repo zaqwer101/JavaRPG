@@ -11,7 +11,6 @@ public class MoveAction extends Action
     public MoveAction(Creature user, int cost, Position destination)
     {
         super(user, ActionType.ACTION_MOVE, cost);
-        this.user = (Creature)user;
         this.destination = destination;
     }
 
@@ -20,7 +19,7 @@ public class MoveAction extends Action
     {
         try
         {
-            ((Creature) user).teleport(destination);
+            user.teleport(destination);
         }
         catch (Exception e)
         {
