@@ -95,21 +95,6 @@ public class Creature extends WorldObject
         return position;
     }
 
-    public void recountEffects()
-    {
-        for (int i = 0; i < effects.size(); i++)
-        {
-            effects.get(i).apply(this);
-            JavaRPG.log(this.getName() + ": " + effects.get(i).getName() + " осталось " + effects.get(i).getDuration() + " ходов");
-            // если длительность = -100, эффект без длительности
-            if(effects.get(i).getDuration() <= 0 && effects.get(i).getDuration() != PeriodicEffect.FOREVER)
-            {
-                effects.get(i).remove(this);
-                effects.remove(effects.get(i));
-            }
-        }
-    }
-
     public Stats getStats()
     {
         stats.recountStats();
@@ -159,6 +144,22 @@ public class Creature extends WorldObject
         if (stats.getStat("hp") > stats.getStat("maxHp"))
         {
             stats.setStat("hp", stats.getStat("maxHp"));
+        }
+    }
+
+    public void recountEffects()
+    {
+        for (int i = 0; i < effects.size(); i++)
+        {
+            effects.get(i).apply(this);
+            // если длительность = -100, эффект без длительности
+            if (effects.get(i).getDuration() <= 0 && effects.get(i).getDuration() != PeriodicEffect.FOREVER)
+            {
+                JavaRPG.log(this.getName() + ": эффект " + effects.get(i).getName() + " снят");
+                effects.get(i).remove(this);
+                effects.remove(effects.get(i));
+            } else
+                JavaRPG.log(this.getName() + ": " + effects.get(i).getName() + " осталось " + effects.get(i).getDuration() + " ходов");
         }
     }
 
