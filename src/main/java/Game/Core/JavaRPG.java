@@ -26,6 +26,8 @@ public class JavaRPG
 
     public static void combinedTest()
     {
+        int turn = 0;
+
         Creature dummy;
         Creature target;
         Location location;
@@ -49,10 +51,14 @@ public class JavaRPG
 
         dummy.addAttack(trainingAttack);
 
-        dummy.heal(1000);
-        target.heal(1000);
         while (dummy.getHp()[0] > 0 && target.getHp()[0] > 0)
         {
+            if (turn == 1)
+            {
+                dummy.heal(1000);
+                target.heal(1000);
+            }
+
             // dummy's turn
             while (dummy.getAP()[0] > 0)
             {
@@ -68,8 +74,9 @@ public class JavaRPG
             target.endTurn();
 
             System.out.println();
-            JavaRPG.log("------------------ Конец хода --------------------");
+            JavaRPG.log("------------------ Конец хода " + turn + " --------------------");
             System.out.println();
+            turn++;
         }
     }
 

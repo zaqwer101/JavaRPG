@@ -66,8 +66,10 @@ public class Stats {
                 int newStat = this.stats.get(key) - stat2.stats.get(key);
                 if (newStat < 0)
                     newStat = 0;
-
                 stat3.stats.replace(key, newStat);
+            } else
+            {
+                stat3.stats.replace(key, this.stats.get(key));
             }
         }
         return stat3;
