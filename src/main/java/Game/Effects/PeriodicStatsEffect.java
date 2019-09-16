@@ -23,9 +23,11 @@ public class PeriodicStatsEffect extends PeriodicEffect
         {
             target.addStats(additionalStats);
             applied = true;
-            return;
+        } else
+        {
+            duration--;
         }
-        duration--;
+
     }
     @Override
     public void remove(Creature target)

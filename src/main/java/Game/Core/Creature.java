@@ -143,7 +143,6 @@ public class Creature extends WorldObject
     public void addEffect(PeriodicEffect effect)
     {
         effects.add(effect);
-        effect.apply(this);
         JavaRPG.log(getName() + ": наложен эффект " + effect.getName());
     }
 

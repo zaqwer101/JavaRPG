@@ -64,6 +64,10 @@ public class JavaRPG
                 target.addAction(new AttackAction(target, dummy, 1, trainingAttack));
             }
             target.endTurn();
+
+            System.out.println();
+            JavaRPG.log("------------------ Конец хода --------------------");
+            System.out.println();
         }
     }
 

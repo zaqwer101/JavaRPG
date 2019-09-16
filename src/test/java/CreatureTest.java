@@ -100,7 +100,7 @@ public class CreatureTest {
 
         dummy.addEffect(new PeriodicStatsEffect(3, "Тестовый бафф", new Stats(additionalStats)));
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 3; i++)
         {
             dummy.endTurn();
             assertEquals(10, dummy.getStats().getStat("agility"));
