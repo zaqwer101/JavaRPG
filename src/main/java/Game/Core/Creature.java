@@ -23,6 +23,9 @@ public class Creature extends WorldObject
     = 8 hp
      */
 
+    /**
+     * Функция для конструктора, чтобы определённые статы не были == 0
+     */
     public void checkBaseStats()
     {
         if (this.stats.getStat("level") <= 0)
@@ -101,12 +104,21 @@ public class Creature extends WorldObject
         return stats;
     }
 
+    /**
+     * Прибавить статы к статам существа
+     *
+     * @param stats
+     */
     public void addStats(Stats stats)
     {
         this.stats = this.stats.add(stats);
         this.stats.recountStats();
     }
 
+    /**
+     * Отнять статы
+     * @param stats
+     */
     public void subStats(Stats stats)
     {
         this.stats = this.stats.sub(stats);
@@ -120,7 +132,7 @@ public class Creature extends WorldObject
 
     /**
      * Получить очки здоровья существа
-     * @return массив, где 0 - текущее количество очков, 1 - максимальное
+     * @return массив [текущие HP, максимум HP]
      */
     public int[] getHp()
     {
@@ -130,6 +142,10 @@ public class Creature extends WorldObject
         };
     }
 
+    /**
+     * Получить очки действия
+     * @return массив [текущие AP, максимум AP]
+     */
     public int[] getAP()
     {
         return new int[] {
@@ -147,6 +163,9 @@ public class Creature extends WorldObject
         }
     }
 
+    /**
+     * Обработать периодические эффекты, висящие на существе
+     */
     public void recountEffects()
     {
         for (int i = 0; i < effects.size(); i++)
@@ -163,20 +182,33 @@ public class Creature extends WorldObject
         }
     }
 
+    /**
+     * Навесить на существо периодический эффект
+     * @param effect
+     */
     public void addEffect(PeriodicEffect effect)
     {
         effects.add(effect);
         JavaRPG.log(getName() + ": наложен эффект " + effect.getName());
     }
 
+    /**
+     * Нанести урон этому существу
+     * @param amount
+     * @param type
+     */
     public void takeDamage(int amount, DamageType type)
     {
         int currentHp = getHp()[0];
         getStats().setStat("hp",
                 getStats().getStat("hp") - (amount - amount * (resists.getResist(type) / 100))
-                );
+        );
     }
 
+    /**
+     * Добавить атаку в список доступных
+     * @param attack
+     */
     public void addAttack(Attack attack)
     {
         for (var a : attacks)
@@ -195,6 +227,11 @@ public class Creature extends WorldObject
         return attacks.toArray(new Attack[0]);
     }
 
+    /**
+     * Телепортация существа
+     * @param position
+     * @throws Exception
+     */
     public void teleport(Position position) throws Exception
     {
         if (location.getPosition(position.getX(), position.getY()).isEmpty())
@@ -236,11 +273,14 @@ public class Creature extends WorldObject
             int newAP = currentAP - ap;
             stats.setStat("actionPoints", newAP);
             return true;
-        }
-        else
+        } else
             return false;
     }
 
+    /**
+     * Добавить действие в очередь
+     * @param action
+     */
     public void addAction(Action action)
     {
         if (spendActionPoints(action.getCost()))

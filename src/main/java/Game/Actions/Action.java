@@ -3,6 +3,9 @@ package Game.Actions;
 import Game.Attacks.Attack;
 import Game.Core.*;
 
+/**
+ * Действия - это всё, что может сделать существо в свой ход
+ */
 public abstract class Action
 {
     public static enum ActionType { ACTION_MOVE, ACTION_ATTACK };
