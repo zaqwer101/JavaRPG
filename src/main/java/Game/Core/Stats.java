@@ -53,6 +53,8 @@ public class Stats {
         for (var key : this.stats.keySet()) {
             if (!Arrays.asList(nonFoldingStats).contains(key))
                 stat3.stats.replace(key, this.stats.get(key) + stat2.stats.get(key));
+            else
+                stat3.stats.replace(key, this.stats.get(key));
         }
         return stat3;
     }

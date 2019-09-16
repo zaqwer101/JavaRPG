@@ -22,6 +22,21 @@ public class Creature extends WorldObject
     /* Дефолтное существо имеет всех статов по 1
     = 8 hp
      */
+
+    public void checkBaseStats()
+    {
+        if (this.stats.getStat("level") <= 0)
+            stats.setStat("level", 1);
+        if (this.stats.getStat("strength") <= 0)
+            stats.setStat("strength", 1);
+        if (this.stats.getStat("agility") <= 0)
+            stats.setStat("agility", 1);
+        if (this.stats.getStat("intelligence") <= 0)
+            stats.setStat("intelligence", 1);
+        if (this.stats.getStat("endurance") <= 0)
+            stats.setStat("endurance", 1);
+    }
+
     public Creature(String name, char icon, Position position, Location location)
     {
         super(name, icon);
@@ -43,12 +58,13 @@ public class Creature extends WorldObject
         resists = new Resists(new HashMap());
         stats = new Stats();
         effects = new ArrayList<>();
-        stats.setStat("level", 1);
-        stats.setStat("expToLevel", 100);
-        stats.setStat("strength", 1);
-        stats.setStat("agility", 1);
-        stats.setStat("intelligence", 1);
-        stats.setStat("endurance", 1);
+//        stats.setStat("level", 1);
+//        stats.setStat("expToLevel", 100);
+//        stats.setStat("strength", 1);
+//        stats.setStat("agility", 1);
+//        stats.setStat("intelligence", 1);
+//        stats.setStat("endurance", 1);
+        checkBaseStats();
         stats.setStat("baseHp", 0);
         stats.setStat("hp", stats.getStat("maxHp"));
         stats.setStat("actionPoints", stats.getStat("maxActionPoints"));
@@ -60,12 +76,18 @@ public class Creature extends WorldObject
     {
         super(name, icon);
         this.location = location;
+        this.actionQueue = new ArrayList<>();
         this.position = position;
         attacks = new ArrayList<>();
         resists = new Resists(new HashMap());
         this.stats = stats;
+        this.checkBaseStats();
         effects = new ArrayList<>();
         this.stats.recountStats();
+        onAttackEffects = new ArrayList<>();
+        onTakeDamageEffects = new ArrayList<>();
+        stats.setStat("hp", stats.getStat("maxHp"));
+        stats.setStat("actionPoints", stats.getStat("maxActionPoints"));
     }
 
     public Position getPosition()

@@ -30,9 +30,12 @@ public class JavaRPG
         Creature target;
         Location location;
 
+        Stats baseStats = new Stats();
+        baseStats.setStat("baseHp", 100);
+
         location = new Location(10, 10);
-        dummy = new Creature("Dummy", '$', new Position(0, 0), location);
-        target = new Creature("Target", 'T', new Position(1, 1), location);
+        dummy = new Creature("Dummy", '$', new Position(0, 0), baseStats, location);
+        target = new Creature("Target", 'T', new Position(1, 1), baseStats, location);
 
         Stats buffStats = new Stats();
         buffStats.setStat("agility", 1);
@@ -48,7 +51,6 @@ public class JavaRPG
 
         dummy.heal(1000);
         target.heal(1000);
-
         while (dummy.getHp()[0] > 0 && target.getHp()[0] > 0)
         {
             // dummy's turn
@@ -59,10 +61,10 @@ public class JavaRPG
             dummy.endTurn();
 
             // target's turn
-            while (target.getAP()[0] > 0)
-            {
-                target.addAction(new AttackAction(target, dummy, 1, trainingAttack));
-            }
+//            while (target.getAP()[0] > 0)
+//            {
+//                target.addAction(new AttackAction(target, dummy, 1, trainingAttack));
+//            }
             target.endTurn();
 
             System.out.println();
