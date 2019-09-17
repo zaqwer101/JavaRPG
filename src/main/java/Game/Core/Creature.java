@@ -116,6 +116,14 @@ public class Creature extends WorldObject
     }
 
     /**
+     * Добавить очки сопротивления урону
+     */
+    public void addResists(Resists resists)
+    {
+        this.resists = this.resists.add(resists);
+    }
+
+    /**
      * Отнять статы
      * @param stats
      */
