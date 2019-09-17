@@ -13,14 +13,38 @@ public class Equipment extends Item
     private Resists resists;
     private Stats  stats;
 
-    public Equipment(String name, int weight, int size)
+    public Equipment(String name, int weight, int size, EquipmentSlot slot, Resists resists, Stats stats)
     {
         super(name, weight, size);
+        this.resists = resists;
+        this.slot = slot;
+        this.stats = stats;
     }
 
     public void onEquip(Creature target)
     {
         target.addStats(stats);
         target.addResists(resists);
+    }
+
+    public void onUnEquip(Creature target)
+    {
+        target.subStats(stats);
+        target.subResists(resists);
+    }
+
+    public EquipmentSlot getSlot()
+    {
+        return slot;
+    }
+
+    public Stats getStats()
+    {
+        return stats;
+    }
+
+    public Resists getResists()
+    {
+        return resists;
     }
 }

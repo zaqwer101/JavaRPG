@@ -15,7 +15,7 @@ public class Resists {
         this.resists = resists;
         for (var type : DamageType.values())
         {
-            if (!this.resists.keySet().contains(type))
+            if (!this.resists.containsKey(type))
             {
                 this.resists.put(type, 0);
             }
@@ -23,7 +23,7 @@ public class Resists {
         resists.replace(DamageType.PURE, 0);
     }
 
-    private Resists()
+    public Resists()
     {
         this.resists = new HashMap<>();
         for (var type : DamageType.values())
@@ -35,6 +35,11 @@ public class Resists {
     public int getResist(DamageType resist)
     {
         return resists.get(resist);
+    }
+
+    public void setResist(DamageType resist, int value)
+    {
+        this.resists.replace(resist, value);
     }
 
     public Resists add(Resists resist2)

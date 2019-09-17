@@ -123,6 +123,12 @@ public class Creature extends WorldObject
         this.resists = this.resists.add(resists);
     }
 
+    public void subResists(Resists resists)
+    {
+        this.resists = this.resists.sub(resists);
+    }
+
+
     /**
      * Отнять статы
      * @param stats

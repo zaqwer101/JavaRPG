@@ -76,7 +76,7 @@ public class Stats {
     }
 
     public int getStat(String stat) {
-        if (stats.keySet().contains(stat))
+        if (stats.containsKey(stat))
             return this.stats.get(stat);
         else
         {
@@ -86,13 +86,12 @@ public class Stats {
         }
     }
 
-    public int setStat(String stat, int value) {
+    public void setStat(String stat, int value)
+    {
         if (Arrays.asList(allStats).contains(stat)) {
             this.stats.replace(stat, value);
             recountStats();
-            return 0;
         }
-        return 1;
     }
 
     // setStat здесь использовать нельзя
