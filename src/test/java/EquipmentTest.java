@@ -28,21 +28,21 @@ public class EquipmentTest
     public void armorStatsTest()
     {
         equipment = new BodyArmor("Доспех", 10, 5, new Resists(), equipmentStats);
-        assertEquals(1, dummy.getStats().getStat("strength"));
-        assertEquals(1, dummy.getStats().getStat("agility"));
-        assertEquals(1, dummy.getStats().getStat("intelligence"));
+        assertEquals(1, dummy.getStat("strength"));
+        assertEquals(1, dummy.getStat("agility"));
+        assertEquals(1, dummy.getStat("intelligence"));
 
         dummy.equip(equipment);
-        assertEquals(11, dummy.getStats().getStat("strength"));
-        assertEquals(11, dummy.getStats().getStat("agility"));
-        assertEquals(11, dummy.getStats().getStat("intelligence"));
+        assertEquals(11, dummy.getStat("strength"));
+        assertEquals(11, dummy.getStat("agility"));
+        assertEquals(11, dummy.getStat("intelligence"));
         assertEquals(equipment, dummy.getEquipment(equipment.getSlot()));
 
         dummy.unEquip(equipment);
 
-        assertEquals(1, dummy.getStats().getStat("strength"));
-        assertEquals(1, dummy.getStats().getStat("agility"));
-        assertEquals(1, dummy.getStats().getStat("intelligence"));
+        assertEquals(1, dummy.getStat("strength"));
+        assertEquals(1, dummy.getStat("agility"));
+        assertEquals(1, dummy.getStat("intelligence"));
 
         assertEquals(equipment, dummy.getLocation().getPosition(dummy.getPosition().getX(), dummy.getPosition().getY()).getItems()[0]);
         assertNull(dummy.getEquipment(equipment.getSlot()));

@@ -102,11 +102,11 @@ public class CreatureTest {
         for (int i = 0; i < 3; i++)
         {
             dummy.endTurn();
-            assertEquals(10, dummy.getStats().getStat("agility"));
+            assertEquals(10, dummy.getStat("agility"));
             assertEquals(18, dummy.getHp()[1]);
         }
         dummy.endTurn();
-        assertEquals(1, dummy.getStats().getStat("agility"));
+        assertEquals(1, dummy.getStat("agility"));
         assertEquals(8, dummy.getHp()[1]);
     }
 

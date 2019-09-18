@@ -107,10 +107,15 @@ public class Creature extends WorldObject
         return position;
     }
 
-    public Stats getStats()
+    Stats getStats()
     {
         stats.recountStats();
         return stats;
+    }
+
+    public int getStat(String stat)
+    {
+        return stats.getStat(stat);
     }
 
     /**
