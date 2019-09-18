@@ -5,12 +5,14 @@ import Game.Attacks.Attack;
 import Game.Effects.Effect;
 import Game.Effects.PeriodicEffect;
 import Game.Core.Resists.DamageType;
+import Game.Items.Equipment.Equipment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Creature extends WorldObject
 {
+    private HashMap<Equipment.EquipmentSlot, Equipment> equipmentSlots;
     private ArrayList<PeriodicEffect> effects;
     private Stats stats;
     private Resists resists;
@@ -28,6 +30,14 @@ public class Creature extends WorldObject
      */
     public void checkBaseStats()
     {
+        this.equipmentSlots = new HashMap<>();
+        this.actionQueue = new ArrayList<>();
+
+        for (var slot : Equipment.EquipmentSlot.values())
+        {
+            equipmentSlots.put(slot, null);
+        }
+
         if (this.stats.getStat("level") <= 0)
             stats.setStat("level", 1);
         if (this.stats.getStat("strength") <= 0)
@@ -44,7 +54,6 @@ public class Creature extends WorldObject
     {
         super(name, icon);
         this.location = location;
-        this.actionQueue = new ArrayList<>();
         try
         {
             teleport(position);
@@ -79,7 +88,7 @@ public class Creature extends WorldObject
     {
         super(name, icon);
         this.location = location;
-        this.actionQueue = new ArrayList<>();
+
         this.position = position;
         attacks = new ArrayList<>();
         resists = new Resists(new HashMap());
@@ -339,5 +348,28 @@ public class Creature extends WorldObject
     public Action[] getActions()
     {
         return actionQueue.toArray(new Action[0]);
+    }
+
+    public void equip(Equipment equipment)
+    {
+        if (equipmentSlots.get(equipment.getSlot())!=null)
+        {
+            unEquip(equipmentSlots.get(equipment.getSlot()));
+        }
+        equipment.onEquip(this);
+        equipmentSlots.replace(equipment.getSlot(), equipment);
+    }
+
+    public void unEquip(Equipment equipment)
+    {
+        // TODO: выкладывать в инвентарь снаряжение при снятии
+        equipment.onUnEquip(this);
+        this.location.getPosition(position.getX(), position.getY()).addItem(equipment);
+        equipmentSlots.replace(equipment.getSlot(), null);
+    }
+
+    public Equipment getEquipment(Equipment.EquipmentSlot slot)
+    {
+        return equipmentSlots.get(slot);
     }
 }

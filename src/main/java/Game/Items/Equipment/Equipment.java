@@ -1,8 +1,10 @@
-package Game.Items;
+package Game.Items.Equipment;
 
 import Game.Core.Creature;
+import Game.Core.JavaRPG;
 import Game.Core.Resists;
 import Game.Core.Stats;
+import Game.Items.Item;
 
 public class Equipment extends Item
 {
@@ -25,12 +27,14 @@ public class Equipment extends Item
     {
         target.addStats(stats);
         target.addResists(resists);
+        JavaRPG.log(target.getName() + ": надел " + getName());
     }
 
     public void onUnEquip(Creature target)
     {
         target.subStats(stats);
         target.subResists(resists);
+        JavaRPG.log(target.getName() + ": снял " + getName());
     }
 
     public EquipmentSlot getSlot()

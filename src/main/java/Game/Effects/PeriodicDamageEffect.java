@@ -1,6 +1,7 @@
 package Game.Effects;
 
 import Game.Core.Creature;
+import Game.Core.JavaRPG;
 import Game.Core.Resists;
 
 import static Game.Core.JavaRPG.log;
@@ -8,10 +9,10 @@ import static Game.Core.JavaRPG.log;
 /**
  * Периодический эффект получения урона
  */
-public class PeriodicBleedingEffect extends PeriodicEffect
+public class PeriodicDamageEffect extends PeriodicEffect
 {
     int amount;
-    public PeriodicBleedingEffect(int duration, int amount) {
+    public PeriodicDamageEffect(int duration, int amount) {
         super(duration, "Кровотечение");
         this.amount = amount;
         this.effectType = EffectType.DAMAGE_DEBUFF;
@@ -20,6 +21,7 @@ public class PeriodicBleedingEffect extends PeriodicEffect
     @Override
     public void apply(Creature target) {
         target.takeDamage(amount, Resists.DamageType.PURE);
+        JavaRPG.log(target.getName() + " получил " + amount + " единиц урона от \"" + name + "\", осталось " + target.getHp()[0] + " хп");
         applied = true;
         duration--;
     }

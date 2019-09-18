@@ -4,8 +4,7 @@ import Game.Attacks.Attack;
 import Game.Attacks.MeleeAttack;
 import Game.Attacks.VampireBite;
 import Game.Core.*;
-import Game.Effects.Effect;
-import Game.Effects.PeriodicBleedingEffect;
+import Game.Effects.PeriodicDamageEffect;
 import Game.Effects.InstantHeal;
 import Game.Effects.PeriodicStatsEffect;
 import org.junit.Before;
@@ -39,7 +38,7 @@ public class CreatureTest {
     {
         int steps = 3;
         int damage = 1;
-        dummy.addEffect(new PeriodicBleedingEffect(3, damage));
+        dummy.addEffect(new PeriodicDamageEffect(3, damage));
 
         for (int i = 1; i <= steps; i++)
         {
