@@ -1,4 +1,5 @@
 import Game.Core.*;
+import Game.Effects.InstantDamage;
 import Game.Items.Equipment.Armor.BodyArmor;
 import Game.Items.Equipment.Equipment;
 import org.junit.Before;
@@ -47,5 +48,22 @@ public class EquipmentTest
         assertEquals(equipment, dummy.getLocation().getPosition(dummy.getPosition().getX(), dummy.getPosition().getY()).getItems()[0]);
         assertNull(dummy.getEquipment(equipment.getSlot()));
 
+    }
+
+    @Test
+    public void armorResistsTest()
+    {
+        Resists resists = new Resists();
+        resists.setResist(Resists.DamageType.PHYSICAL, 90);
+        equipment = new BodyArmor("Доспех", 10, 5, resists, equipmentStats);
+
+        // Creature tester = new Creature("Dummy", '!', new Position(1, 1), location);
+
+        assertEquals(8, dummy.getHp()[0]);
+
+        dummy.equip(equipment);
+        new InstantDamage("ХУЯК", Resists.DamageType.PHYSICAL, 10).apply(dummy);
+
+        assertEquals(7, dummy.getHp()[0]);
     }
 }

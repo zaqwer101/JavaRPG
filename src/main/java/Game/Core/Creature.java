@@ -228,9 +228,12 @@ public class Creature extends WorldObject
     public void takeDamage(int amount, DamageType type)
     {
         int currentHp = getHp()[0];
-        getStats().setStat("hp",
-                getStats().getStat("hp") - (amount - amount * (resists.getResist(type) / 100))
-        );
+
+        // fixed: сопротивления считались некорректно из-за того, что значения резистов - integer
+        float coefficient = (float)resists.getResist(type) / 100;
+        int blockedDamage = (int)(amount * coefficient);
+        int damageTaken = amount - blockedDamage;
+        getStats().setStat("hp", getHp()[0] - damageTaken);
     }
 
     /**
