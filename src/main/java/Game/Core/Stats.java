@@ -15,7 +15,7 @@ public class Stats {
             "criticalChance", "evasionChance",
             "level", "exp", "expToLevel",
             "actionPoints", "maxActionPoints",
-            "moveCost"
+            "weight", "maxWeight"
     };
 
     // Статы, которые нельзя складывать/вычитать друг из друга при сложении/вычитании объектов
@@ -126,9 +126,8 @@ public class Stats {
         stats.put("maxActionPoints", actionPoints);
         if (stats.get("actionPoints") > stats.get("maxActionPoints")) stats.replace("actionPoints", stats.get("maxActionPoints"));
 
-        //////
-        // move cost
-        //////
+        int maxWeight = 20 + 10 * stats.get("strength");
+        stats.put("maxWeight", maxWeight);
 
     }
 }
