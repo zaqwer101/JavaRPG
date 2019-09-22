@@ -15,13 +15,13 @@ public class Stats {
             "criticalChance", "evasionChance",
             "level", "exp", "expToLevel",
             "actionPoints", "maxActionPoints",
-            "weight", "maxWeight"
+            "weight", "maxWeight", "baseMaxWeight"
     };
 
     // Статы, которые нельзя складывать/вычитать друг из друга при сложении/вычитании объектов
     public static String[] nonFoldingStats = {
         "expToLevel", "level", "hp", /* потому что увеличиваться может только максимальное количество хп */
-            "actionPoints"
+            "actionPoints", "weight", "maxWeight"
     };
 
     private HashMap<String, Integer> stats;
@@ -126,7 +126,10 @@ public class Stats {
         stats.put("maxActionPoints", actionPoints);
         if (stats.get("actionPoints") > stats.get("maxActionPoints")) stats.replace("actionPoints", stats.get("maxActionPoints"));
 
-        int maxWeight = 20 + 10 * stats.get("strength");
+        //////
+        // weight
+        //////
+        int maxWeight = stats.get("baseMaxWeight") + 10 * stats.get("strength");
         stats.put("maxWeight", maxWeight);
 
     }
