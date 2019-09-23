@@ -377,6 +377,16 @@ public class Creature extends WorldObject
     {
         // TODO: выкладывать в инвентарь снаряжение при снятии
         equipment.onUnEquip(this);
+
+        if (getMaxFreeSize() >= equipment.getSize() || getFreeWeight() >= equipment.getWeight())
+        {
+            addToInventory(equipment);
+        }
+        else
+        {
+            location.getPosition(position).addItem(equipment);
+        }
+
         equipmentSlots.replace(equipment.getSlot(), null);
 
     }
@@ -403,14 +413,8 @@ public class Creature extends WorldObject
         return equipmentSlots.get(slot);
     }
 
-    public boolean pickUpItem(Item item)
+    public boolean addToInventory(Item item)
     {
-        if(!Arrays.asList(location.getPosition(position.getX(), position.getY()).getItems()).contains(item))
-        {
-            JavaRPG.log("Предмет \"" + item.getName() + "\" не найден в локации");
-            return false;
-        }
-
         if (getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BACKPACK) != null)
         {
             if (
@@ -421,7 +425,6 @@ public class Creature extends WorldObject
                 if(stats.getStat("maxWeight") >= (getCurrentWeight() + item.getWeight()))
                 {
                     ((BackpackArmor)getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BACKPACK)).addToInventory(item);
-                    location.getPosition(position).removeItem(item);
                     JavaRPG.log("Предмет \"" + item.getName() + "\" добавлен в рюкзак");
                     return true;
                 }
@@ -434,11 +437,25 @@ public class Creature extends WorldObject
                 if(stats.getStat("maxWeight") >= (getCurrentWeight() + item.getWeight()))
                 {
                     baseInventory.addItem(item);
-                    location.getPosition(position).removeItem(item);
                     JavaRPG.log("Предмет \"" + item.getName() + "\" добавлен в инвентарь");
                     return true;
                 }
             }
+        }
+        return false;
+    }
+
+    public boolean pickUpItem(Item item)
+    {
+        if(!Arrays.asList(location.getPosition(position.getX(), position.getY()).getItems()).contains(item))
+        {
+            JavaRPG.log("Предмет \"" + item.getName() + "\" не найден в локации");
+            return false;
+        }
+        if (addToInventory(item))
+        {
+            location.getPosition(position).removeItem(item);
+            return true;
         }
         return false;
     }
@@ -494,5 +511,10 @@ public class Creature extends WorldObject
             max = baseInventory.getInventoryFreeSize();
         }
         return max;
+    }
+
+    public int getFreeWeight()
+    {
+        return stats.getStat("maxWeight") - getCurrentWeight();
     }
 }

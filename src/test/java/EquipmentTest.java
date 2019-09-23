@@ -28,7 +28,7 @@ public class EquipmentTest
     @Test
     public void armorStatsTest()
     {
-        equipment = new BodyArmor("Доспех", 10, 5, new Resists(), equipmentStats);
+        equipment = new BodyArmor("Доспех", 1, 5, new Resists(), equipmentStats);
         assertEquals(1, dummy.getStat("strength"));
         assertEquals(1, dummy.getStat("agility"));
         assertEquals(1, dummy.getStat("intelligence"));
@@ -45,8 +45,8 @@ public class EquipmentTest
         assertEquals(1, dummy.getStat("agility"));
         assertEquals(1, dummy.getStat("intelligence"));
 
-        assertEquals(equipment, dummy.getLocation().getPosition(dummy.getPosition().getX(), dummy.getPosition().getY()).getItems()[0]);
-        assertNull(dummy.getEquipment(equipment.getSlot()));
+        assertEquals(equipment, dummy.getInventory()[0]);
+        assertNull  (dummy.getEquipment(equipment.getSlot()));
 
     }
 
