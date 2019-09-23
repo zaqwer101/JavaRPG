@@ -84,4 +84,8 @@ public class LocationPosition extends Position
     {
         return items.toArray(new Item[0]);
     }
+    public void removeItem(Item item)
+    {
+        items.remove(item);
+    }
 }

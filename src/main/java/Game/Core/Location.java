@@ -37,6 +37,18 @@ public class Location
         return null;
     }
 
+    public LocationPosition getPosition(Position position)
+    {
+        for (var l : location)
+        {
+            if(l.getX() == position.getX() && l.getY() == position.getY())
+            {
+                return l;
+            }
+        }
+        return null;
+    }
+
     public int[] getSize()
     {
         return new int[] {sizeX, sizeY};

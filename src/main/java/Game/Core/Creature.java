@@ -5,15 +5,20 @@ import Game.Attacks.Attack;
 import Game.Effects.Effect;
 import Game.Effects.PeriodicEffect;
 import Game.Core.Resists.DamageType;
+import Game.Items.Equipment.Armor.BackpackArmor;
 import Game.Items.Equipment.Equipment;
+import Game.Items.Inventory;
+import Game.Items.Item;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Creature extends WorldObject
 {
     private HashMap<Equipment.EquipmentSlot, Equipment> equipmentSlots;
     private ArrayList<PeriodicEffect> effects;
+    private Inventory baseInventory; // карманы существа
     private Stats stats;
     private Resists resists;
     private Position position;
@@ -32,7 +37,7 @@ public class Creature extends WorldObject
     {
         this.equipmentSlots = new HashMap<>();
         this.actionQueue = new ArrayList<>();
-
+        this.baseInventory = new Inventory(20);
         for (var slot : Equipment.EquipmentSlot.values())
         {
             equipmentSlots.put(slot, null);
@@ -372,12 +377,122 @@ public class Creature extends WorldObject
     {
         // TODO: выкладывать в инвентарь снаряжение при снятии
         equipment.onUnEquip(this);
-        this.location.getPosition(position.getX(), position.getY()).addItem(equipment);
         equipmentSlots.replace(equipment.getSlot(), null);
+
+    }
+
+    public int getCurrentWeight()
+    {
+        int weight = 0;
+        for (var item : baseInventory.getInventory())
+        {
+            weight += item.getWeight();
+        }
+
+        if (getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BACKPACK) != null)
+            for (var item : ((BackpackArmor)getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BACKPACK)).Inventory().getInventory())
+            {
+                weight += item.getWeight();
+            }
+
+        return weight;
     }
 
     public Equipment getEquipment(Equipment.EquipmentSlot slot)
     {
         return equipmentSlots.get(slot);
+    }
+
+    public boolean pickUpItem(Item item)
+    {
+        if(!Arrays.asList(location.getPosition(position.getX(), position.getY()).getItems()).contains(item))
+        {
+            JavaRPG.log("Предмет \"" + item.getName() + "\" не найден в локации");
+            return false;
+        }
+
+        if (getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BACKPACK) != null)
+        {
+            if (
+                    ((BackpackArmor)getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BACKPACK)).
+                            Inventory().getInventoryFreeSize() >= item.getSize()
+            )
+            {
+                if(stats.getStat("maxWeight") >= (getCurrentWeight() + item.getWeight()))
+                {
+                    ((BackpackArmor)getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BACKPACK)).addToInventory(item);
+                    location.getPosition(position).removeItem(item);
+                    JavaRPG.log("Предмет \"" + item.getName() + "\" добавлен в рюкзак");
+                    return true;
+                }
+            }
+        }
+        else
+        {
+            if (baseInventory.getInventoryFreeSize() >= item.getSize())
+            {
+                if(stats.getStat("maxWeight") >= (getCurrentWeight() + item.getWeight()))
+                {
+                    baseInventory.addItem(item);
+                    location.getPosition(position).removeItem(item);
+                    JavaRPG.log("Предмет \"" + item.getName() + "\" добавлен в инвентарь");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean dropItem(Item item)
+    {
+        if(((BackpackArmor)getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BACKPACK)).Inventory().getInventory().contains(item))
+        {
+            location.getPosition(position.getX(), position.getY()).addItem(item);
+            JavaRPG.log("Предмет \"" + item.getName() + "\" выброшен в локацию");
+            return true;
+        }
+
+        if(baseInventory.getInventory().contains(item))
+        {
+            location.getPosition(position.getX(), position.getY()).addItem(item);
+            JavaRPG.log("Предмет \"" + item.getName() + "\" выброшен в локацию");
+            return true;
+        }
+        return false;
+    }
+
+    public Item[] getInventory()
+    {
+        Item[] array;
+        if (getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BACKPACK) != null)
+        {
+            array = new Item[
+                    baseInventory.getInventory().size() +
+                            ((BackpackArmor) getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BACKPACK)).Inventory().getInventory().size()
+                    ];
+            System.arraycopy(baseInventory.getInventory().toArray(), 0,
+                    array, 0, baseInventory.getInventory().size());
+            System.arraycopy( ((BackpackArmor)getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BACKPACK)).Inventory().getInventory().toArray(), 0,
+                    array, baseInventory.getInventory().size(), ((BackpackArmor)getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BACKPACK)).Inventory().getInventory().size());
+        }
+        else
+            array = baseInventory.getInventory().toArray(new Item[0]);
+
+        return array;
+    }
+
+    public int getMaxFreeSize()
+    {
+        int max = 0;
+        if (getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BACKPACK) != null)
+        {
+            max = ((BackpackArmor)getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BACKPACK)).Inventory().getInventoryFreeSize();
+        }
+
+        if (max < baseInventory.getInventoryFreeSize())
+        {
+            max = baseInventory.getInventoryFreeSize();
+        }
+        return max;
     }
 }
