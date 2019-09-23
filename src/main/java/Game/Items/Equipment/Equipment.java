@@ -8,8 +8,10 @@ import Game.Items.Item;
 
 public class Equipment extends Item
 {
-    public static enum EquipmentSlot {  EQUIPMENT_HEAD, EQUIPMENT_NECK, EQUIPMENT_BODY,
-                                        EQUIPMENT_HANDS, EQUIPMENT_LEGS };
+    public static enum EquipmentSlot    {   EQUIPMENT_HEAD, EQUIPMENT_NECK, EQUIPMENT_BODY,
+                                            EQUIPMENT_HANDS, EQUIPMENT_LEGS,
+                                            EQUIPMENT_BACKPACK
+                                        };
 
     private EquipmentSlot slot;
     private Resists resists;
