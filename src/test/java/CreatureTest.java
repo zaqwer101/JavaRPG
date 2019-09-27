@@ -1,4 +1,5 @@
 import Game.Actions.AttackAction;
+import Game.Actions.EquipAction;
 import Game.Actions.MoveAction;
 import Game.Actions.PickupAction;
 import Game.Attacks.Attack;
@@ -8,6 +9,8 @@ import Game.Core.*;
 import Game.Effects.PeriodicDamageEffect;
 import Game.Effects.InstantHeal;
 import Game.Effects.PeriodicStatsEffect;
+import Game.Items.Equipment.Armor.BodyArmor;
+import Game.Items.Equipment.Equipment;
 import Game.Items.Item;
 import org.junit.Before;
 import org.junit.Test;
@@ -202,5 +205,24 @@ public class CreatureTest {
 
         assertEquals(0, location.getPosition(dummy.getPosition()).getItems().length);
         assertEquals(testItem, dummy.getInventory()[0]);
+    }
+
+    @Test
+    public void equipActionTest()
+    {
+        BodyArmor armor = new BodyArmor("Доспех",1, 1, new Resists(), new Stats());
+        location.getPosition(dummy.getPosition()).addItem(armor);
+        assertEquals(1,location.getPosition(dummy.getPosition()).getItems().length);
+
+        dummy.addAction(new PickupAction(dummy, armor));
+
+        dummy.endTurn();
+
+        dummy.addAction(new EquipAction(dummy, armor));
+
+        dummy.endTurn();
+
+        assertEquals(0,location.getPosition(dummy.getPosition()).getItems().length);
+        assertEquals(armor, dummy.getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BODY));
     }
 }

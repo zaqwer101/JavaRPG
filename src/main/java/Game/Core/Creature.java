@@ -322,7 +322,7 @@ public class Creature extends WorldObject
         if (spendActionPoints(action.getCost()))
             actionQueue.add(action);
         else
-            JavaRPG.log(getName() + ": недостаточно очков дейстий");
+            JavaRPG.log(getName() + ": недостаточно очков дейстий для " + action.toString());
     }
 
     /**

@@ -8,7 +8,7 @@ import Game.Core.*;
  */
 public abstract class Action
 {
-    public static enum ActionType { ACTION_MOVE, ACTION_ATTACK, ACTION_PICKUP };
+    public static enum ActionType { ACTION_MOVE, ACTION_ATTACK, ACTION_PICKUP, ACTION_EQUIP };
     int cost; // стоимость действия
     Creature user; // кто вызвал действие
     ActionType type;
@@ -44,6 +44,8 @@ public abstract class Action
             {
                 return "Action.Pickup";
             }
+            case ACTION_EQUIP:
+                return "Action.Equip";
         }
         return "Action.???";
     }
