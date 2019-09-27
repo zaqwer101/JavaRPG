@@ -1,5 +1,6 @@
 import Game.Actions.AttackAction;
 import Game.Actions.MoveAction;
+import Game.Actions.PickupAction;
 import Game.Attacks.Attack;
 import Game.Attacks.MeleeAttack;
 import Game.Attacks.VampireBite;
@@ -7,6 +8,7 @@ import Game.Core.*;
 import Game.Effects.PeriodicDamageEffect;
 import Game.Effects.InstantHeal;
 import Game.Effects.PeriodicStatsEffect;
+import Game.Items.Item;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -184,5 +186,21 @@ public class CreatureTest {
         // проверяем позицию существа
         assertEquals(2, dummy.getPosition().getX());
         assertEquals(3, dummy.getPosition().getY());
+    }
+
+    @Test
+    public void pickupActionTest()
+    {
+        Item testItem = new Item("Kek", 1, 1);
+        location.getPosition(dummy.getPosition()).addItem(testItem);
+        assertEquals(testItem, location.getPosition(dummy.getPosition()).getItems()[0]);
+
+        dummy.addAction(new PickupAction(dummy, testItem));
+        assertEquals("Action.Pickup", dummy.getActions()[0].toString());
+
+        dummy.doAllActions();
+
+        assertEquals(0, location.getPosition(dummy.getPosition()).getItems().length);
+        assertEquals(testItem, dummy.getInventory()[0]);
     }
 }
