@@ -223,6 +223,7 @@ public class CreatureTest {
         dummy.endTurn();
 
         assertEquals(0,location.getPosition(dummy.getPosition()).getItems().length);
+        assertEquals(0, dummy.getInventory().length);
         assertEquals(armor, dummy.getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BODY));
     }
 }

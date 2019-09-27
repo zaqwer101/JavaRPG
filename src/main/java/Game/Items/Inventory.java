@@ -43,7 +43,7 @@ public class Inventory
         return false;
     }
 
-    public boolean removeItem(Item item)
+    public boolean deleteItem(Item item)
     {
         if (inventory.contains(item))
         {

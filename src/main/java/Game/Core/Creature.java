@@ -371,6 +371,7 @@ public class Creature extends WorldObject
         }
         equipment.onEquip(this);
         equipmentSlots.replace(equipment.getSlot(), equipment);
+        deleteFromInventory(equipment);
     }
 
     public void unEquip(Equipment equipment)
@@ -516,5 +517,39 @@ public class Creature extends WorldObject
     public int getFreeWeight()
     {
         return stats.getStat("maxWeight") - getCurrentWeight();
+    }
+
+    public void deleteFromInventory(Item item)
+    {
+        if (doesHaveBackpack())
+        {
+            for (int i = 0; i < getBackpack().Inventory().getInventory().size(); i++)
+            {
+                if (getBackpack().Inventory().getInventory().get(i) == item)
+                {
+                    getBackpack().Inventory().deleteItem(item);
+                    return;
+                }
+            }
+        }
+
+        for (int i = 0; i < baseInventory.getInventory().size(); i++)
+        {
+            if (baseInventory.getInventory().get(i) == item)
+            {
+                baseInventory.deleteItem(item);
+                return;
+            }
+        }
+    }
+
+    public boolean doesHaveBackpack()
+    {
+        return getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BACKPACK) != null;
+    }
+
+    public BackpackArmor getBackpack()
+    {
+        return (BackpackArmor)getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BACKPACK);
     }
 }
