@@ -202,15 +202,22 @@ public class Creature extends WorldObject
      */
     public void recountEffects()
     {
-        for (int i = 0; i < effects.size(); i++)
+        int size = effects.size();
+
+        for (int i = size - 1; i >= 0; i--)
         {
             effects.get(i).apply(this);
+
             // если длительность = -100, эффект без длительности
             if (effects.get(i).getDuration() <= 0 && effects.get(i).getDuration() != PeriodicEffect.FOREVER)
             {
                 JavaRPG.log(this.getName() + ": эффект " + effects.get(i).getName() + " снят");
                 effects.get(i).remove(this);
+
+
                 effects.remove(effects.get(i));
+
+
             } else
                 JavaRPG.log(this.getName() + ": " + effects.get(i).getName() + " осталось " + effects.get(i).getDuration() + " ходов");
         }
@@ -552,5 +559,9 @@ public class Creature extends WorldObject
     public BackpackArmor getBackpack()
     {
         return (BackpackArmor)getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BACKPACK);
+    }
+    public PeriodicEffect[] getEffects()
+    {
+        return effects.toArray(new PeriodicEffect[0]);
     }
 }

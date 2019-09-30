@@ -163,6 +163,7 @@ public class CreatureTest {
         stats.setStat("endurance", 10);
         dummy.addStats(stats);
         dummy.endTurn();
+
         assertEquals(5, dummy.getAP()[0]);
 
         dummy.addAttack(new MeleeAttack(5));
@@ -225,5 +226,36 @@ public class CreatureTest {
         assertEquals(0,location.getPosition(dummy.getPosition()).getItems().length);
         assertEquals(0, dummy.getInventory().length);
         assertEquals(armor, dummy.getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BODY));
+    }
+
+    @Test
+    public void periodicEffectsTest()
+    {
+        PeriodicStatsEffect effect1 = new PeriodicStatsEffect(2, "Test effect 1", new Stats());
+        PeriodicStatsEffect effect2 = new PeriodicStatsEffect(2, "Test effect 2", new Stats());
+        PeriodicStatsEffect effect3 = new PeriodicStatsEffect(2, "Test effect 3", new Stats());
+        PeriodicStatsEffect effect4 = new PeriodicStatsEffect(2, "Test effect 4", new Stats());
+
+        dummy.addEffect(effect1);
+        dummy.addEffect(effect2);
+        dummy.addEffect(effect3);
+        dummy.addEffect(effect4);
+
+        assertEquals(4, dummy.getEffects().length);
+        assertEquals(2, dummy.getEffects()[0].getDuration());
+
+        dummy.endTurn();
+
+        assertEquals(4, dummy.getEffects().length);
+        assertEquals(2, dummy.getEffects()[0].getDuration());
+
+        dummy.endTurn();
+
+        assertEquals(4, dummy.getEffects().length);
+        assertEquals(1, dummy.getEffects()[0].getDuration());
+
+        dummy.endTurn();
+
+        assertEquals(0, dummy.getEffects().length);
     }
 }
