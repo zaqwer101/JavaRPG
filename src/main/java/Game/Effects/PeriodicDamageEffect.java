@@ -21,16 +21,14 @@ public class PeriodicDamageEffect extends PeriodicEffect
     @Override
     public void apply(Creature target) {
         target.takeDamage(amount, Resists.DamageType.PURE);
-        JavaRPG.log(target.getName() + " получил " + amount + " единиц урона от \"" + name + "\", осталось " + target.getHp()[0] + " хп");
+        JavaRPG.log(target.getName() + ": получил " + amount + " единиц урона от \"" + name + "\", осталось " + target.getHp()[0] + " хп");
         applied = true;
         duration--;
     }
 
     @Override
     public void remove(Creature target) {
-        log("Кровотечение у " + target.getName() + " прекратилось");
+        log(target.getName() + ": эффект \"" + getName() + "\" прекратился");
         applied = false;
     }
-
-
 }

@@ -20,6 +20,6 @@ public class InstantDamage extends InstantEffect
     public void apply(Creature target)
     {
         target.takeDamage(amount, type);
-        JavaRPG.log(target.getName() + " получил " + amount + " единиц урона от \"" + name + "\", осталось " + target.getHp()[0] + " хп");
+        JavaRPG.log(target.getName() + ": получил " + amount + " единиц урона от \"" + name + "\", осталось " + target.getHp()[0] + " хп");
     }
 }

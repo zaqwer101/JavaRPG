@@ -16,23 +16,23 @@ public class StatsTest
     HashMap<String, Integer> params1 = new HashMap<>();
     HashMap<String, Integer> params2 = new HashMap<>();
 
-    @After
-    public void over()
-    {
-        System.out.println("------------------------------------");
-    }
+//    @After
+//    public void over()
+//    {
+//        System.out.println("------------------------------------");
+//    }
 
     @Before
     public void init()
     {
         // заполняем таблицы случайными корректными значениями
-        System.out.println("Putting stats...");
+        // System.out.println("Putting stats...");
         for (var key : Stats.allStats)
         {
             params1.put(key, new Random().nextInt(100));
-            System.out.println(key + "1: " + params1.get(key));
+            // System.out.println(key + "1: " + params1.get(key));
             params2.put(key, new Random().nextInt(100));
-            System.out.println(key + "2: " + params2.get(key));
+            // System.out.println(key + "2: " + params2.get(key));
         }
         stats1 = new Stats(params1);
         stats2 = new Stats(params2);
@@ -41,20 +41,20 @@ public class StatsTest
     @Test
     public void constructorStatsTest()
     {
-        System.out.println("Testing constructor and getter...");
+        // System.out.println("Testing constructor and getter...");
         for (var key : Stats.allStats)
         {
             assertEquals(params1.get(key), stats1.getStat(key));
-            System.out.println(params1.get(key) + " == " + stats1.getStat(key));
+            // System.out.println(params1.get(key) + " == " + stats1.getStat(key));
             assertEquals(params2.get(key), stats2.getStat(key));
-            System.out.println(params2.get(key) + " == " + stats2.getStat(key));
+            // System.out.println(params2.get(key) + " == " + stats2.getStat(key));
         }
     }
 
     @Test
     public void addStatsTest()
     {
-        System.out.println("Testing addition...");
+        // System.out.println("Testing addition...");
         Stats stats3 = stats1.add(stats2);
 
         for (var key : Stats.allStats)
@@ -64,7 +64,7 @@ public class StatsTest
             // не проверяем статы, указанные в массиве nonFoldingStats
             if (!Arrays.asList(Stats.nonFoldingStats).contains(key)) {
                 _stat = stats1.getStat(key) + stats2.getStat(key);
-                System.out.println(key + ": " + stats3.getStat(key) + " == " + _stat);
+                // System.out.println(key + ": " + stats3.getStat(key) + " == " + _stat);
                 assertEquals(_stat, stats3.getStat(key));
             }
         }
@@ -73,7 +73,7 @@ public class StatsTest
     @Test
     public void subStatsTest()
     {
-        System.out.println("Testing subtraction...");
+        // System.out.println("Testing subtraction...");
         Stats stats3 = stats1.sub(stats2);
 
         for (var key : Stats.allStats)
@@ -84,7 +84,7 @@ public class StatsTest
                     subStat = 0;
                 var _stat = stats3.getStat(key);
                 assertEquals(subStat, _stat);
-                System.out.println(key + ": " + stats3.getStat(key) + " == " + subStat);
+                // System.out.println(key + ": " + stats3.getStat(key) + " == " + subStat);
             }
         }
     }

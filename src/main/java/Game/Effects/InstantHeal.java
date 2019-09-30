@@ -17,6 +17,6 @@ public class InstantHeal extends InstantEffect
     public void apply(Creature target)
     {
         target.heal(amount);
-        JavaRPG.log(target.getName() + " вылечился от эффекта \"" + name + "\" на " + amount);
+        JavaRPG.log(target.getName() + ": вылечился от эффекта \"" + name + "\" на " + amount);
     }
 }

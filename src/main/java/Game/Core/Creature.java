@@ -426,7 +426,7 @@ public class Creature extends WorldObject
                 if(stats.getStat("maxWeight") >= (getCurrentWeight() + item.getWeight()))
                 {
                     ((BackpackArmor)getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BACKPACK)).addToInventory(item);
-                    JavaRPG.log("Предмет \"" + item.getName() + "\" добавлен в рюкзак");
+                    JavaRPG.log(getName() + ": предмет \"" + item.getName() + "\" добавлен в рюкзак " + getName());
                     return true;
                 }
             }
@@ -438,7 +438,7 @@ public class Creature extends WorldObject
                 if(stats.getStat("maxWeight") >= (getCurrentWeight() + item.getWeight()))
                 {
                     baseInventory.addItem(item);
-                    JavaRPG.log("Предмет \"" + item.getName() + "\" добавлен в инвентарь");
+                    JavaRPG.log(getName() + ": предмет \"" + item.getName() + "\" добавлен в инвентарь ");
                     return true;
                 }
             }
