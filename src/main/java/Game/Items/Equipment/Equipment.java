@@ -1,7 +1,7 @@
 package Game.Items.Equipment;
 
 import Game.Core.Creature;
-import Game.Core.JavaRPG;
+import Engine.JavaRPG;
 import Game.Core.Resists;
 import Game.Core.Stats;
 import Game.Items.Item;

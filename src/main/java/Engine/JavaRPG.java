@@ -1,8 +1,12 @@
-package Game.Core;
+package Engine;
 
 import Game.Actions.AttackAction;
 import Game.Attacks.Attack;
 import Game.Attacks.MeleeAttack;
+import Game.Core.Creature;
+import Game.Core.Location;
+import Game.Core.Position;
+import Game.Core.Stats;
 import Game.Effects.PeriodicStatsEffect;
 
 public class JavaRPG

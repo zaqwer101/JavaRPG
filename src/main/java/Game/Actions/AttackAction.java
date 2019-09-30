@@ -2,8 +2,6 @@ package Game.Actions;
 
 import Game.Attacks.Attack;
 import Game.Core.Creature;
-import Game.Core.JavaRPG;
-import Game.Core.WorldObject;
 
 public class AttackAction extends Action
 {

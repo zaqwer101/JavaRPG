@@ -1,7 +1,7 @@
 package Game.Effects;
 
 import Game.Core.Creature;
-import Game.Core.JavaRPG;
+import Engine.JavaRPG;
 import Game.Core.Resists.DamageType;
 
 /**
