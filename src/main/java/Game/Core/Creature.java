@@ -338,8 +338,16 @@ public class Creature extends WorldObject
      */
     public void performAction()
     {
-        actionQueue.get(0).use();
-        actionQueue.remove(0);
+        if (actionQueue.size() != 0)
+        {
+            actionQueue.get(0).use();
+            actionQueue.remove(0);
+        }
+    }
+
+    public void performAction(Action action)
+    {
+        action.use();
     }
 
     /**

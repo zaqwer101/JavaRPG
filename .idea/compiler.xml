@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="11" />
+    <bytecodeTargetLevel target="11">
+      <module name="JavaRPG.core.main" target="11" />
+      <module name="JavaRPG.core.test" target="11" />
+      <module name="JavaRPG.desktop.main" target="11" />
+      <module name="JavaRPG.desktop.test" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
