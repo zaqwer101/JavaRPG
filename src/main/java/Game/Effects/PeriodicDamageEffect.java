@@ -1,10 +1,10 @@
 package Game.Effects;
 
 import Game.Core.Creature;
-import Engine.JavaRPG;
+import Game.Core.JavaRPG;
 import Game.Core.Resists;
 
-import static Engine.JavaRPG.log;
+import static Game.Core.JavaRPG.log;
 
 /**
  * Периодический эффект получения урона

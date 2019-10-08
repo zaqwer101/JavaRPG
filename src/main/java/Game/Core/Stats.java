@@ -1,7 +1,5 @@
 package Game.Core;
 
-import Engine.JavaRPG;
-
 import java.util.Arrays;
 import java.util.HashMap;
 

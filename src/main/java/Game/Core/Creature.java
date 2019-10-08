@@ -1,6 +1,5 @@
 package Game.Core;
 
-import Engine.JavaRPG;
 import Game.Actions.Action;
 import Game.Attacks.Attack;
 import Game.Effects.Effect;

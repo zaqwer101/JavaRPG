@@ -1,7 +1,7 @@
 package Game.Effects;
 
 import Game.Core.Creature;
-import Engine.JavaRPG;
+import Game.Core.JavaRPG;
 
 /**
  * Мгновенный эффект, лечащий цель

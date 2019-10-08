@@ -1,7 +1,7 @@
 package Game.Actions;
 
 import Game.Core.Creature;
-import Engine.JavaRPG;
+import Game.Core.JavaRPG;
 import Game.Core.Position;
 
 public class MoveAction extends Action
