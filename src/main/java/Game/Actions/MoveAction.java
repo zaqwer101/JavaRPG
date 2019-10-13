@@ -7,9 +7,9 @@ import Game.Core.Position;
 public class MoveAction extends Action
 {
     int[] direction;
-    public MoveAction(Creature user, int cost, int[] direction)
+    public MoveAction(Creature user, int[] direction)
     {
-        super(user, ActionType.ACTION_MOVE, cost);
+        super(user, ActionType.ACTION_MOVE, 0);
         this.direction = direction;
     }
 
@@ -17,5 +17,6 @@ public class MoveAction extends Action
     public void use()
     {
         // TODO
+        // Не тратит очки действия, тратит очки передвижения
     }
 }
