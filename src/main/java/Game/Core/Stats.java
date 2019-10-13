@@ -17,7 +17,6 @@ public class Stats {
             "actionPoints", "maxActionPoints",
             "weight", "maxWeight", "baseMaxWeight",
             "movePoints", "movePointsPerAP", // сколько очков движения можно получить за очко действия
-
     };
 
     // Статы, которые нельзя складывать/вычитать друг из друга при сложении/вычитании объектов

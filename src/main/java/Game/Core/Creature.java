@@ -571,4 +571,17 @@ public class Creature extends WorldObject
     {
         return effects.toArray(new PeriodicEffect[0]);
     }
+
+    public boolean spendMovementPoints(int points)
+    {
+        int currentMP = stats.getStat("movementPoints");
+
+        if (currentMP >= points)
+        {
+            int newMP = currentMP - points;
+            stats.setStat("movementPoints", newMP);
+            return true;
+        } else
+            return false;
+    }
 }
