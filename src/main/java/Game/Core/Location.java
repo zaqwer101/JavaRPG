@@ -20,7 +20,7 @@ public class Location
                 if (i == 0 || f == 0 || f == sizeX - 1 || i == sizeY - 1)
                     location.add(new LocationPosition(f, i, false, '#'));
                 else
-                    location.add(new LocationPosition(f, i, true));
+                    location.add(new LocationPosition(f, i, true, 1));
             }
         }
     }

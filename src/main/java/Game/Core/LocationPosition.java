@@ -14,10 +14,12 @@ public class LocationPosition extends Position
     boolean passable;
     private char baseIcon;
     private ArrayList<Item> items;
+    private int movementCost;
 
-    public LocationPosition(int x, int y, boolean passable)
+    public LocationPosition(int x, int y, boolean passable, int movementCost)
     {
         super(x, y);
+        this.movementCost = movementCost;
         locationMember = null;
         locationItems = new ArrayList<>();
         this.icon = ' ';
@@ -87,5 +89,9 @@ public class LocationPosition extends Position
     public void removeItem(Item item)
     {
         items.remove(item);
+    }
+    public int getMovementCost()
+    {
+        return movementCost;
     }
 }
