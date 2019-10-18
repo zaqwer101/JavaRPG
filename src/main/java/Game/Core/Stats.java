@@ -134,12 +134,13 @@ public class Stats {
         stats.put("maxWeight", maxWeight);
 
         //////
-        // speed
+        // movePoints
         //////
-        if (stats.get("speed") <= 0)
-        {
-            stats.replace("speed", 1);
-        }
+        stats.put("movePointsPerAP", 1);
 
+        if (stats.get("movePoints") < 0)
+        {
+            stats.replace("movePoints", 0);
+        }
     }
 }
