@@ -182,7 +182,7 @@ public class CreatureTest {
     @Test
     public void moveTest()
     {
-        dummy.addAction(new MoveAction(dummy, 1, new int[] {1, 0}));
+        dummy.addAction(new MoveAction(dummy, new int[] {1, 0} ));
         dummy.endTurn();
         // проверяем, что существо корректно разместилось в новой локации
         assertEquals(dummy, location.getPosition(1, 0).getMember());
