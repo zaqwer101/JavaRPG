@@ -182,9 +182,10 @@ public class CreatureTest {
     @Test
     public void moveTest()
     {
-        // TODO проверить корректность работы с MP и AP при перемещении
-
+        int currentAP   = dummy.getAP()[0];
         dummy.performAction(new MoveAction(dummy, new int[] {1, 0} ));
+        assertEquals(currentAP - 1, dummy.getAP()[0]);
+
         // проверяем, что существо корректно разместилось в новой локации
         assertEquals(dummy, location.getPosition(3, 2).getMember());
 
