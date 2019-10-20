@@ -19,6 +19,8 @@ import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// TODO переписать всё на использование performAction(Action), отказаться от performAction
+
 public class CreatureTest {
     Creature dummy;
     Creature target;

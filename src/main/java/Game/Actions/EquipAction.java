@@ -13,8 +13,10 @@ public class EquipAction extends Action
     }
 
     @Override
-    public void use()
+    public boolean use()
     {
         this.user.equip(equipment);
+        // TODO сделать так чтобы при невозможности выполнить действия возвращалось false
+        return true;
     }
 }

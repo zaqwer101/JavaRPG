@@ -16,8 +16,14 @@ public class AttackAction extends Action
     }
 
     @Override
-    public void use()
+    public boolean use()
     {
-        attack.attack(user, target);
+        if (attack.getAttackDistance() <= user.getPosition().getDistance(target.getPosition()))
+        {
+            attack.attack(user, target);
+            return true;
+        }
+        else
+            return false;
     }
 }

@@ -15,7 +15,7 @@ public class MoveAction extends Action
 
     // Не тратит очки действия, тратит очки передвижения
     @Override
-    public void use()
+    public boolean use()
     {
         if (
                 user.getLocation().getPosition(
@@ -77,5 +77,8 @@ public class MoveAction extends Action
                 }
             }
         }
+
+        // TODO сделать так чтобы при невозможности выполнить действия возвращалось false
+        return true;
     }
 }

@@ -42,4 +42,8 @@ public abstract class Attack
     {
         return name;
     }
+    public int getAttackDistance()
+    {
+        return attackDistance;
+    }
 }

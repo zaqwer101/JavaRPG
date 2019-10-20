@@ -13,8 +13,10 @@ public class PickupAction extends Action
     }
 
     @Override
-    public void use()
+    public boolean use()
     {
         user.pickUpItem(item);
+        // TODO сделать так чтобы при невозможности выполнить действия возвращалось false
+        return true;
     }
 }

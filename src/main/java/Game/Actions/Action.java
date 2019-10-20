@@ -20,7 +20,7 @@ public abstract class Action
         this.cost = cost;
     }
 
-    public abstract void use();
+    public abstract boolean use();
 
     public int getCost()
     {
