@@ -27,8 +27,8 @@ public class CreatureTest {
     public void init()
     {
         location = new Location(10, 10);
-        dummy = new Creature("Dummy", '$', new Position(0, 0), location);
-        target = new Creature("Target", 'T', new Position(1, 1), location);
+        dummy = new Creature("Dummy", '$', new Position(2, 2), location);
+        target = new Creature("Target", 'T', new Position(3, 3), location);
     }
 
     @Test
@@ -118,12 +118,12 @@ public class CreatureTest {
     @Test
     public void locationTest()
     {
-        assertEquals(0, dummy.getPosition().getX());
-        assertEquals(0, dummy.getPosition().getY());
-        assertEquals(1, target.getPosition().getX());
-        assertEquals(1, target.getPosition().getY());
+        assertEquals(2, dummy.getPosition().getX());
+        assertEquals(2, dummy.getPosition().getY());
+        assertEquals(3, target.getPosition().getX());
+        assertEquals(3, target.getPosition().getY());
 
-        assertEquals(dummy, location.getPosition(0, 0).getMember());
+        assertEquals(dummy, location.getPosition(2, 2).getMember());
         assertEquals(target, location.getPosition(target.getPosition().getX(), target.getPosition().getY()).getMember());
     }
 
@@ -139,7 +139,7 @@ public class CreatureTest {
         }
 
         // проверяем, что после телепортации в предыдущей позиции ничего не осталось
-        assertNull(location.getPosition(0, 0).getMember());
+        assertNull(location.getPosition(2, 2).getMember());
 
         // проверяем, что существо корректно разместилось в новой локации
         assertEquals(dummy, location.getPosition(5, 5).getMember());
@@ -182,14 +182,15 @@ public class CreatureTest {
     @Test
     public void moveTest()
     {
-        dummy.addAction(new MoveAction(dummy, new int[] {1, 0} ));
-        dummy.endTurn();
+        // TODO проверить корректность работы с MP и AP при перемещении
+
+        dummy.performAction(new MoveAction(dummy, new int[] {1, 0} ));
         // проверяем, что существо корректно разместилось в новой локации
-        assertEquals(dummy, location.getPosition(1, 0).getMember());
+        assertEquals(dummy, location.getPosition(3, 2).getMember());
 
         // проверяем позицию существа
-        assertEquals(1, dummy.getPosition().getX());
-        assertEquals(0, dummy.getPosition().getY());
+        assertEquals(3, dummy.getPosition().getX());
+        assertEquals(2, dummy.getPosition().getY());
     }
 
     @Test

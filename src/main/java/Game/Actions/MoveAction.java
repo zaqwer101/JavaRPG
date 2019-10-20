@@ -37,15 +37,44 @@ public class MoveAction extends Action
                 {
                     user.teleport(new Position(user.getPosition().getX() + direction[0],
                             user.getPosition().getY() + direction[1]));
+
+                    // отнимаем MP
+                    user.addMP(-1 * user.getLocation().getPosition(
+                            user.getPosition().getX() + direction[0],
+                            user.getPosition().getY() + direction[1]).getMovementCost());
                 } catch (Exception e)
                 {
                     e.printStackTrace();
                 }
             }
-            else
+            else // если существу НЕ хватает очков передвижения
             {
-                // TODO
-                // Я хз как корректно конвертировать очки
+                // считаем, сколько MP не хватает для перехода, считаем, сколько AP потребуется для этого конвертировать
+                // конвертируем, переходим
+
+                // немного говнокода для лучшего понимания :/
+                int currentMP = user.getMP();
+                int needMP = user.getLocation().getPosition(
+                        user.getPosition().getX() + direction[0],
+                        user.getPosition().getY() + direction[1]).getMovementCost() - currentMP;
+                int needAP = (int)Math.ceil((double)needMP / (double)user.getStat("movePointsPerAP"));
+
+                if (user.spendActionPoints(needAP)) // если существу хватает очков действия
+                {
+                    user.addMP(needAP * user.getStat("movePointsPerAP")); // добавляем недостающее количество MP
+                    try
+                    {
+                        user.teleport(new Position(user.getPosition().getX() + direction[0],
+                                user.getPosition().getY() + direction[1])); // перемещаем существо
+                        // отнимаем MP
+                        user.addMP(-1 * user.getLocation().getPosition(
+                                user.getPosition().getX() + direction[0],
+                                user.getPosition().getY() + direction[1]).getMovementCost());
+                    } catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }

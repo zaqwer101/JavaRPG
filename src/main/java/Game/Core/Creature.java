@@ -584,4 +584,13 @@ public class Creature extends WorldObject
         } else
             return false;
     }
+    public int getMP()
+    {
+        return stats.getStat("movePoints");
+    }
+
+    public void addMP(int MP)
+    {
+        stats.setStat("movePoints", stats.getStat("movePoints") + MP);
+    }
 }
