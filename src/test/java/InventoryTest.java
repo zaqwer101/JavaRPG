@@ -48,7 +48,7 @@ public class InventoryTest
     public void pickupBackpackTest()
     {
         assertEquals(item, location.getPosition(dummy.getPosition().getX(), dummy.getPosition().getY()).getItems()[0]);
-
+        location.getPosition(dummy.getPosition()).addItem(backpack); // кладём предмет в локацию, чтобы можно было надеть оттуда
         dummy.equip(backpack);
         System.out.println(dummy.getCurrentWeight());
         assertEquals(backpack, dummy.getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BACKPACK));

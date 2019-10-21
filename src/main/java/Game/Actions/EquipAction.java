@@ -15,8 +15,6 @@ public class EquipAction extends Action
     @Override
     public boolean use()
     {
-        this.user.equip(equipment);
-        // TODO сделать так чтобы при невозможности выполнить действия возвращалось false
-        return true;
+        return this.user.equip(equipment);
     }
 }

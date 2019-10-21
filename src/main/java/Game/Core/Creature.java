@@ -315,6 +315,7 @@ public class Creature extends WorldObject
         {
             int newAP = currentAP - ap;
             stats.setStat("actionPoints", newAP);
+            String lol = "".toLowerCase();
             return true;
         } else
             return false;
@@ -339,7 +340,7 @@ public class Creature extends WorldObject
     {
         if (actionQueue.size() != 0)
         {
-            actionQueue.get(0).use();
+            performAction(actionQueue.get(0));
             actionQueue.remove(0);
         }
     }
@@ -371,6 +372,7 @@ public class Creature extends WorldObject
         stats.setStat("actionPoints", stats.getStat("maxActionPoints"));
         stats.recountStats();
         recountEffects();
+        JavaRPG.log(getName() + ": сдал ход");
     }
 
     public Action[] getActions()
@@ -378,15 +380,35 @@ public class Creature extends WorldObject
         return actionQueue.toArray(new Action[0]);
     }
 
-    public void equip(Equipment equipment)
+    public boolean equip(Equipment equipment)
     {
-        if (equipmentSlots.get(equipment.getSlot())!=null)
+        if (Arrays.asList(getInventory()).contains(equipment))
         {
-            unEquip(equipmentSlots.get(equipment.getSlot()));
+            if (equipmentSlots.get(equipment.getSlot()) != null)
+            {
+                unEquip(equipmentSlots.get(equipment.getSlot()));
+            }
+            equipment.onEquip(this);
+            equipmentSlots.replace(equipment.getSlot(), equipment);
+            deleteFromInventory(equipment);
+            return true;
         }
-        equipment.onEquip(this);
-        equipmentSlots.replace(equipment.getSlot(), equipment);
-        deleteFromInventory(equipment);
+        else
+        {
+            if (Arrays.asList(getLocation().getPosition(getPosition()).getItems()).contains(equipment))
+            {
+                if (equipmentSlots.get(equipment.getSlot()) != null)
+                {
+                    unEquip(equipmentSlots.get(equipment.getSlot()));
+                }
+                equipment.onEquip(this);
+                equipmentSlots.replace(equipment.getSlot(), equipment);
+                deleteFromInventory(equipment);
+                return true;
+            }
+            else
+                return false;
+        }
     }
 
     public void unEquip(Equipment equipment)

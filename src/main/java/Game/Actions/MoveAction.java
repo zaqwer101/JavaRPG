@@ -29,19 +29,20 @@ public class MoveAction extends Action
                     user.getPosition().getY() + direction[1]
             ).getMovementCost()) // если существу хватает очков передвижения
             {
-                user.spendActionPoints(user.getLocation().getPosition(
-                        user.getPosition().getX() + direction[0],
-                        user.getPosition().getY() + direction[1]
-                ).getMovementCost());
+//                user.spendActionPoints(user.getLocation().getPosition( // Чтобы не тратить очки действия, если есть очки передвижения
+//                        user.getPosition().getX() + direction[0],
+//                        user.getPosition().getY() + direction[1]
+//                ).getMovementCost());
                 try
                 {
                     user.teleport(new Position(user.getPosition().getX() + direction[0],
                             user.getPosition().getY() + direction[1]));
-
+                    JavaRPG.log(user.getName() + ": выполнен переход в " + user.getPosition().getX() + "/" + user.getPosition().getY());
                     // отнимаем MP
                     user.addMP(-1 * user.getLocation().getPosition(
                             user.getPosition().getX() + direction[0],
                             user.getPosition().getY() + direction[1]).getMovementCost());
+                    return true;
                 } catch (Exception e)
                 {
                     e.printStackTrace();
@@ -66,10 +67,12 @@ public class MoveAction extends Action
                     {
                         user.teleport(new Position(user.getPosition().getX() + direction[0],
                                 user.getPosition().getY() + direction[1])); // перемещаем существо
+                        JavaRPG.log(user.getName() + ": выполнен переход в " + user.getPosition().getX() + "/" + user.getPosition().getY());
                         // отнимаем MP
                         user.addMP(-1 * user.getLocation().getPosition(
                                 user.getPosition().getX() + direction[0],
                                 user.getPosition().getY() + direction[1]).getMovementCost());
+                        return true;
                     } catch (Exception e)
                     {
                         e.printStackTrace();
@@ -77,8 +80,13 @@ public class MoveAction extends Action
                 }
             }
         }
+        else
+        {
+            JavaRPG.log(user.getName() + " точка недоступна для перехода");
+            return false;
+        }
+        return false;
 
         // TODO сделать так чтобы при невозможности выполнить действия возвращалось false
-        return true;
     }
 }

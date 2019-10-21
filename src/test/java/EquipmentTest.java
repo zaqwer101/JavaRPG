@@ -32,6 +32,7 @@ public class EquipmentTest
         assertEquals(1, dummy.getStat("strength"));
         assertEquals(1, dummy.getStat("agility"));
         assertEquals(1, dummy.getStat("intelligence"));
+        location.getPosition(dummy.getPosition()).addItem(equipment); // кладём предмет в локацию, чтобы можно было надеть оттуда
 
         dummy.equip(equipment);
         assertEquals(11, dummy.getStat("strength"));
@@ -55,8 +56,8 @@ public class EquipmentTest
     {
         Resists resists = new Resists();
         resists.setResist(Resists.DamageType.PHYSICAL, 90);
-        equipment = new BodyArmor("Доспех", 10, 5, resists, equipmentStats);
-
+        equipment = new BodyArmor("Доспех", 10, 1, resists, equipmentStats);
+        location.getPosition(dummy.getPosition()).addItem(equipment); // кладём предмет в локацию, чтобы можно было надеть оттуда
         // Creature tester = new Creature("Dummy", '!', new Position(1, 1), location);
 
         assertEquals(8, dummy.getHp()[0]);
