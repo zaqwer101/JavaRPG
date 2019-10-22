@@ -262,4 +262,20 @@ public class CreatureTest {
 
         assertEquals(0, dummy.getEffects().length);
     }
+
+    @Test
+    public void dieTest()
+    {
+        var item = new Item("Item", 1, 1);
+        dummy.addToInventory(item);
+        var position = dummy.getLocation().getPosition(dummy.getPosition());
+
+        assertEquals(0, position.getItems().length);
+        assertEquals(dummy, position.getMember());
+
+        dummy.takeDamage(100000, Resists.DamageType.PURE); // чтоб наверняка убить
+
+        assertEquals(1, position.getItems().length);
+        assertNull(position.getMember());
+    }
 }

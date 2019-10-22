@@ -246,6 +246,11 @@ public class Creature extends WorldObject
         int blockedDamage = (int)(amount * coefficient);
         int damageTaken = amount - blockedDamage;
         getStats().setStat("hp", getHp()[0] - damageTaken);
+
+        if (isDead())
+        {
+            die();
+        }
     }
 
     /**
@@ -368,11 +373,11 @@ public class Creature extends WorldObject
      */
     public void endTurn()
     {
+        JavaRPG.log(getName() + ": сдал ход");
         doAllActions();
         stats.setStat("actionPoints", stats.getStat("maxActionPoints"));
         stats.recountStats();
         recountEffects();
-        JavaRPG.log(getName() + ": сдал ход");
     }
 
     public Action[] getActions()
@@ -614,5 +619,22 @@ public class Creature extends WorldObject
     public void addMP(int MP)
     {
         stats.setStat("movePoints", stats.getStat("movePoints") + MP);
+    }
+
+    public boolean isDead()
+    {
+        return getHp()[0] <= 0;
+    }
+
+    public void die()
+    {
+        stats.setStat("hp", 0);
+        for (var item : getInventory())
+            getLocation().getPosition(getPosition()).addItem(item);
+        getLocation().getPosition(getPosition()).setMember(null);
+        baseInventory = null;
+        equipmentSlots = null;
+        position = null;
+        location = null;
     }
 }
