@@ -2,8 +2,7 @@ plugins {
     id 'java'
 }
 
-version '1.0-SNAPSHOT'
-
+def version
 sourceCompatibility = 11
 
 repositories {
@@ -15,3 +14,18 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.1'
 }
+
+tasks.register("versionIncrement") {
+    doLast {
+        def versionPropsFile = file('version.properties')
+
+        def Properties versionProps = new Properties()
+        versionProps.load(new FileInputStream(versionPropsFile))
+        def code = versionProps['VERSION_CODE'].toInteger() + 1
+        versionProps['VERSION_CODE'] = code.toString()
+        versionProps['VERSION_NAME'] = versionProps['VERSION_BUILD'].toString() + "." + versionProps['VERSION_CODE']
+        version = versionProps['VERSION_NAME']
+        versionProps.store(versionPropsFile.newWriter(), null)
+    }
+}
+
