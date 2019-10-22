@@ -247,7 +247,7 @@ public class Creature extends WorldObject
         int damageTaken = amount - blockedDamage;
         getStats().setStat("hp", getHp()[0] - damageTaken);
 
-        if (isDead())
+        if (!isAlive())
         {
             die();
         }
@@ -326,47 +326,75 @@ public class Creature extends WorldObject
             return false;
     }
 
-    /**
-     * Добавить действие в очередь
-     * @param action
-     */
-    public void addAction(Action action)
+//    /**
+//     * Добавить действие в очередь
+//     * @param action
+//     */
+//    public void addAction(Action action)
+//    {
+//        if (spendActionPoints(action.getCost()))
+//            actionQueue.add(action);
+//        else
+//            JavaRPG.log(getName() + ": недостаточно очков дейстий для " + action.toString());
+//    }
+
+//    /**
+//     * Выполнить первое действие в списке
+//     */
+//    public void performAction()
+//    {
+//        if (actionQueue.size() != 0)
+//        {
+//            performAction(actionQueue.get(0));
+//            actionQueue.remove(0);
+//        }
+//    }
+
+    public boolean performAction(Action action)
     {
-        if (spendActionPoints(action.getCost()))
-            actionQueue.add(action);
+        if(spendActionPoints(action.getCost()))
+        {
+            if (action.use())
+            {
+                return true;
+            }
+            else
+            {
+                addAP(action.getCost());
+                JavaRPG.log(getName() + ": не хватило очков действий на " + action.toString());
+            }
+        }
         else
-            JavaRPG.log(getName() + ": недостаточно очков дейстий для " + action.toString());
-    }
-
-    /**
-     * Выполнить первое действие в списке
-     */
-    public void performAction()
-    {
-        if (actionQueue.size() != 0)
         {
-            performAction(actionQueue.get(0));
-            actionQueue.remove(0);
+            return false;
         }
-    }
 
-    public void performAction(Action action)
-    {
-        action.use();
+        return false;
     }
-
-    /**
-     * Выполнить все действия в очереди
-     */
-    public void doAllActions()
+    private void addAP(int cost)
     {
-        int size = actionQueue.size();
-        for (int i = 0; i < size; i++)
+        var newAP = stats.getStat("actionPoints") + cost;
+        if (getAP()[0] + newAP > getAP()[1])
         {
-            JavaRPG.log(getName() + ": выполнил действие " + actionQueue.get(0).toString());
-            performAction();
+            stats.setStat("maxActionPoints", newAP);
+            stats.setStat("actionPoints", newAP);
         }
+        else
+            stats.setStat("actionPoints", newAP);
     }
+
+//    /**
+//     * Выполнить все действия в очереди
+//     */
+//    public void doAllActions()
+//    {
+//        int size = actionQueue.size();
+//        for (int i = 0; i < size; i++)
+//        {
+//            JavaRPG.log(getName() + ": выполнил действие " + actionQueue.get(0).toString());
+//            performAction();
+//        }
+//    }
 
     /**
      * Завершить ход
@@ -374,16 +402,16 @@ public class Creature extends WorldObject
     public void endTurn()
     {
         JavaRPG.log(getName() + ": сдал ход");
-        doAllActions();
+//        doAllActions();
         stats.setStat("actionPoints", stats.getStat("maxActionPoints"));
         stats.recountStats();
         recountEffects();
     }
 
-    public Action[] getActions()
-    {
-        return actionQueue.toArray(new Action[0]);
-    }
+//    public Action[] getActions()
+//    {
+//        return actionQueue.toArray(new Action[0]);
+//    }
 
     public boolean equip(Equipment equipment)
     {
@@ -621,9 +649,9 @@ public class Creature extends WorldObject
         stats.setStat("movePoints", stats.getStat("movePoints") + MP);
     }
 
-    public boolean isDead()
+    public boolean isAlive()
     {
-        return getHp()[0] <= 0;
+        return getHp()[0] > 0;
     }
 
     public void die()

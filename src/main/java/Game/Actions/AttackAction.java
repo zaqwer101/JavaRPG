@@ -2,6 +2,7 @@ package Game.Actions;
 
 import Game.Attacks.Attack;
 import Game.Core.Creature;
+import Game.Core.JavaRPG;
 
 public class AttackAction extends Action
 {
@@ -18,12 +19,21 @@ public class AttackAction extends Action
     @Override
     public boolean use()
     {
-        if (attack.getAttackDistance() <= user.getPosition().getDistance(target.getPosition()))
+        if(target.isAlive())
         {
-            attack.attack(user, target);
-            return true;
+            if (attack.getAttackDistance() <= user.getPosition().getDistance(target.getPosition()))
+            {
+                attack.attack(user, target);
+                JavaRPG.log(user.getName() + ": атаковал " + target.getName());
+                return true;
+            }
+            else
+                return false;
         }
         else
+        {
+            JavaRPG.log(user.getName() + ": цель " + target.getName() + " уже мертва");
             return false;
+        }
     }
 }

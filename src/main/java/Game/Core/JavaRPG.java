@@ -24,62 +24,6 @@ public class JavaRPG
         }
     }
 
-    public static void combinedTest()
-    {
-        int turn = 0;
-
-        Creature dummy;
-        Creature target;
-        Location location;
-
-        Stats baseStats = new Stats();
-        baseStats.setStat("baseHp", 100);
-
-        location = new Location(10, 10);
-        dummy = new Creature("Dummy", '$', new Position(0, 0), baseStats, location);
-        target = new Creature("Target", 'T', new Position(1, 1), baseStats, location);
-
-        Stats buffStats = new Stats();
-        buffStats.setStat("agility", 1);
-        buffStats.setStat("endurance", 1);
-        buffStats.setStat("baseHp", 1000);
-
-        Attack trainingAttack = new MeleeAttack(5);
-
-        dummy.addEffect(new PeriodicStatsEffect(10, "Тренировочный бонус", buffStats));
-        target.addEffect(new PeriodicStatsEffect(10, "Тренировочный бонус", buffStats));
-
-        dummy.addAttack(trainingAttack);
-
-        while (dummy.getHp()[0] > 0 && target.getHp()[0] > 0)
-        {
-            if (turn == 1)
-            {
-                dummy.heal(1000);
-                target.heal(1000);
-            }
-
-            // dummy's turn
-            while (dummy.getAP()[0] > 0)
-            {
-                dummy.addAction(new AttackAction(dummy, target, 1, trainingAttack));
-            }
-            dummy.endTurn();
-
-            // target's turn
-//            while (target.getAP()[0] > 0)
-//            {
-//                target.addAction(new AttackAction(target, dummy, 1, trainingAttack));
-//            }
-            target.endTurn();
-
-            System.out.println();
-            JavaRPG.log("------------------ Конец хода " + turn + " --------------------");
-            System.out.println();
-            turn++;
-        }
-    }
-
     public static void main(String[] args)
     {
         System.out.println("It works!");

@@ -68,14 +68,14 @@ public class CreatureTest {
     {
         dummy.addAttack(new MeleeAttack(5));
         Attack attack = dummy.getAttacks()[0];
-        dummy.addAction(new AttackAction(dummy, target, 1, attack));
+
+        dummy.performAction(new AttackAction(dummy, target, 1, attack));
         // посмотрим, потратились ли очки действий
         assertEquals(0, dummy.getAP()[0]);
 
         // это действие не должно добавиться
-        dummy.addAction(new AttackAction(dummy, target, 1, attack));
+        dummy.performAction(new AttackAction(dummy, target, 1, attack));
 
-        dummy.performAction();
         assertEquals(3, target.getHp()[0]);
     }
 
@@ -87,11 +87,9 @@ public class CreatureTest {
         dummy.addAttack(new VampireBite(7));
         Attack attack = dummy.getAttacks()[0];
 
-        dummy.addAction(new AttackAction(dummy, target, 1, attack));
+        dummy.performAction(new AttackAction(dummy, target, 1, attack));
         // посмотрим, потратились ли очки действий
         assertEquals(0, dummy.getAP()[0]);
-
-        dummy.performAction();
 
         assertEquals(1, target.getHp()[0]);
         assertEquals(8, dummy.getHp()[0]);
@@ -170,15 +168,14 @@ public class CreatureTest {
 
         dummy.addAttack(new MeleeAttack(5));
         Attack attack = dummy.getAttacks()[0];
-        dummy.addAction(new AttackAction(dummy, target, 2, attack));
-        dummy.addAction(new AttackAction(dummy, target, 2, attack));
-        dummy.addAction(new AttackAction(dummy, target, 2, attack));
+        dummy.performAction(new AttackAction(dummy, target, 2, attack));
+        dummy.performAction(new AttackAction(dummy, target, 2, attack));
+        dummy.performAction(new AttackAction(dummy, target, 2, attack));
         assertEquals(1, dummy.getAP()[0]);
 
         dummy.endTurn();
 
-        // все ли действия были выполнены
-        assertEquals(0, dummy.getActions().length);
+        assertEquals(dummy.getAP()[0], dummy.getAP()[1]);
     }
 
     @Test
@@ -203,10 +200,7 @@ public class CreatureTest {
         location.getPosition(dummy.getPosition()).addItem(testItem);
         assertEquals(testItem, location.getPosition(dummy.getPosition()).getItems()[0]);
 
-        dummy.addAction(new PickupAction(dummy, testItem));
-        assertEquals("Action.Pickup", dummy.getActions()[0].toString());
-
-        dummy.doAllActions();
+        dummy.performAction(new PickupAction(dummy, testItem));
 
         assertEquals(0, location.getPosition(dummy.getPosition()).getItems().length);
         assertEquals(testItem, dummy.getInventory()[0]);
@@ -219,11 +213,11 @@ public class CreatureTest {
         location.getPosition(dummy.getPosition()).addItem(armor);
         assertEquals(1,location.getPosition(dummy.getPosition()).getItems().length);
 
-        dummy.addAction(new PickupAction(dummy, armor));
+        dummy.performAction(new PickupAction(dummy, armor));
 
         dummy.endTurn();
 
-        dummy.addAction(new EquipAction(dummy, armor));
+        dummy.performAction(new EquipAction(dummy, armor));
 
         dummy.endTurn();
 
@@ -276,6 +270,7 @@ public class CreatureTest {
         dummy.takeDamage(100000, Resists.DamageType.PURE); // чтоб наверняка убить
 
         assertEquals(1, position.getItems().length);
+        assertFalse(dummy.isAlive());
         assertNull(position.getMember());
     }
 }
