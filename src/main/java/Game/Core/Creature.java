@@ -314,16 +314,17 @@ public class Creature extends WorldObject
      */
     public boolean spendActionPoints(int ap)
     {
-        int currentAP = stats.getStat("actionPoints");
+        int currentAP = getAP()[0];
 
         if (currentAP >= ap)
         {
-            int newAP = currentAP - ap;
-            stats.setStat("actionPoints", newAP);
-            String lol = "".toLowerCase();
+            this.addAP(- ap);
             return true;
-        } else
+        }
+        else
+        {
             return false;
+        }
     }
 
 //    /**
@@ -360,12 +361,13 @@ public class Creature extends WorldObject
             }
             else
             {
+                JavaRPG.log(getName() + ": не удалось выполнить " + action.toString());
                 addAP(action.getCost());
-                JavaRPG.log(getName() + ": не хватило очков действий на " + action.toString());
             }
         }
         else
         {
+            JavaRPG.log(getName() + ": не хватило очков действий на " + action.toString());
             return false;
         }
 
