@@ -78,11 +78,16 @@ public class MoveAction extends Action
                         e.printStackTrace();
                     }
                 }
+                else
+                {
+                    JavaRPG.log(user.getName() + ": недостаточно очков действий для перехода");
+                    return false;
+                }
             }
         }
         else
         {
-            JavaRPG.log(user.getName() + " точка недоступна для перехода");
+            JavaRPG.log(user.getName() + ": точка недоступна для перехода");
             return false;
         }
         return false;
