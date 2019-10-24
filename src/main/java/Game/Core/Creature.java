@@ -659,9 +659,9 @@ public class Creature extends WorldObject
     public void die()
     {
         stats.setStat("hp", 0);
+        getLocation().getPosition(getPosition()).setMember(null);
         for (var item : getInventory())
             getLocation().getPosition(getPosition()).addItem(item);
-        getLocation().getPosition(getPosition()).setMember(null);
         baseInventory = null;
         equipmentSlots = null;
         position = null;

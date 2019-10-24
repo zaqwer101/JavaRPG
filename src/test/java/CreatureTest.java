@@ -272,5 +272,7 @@ public class CreatureTest {
         assertEquals(1, position.getItems().length);
         assertFalse(dummy.isAlive());
         assertNull(position.getMember());
+        assertEquals(item, location.getPosition(position).getItems()[0]);
+        assertEquals(item.getIcon(), location.getPosition(position).getIcon());
     }
 }
