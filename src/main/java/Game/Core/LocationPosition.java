@@ -79,7 +79,11 @@ public class LocationPosition extends Position
 
     public void addItem(Item item)
     {
-        this.items.add(item);
+        items.add(item);
+        if(getIcon() == baseIcon)
+        {
+            icon = item.getIcon();
+        }
     }
 
     public Item[] getItems()
