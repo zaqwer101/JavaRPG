@@ -7,6 +7,7 @@ import Game.Effects.PeriodicEffect;
 import Game.Core.Resists.DamageType;
 import Game.Items.Equipment.Armor.BackpackArmor;
 import Game.Items.Equipment.Equipment;
+import Game.Items.Equipment.Weapon.Weapon;
 import Game.Items.Inventory;
 import Game.Items.Item;
 
@@ -274,10 +275,44 @@ public class Creature extends WorldObject
 
     public Attack[] getAttacks()
     {
+        attacks = new ArrayList<>();
+        var weapons = getWeapons();
+
+        if (weapons.length == 0) // значит без оружия
+        {
+            this.attacks.addAll(this.unarmedAttacks);
+        }
+        else
+        {
+            for (int i = 0; i < weapons.length; i++) // если длина == 2, то два оружия
+            {
+                this.attacks.addAll(weapons[i].getAttacks());
+            }
+        }
+
         return attacks.toArray(new Attack[0]);
     }
 
-
+    // TODO
+    private Weapon[] getWeapons()
+    {
+        if (((Weapon)getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND)).isTwoHanded())
+        {
+            return new Weapon[] { (Weapon)getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND) };
+        }
+        else
+        {
+            if (getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND).getClass() == Weapon.class)
+            {
+                return new Weapon[] {
+                        (Weapon)getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND),
+                        (Weapon)getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND)
+                };
+            }
+            else
+                return new Weapon[] { (Weapon)getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND) };
+        }
+    }
 
     /**
      * Телепортация существа
