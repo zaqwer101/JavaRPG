@@ -275,6 +275,14 @@ public class Creature extends WorldObject
 
     public Attack[] getAttacks()
     {
+        recountAttacks();
+        return attacks.toArray(new Attack[0]);
+    }
+
+    // пересчитать список доступных атак
+    // TODO: допилить под случай отсутствия оружия
+    public void recountAttacks()
+    {
         attacks = new ArrayList<>();
         var weapons = getWeapons();
 
@@ -289,29 +297,27 @@ public class Creature extends WorldObject
                 this.attacks.addAll(weapons[i].getAttacks());
             }
         }
-
-        return attacks.toArray(new Attack[0]);
     }
 
-    // TODO
     private Weapon[] getWeapons()
     {
-        if (((Weapon)getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND)).isTwoHanded())
+        if (getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND) != null) // если в правой руке нет оружия - его нет совсем
         {
-            return new Weapon[] { (Weapon)getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND) };
+            if (((Weapon) getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND)).isTwoHanded())
+            {
+                return new Weapon[]{(Weapon) getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND)};
+            } else
+            {
+                if (getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND).getClass() == Weapon.class)
+                {
+                    return new Weapon[]{(Weapon) getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND), (Weapon) getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND)};
+                }
+            }
         }
         else
-        {
-            if (getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND).getClass() == Weapon.class)
-            {
-                return new Weapon[] {
-                        (Weapon)getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND),
-                        (Weapon)getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND)
-                };
-            }
-            else
-                return new Weapon[] { (Weapon)getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND) };
-        }
+            return null;
+
+        return null;
     }
 
     /**
