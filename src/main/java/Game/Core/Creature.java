@@ -22,7 +22,9 @@ public class Creature extends WorldObject
     private Stats stats;
     private Resists resists;
     private Position position;
-    private ArrayList<Attack> attacks;
+    private ArrayList<Attack> attacks; // все атаки существа
+    private ArrayList<Attack> baseAttacks; // набор атак существа, не зависящий от оружия, но требующих его
+    private ArrayList<Attack> unarmedAttacks; // набор базовых атак существа, не требующих оружия
     private Location location;
     private ArrayList<Action> actionQueue;
     private ArrayList<Effect> onAttackEffects, onTakeDamageEffects; // TODO
@@ -274,6 +276,8 @@ public class Creature extends WorldObject
     {
         return attacks.toArray(new Attack[0]);
     }
+
+
 
     /**
      * Телепортация существа
