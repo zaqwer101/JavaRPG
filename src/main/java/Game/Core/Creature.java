@@ -23,9 +23,9 @@ public class Creature extends WorldObject
     private Stats stats;
     private Resists resists;
     private Position position;
-    private ArrayList<Attack> attacks; // все атаки существа
-    private ArrayList<Attack> baseAttacks; // набор атак существа, не зависящий от оружия, но требующих его
-    private ArrayList<Attack> unarmedAttacks; // набор базовых атак существа, не требующих оружия
+    private ArrayList<Attack> attacks;          // все атаки существа
+    private ArrayList<Attack> baseAttacks;      // набор атак существа, не зависящий от оружия, но требующих его
+    private ArrayList<Attack> unarmedAttacks;   // набор базовых атак существа, не требующих оружия
     private Location location;
     private ArrayList<Action> actionQueue;
     private ArrayList<Effect> onAttackEffects, onTakeDamageEffects; // TODO
@@ -38,6 +38,9 @@ public class Creature extends WorldObject
      */
     public void checkBaseStats()
     {
+        this.baseAttacks = new ArrayList<>();
+        this.unarmedAttacks = new ArrayList<>();
+
         this.equipmentSlots = new HashMap<>();
         this.actionQueue = new ArrayList<>();
         this.baseInventory = new Inventory(20);
@@ -260,17 +263,18 @@ public class Creature extends WorldObject
      * Добавить атаку в список доступных
      * @param attack
      */
-    public void addAttack(Attack attack)
+    public void addUnarmedAttack(Attack attack)
     {
-        for (var a : attacks)
+        for (var a : unarmedAttacks)
         {
             if (attack.getName().equals(a.getName()))
             {
-                attacks.add(attacks.indexOf(a), attack);
+                unarmedAttacks.add(unarmedAttacks.indexOf(a), attack);
                 return;
             }
         }
-        attacks.add(attack);
+        unarmedAttacks.add(attack);
+        recountAttacks();
     }
 
     public Attack[] getAttacks()
@@ -295,6 +299,7 @@ public class Creature extends WorldObject
             {
                 this.attacks.addAll(weapons[i].getAttacks());
             }
+            this.attacks.addAll(baseAttacks);
         }
     }
 

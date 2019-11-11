@@ -66,7 +66,7 @@ public class CreatureTest {
     @Test
     public void attackTest()
     {
-        dummy.addAttack(new MeleeAttack(5));
+        dummy.addUnarmedAttack(new MeleeAttack(5));
         Attack attack = dummy.getAttacks()[0];
 
         dummy.performAction(new AttackAction(dummy, target, 1, attack));
@@ -84,7 +84,7 @@ public class CreatureTest {
     {
         dummy.takeDamage(7, Resists.DamageType.PURE);
         assertEquals(1, dummy.getHp()[0]);
-        dummy.addAttack(new VampireBite(7));
+        dummy.addUnarmedAttack(new VampireBite(7));
         Attack attack = dummy.getAttacks()[0];
 
         dummy.performAction(new AttackAction(dummy, target, 1, attack));
@@ -166,7 +166,7 @@ public class CreatureTest {
 
         assertEquals(5, dummy.getAP()[0]);
 
-        dummy.addAttack(new MeleeAttack(5));
+        dummy.addUnarmedAttack(new MeleeAttack(5));
         Attack attack = dummy.getAttacks()[0];
         dummy.performAction(new AttackAction(dummy, target, 2, attack));
         dummy.performAction(new AttackAction(dummy, target, 2, attack));
