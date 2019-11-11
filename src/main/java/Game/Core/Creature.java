@@ -280,7 +280,6 @@ public class Creature extends WorldObject
     }
 
     // пересчитать список доступных атак
-    // TODO: допилить под случай отсутствия оружия
     public void recountAttacks()
     {
         attacks = new ArrayList<>();
@@ -292,7 +291,7 @@ public class Creature extends WorldObject
         }
         else
         {
-            for (int i = 0; i < weapons.length; i++) // если длина == 2, то два оружия
+            for (int i = 0; i < weapons.length; i++) // если длина == 2, то два оружия, получаем атаки обоих
             {
                 this.attacks.addAll(weapons[i].getAttacks());
             }
@@ -315,9 +314,9 @@ public class Creature extends WorldObject
             }
         }
         else
-            return null;
+            return new Weapon[] {};
 
-        return null;
+        return new Weapon[] {};
     }
 
     /**
