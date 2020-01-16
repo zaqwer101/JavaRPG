@@ -81,12 +81,6 @@ public class Creature extends WorldObject
         resists = new Resists(new HashMap());
         stats = new Stats();
         effects = new ArrayList<>();
-//        stats.setStat("level", 1);
-//        stats.setStat("expToLevel", 100);
-//        stats.setStat("strength", 1);
-//        stats.setStat("agility", 1);
-//        stats.setStat("intelligence", 1);
-//        stats.setStat("endurance", 1);
         checkBaseStats();
         stats.setStat("baseHp", 0);
         stats.setStat("hp", stats.getStat("maxHp"));
@@ -376,30 +370,6 @@ public class Creature extends WorldObject
         }
     }
 
-//    /**
-//     * Добавить действие в очередь
-//     * @param action
-//     */
-//    public void addAction(Action action)
-//    {
-//        if (spendActionPoints(action.getCost()))
-//            actionQueue.add(action);
-//        else
-//            JavaRPG.log(getName() + ": недостаточно очков дейстий для " + action.toString());
-//    }
-
-//    /**
-//     * Выполнить первое действие в списке
-//     */
-//    public void performAction()
-//    {
-//        if (actionQueue.size() != 0)
-//        {
-//            performAction(actionQueue.get(0));
-//            actionQueue.remove(0);
-//        }
-//    }
-
     public boolean performAction(Action action)
     {
         if(spendActionPoints(action.getCost()))
@@ -434,18 +404,6 @@ public class Creature extends WorldObject
             stats.setStat("actionPoints", newAP);
     }
 
-//    /**
-//     * Выполнить все действия в очереди
-//     */
-//    public void doAllActions()
-//    {
-//        int size = actionQueue.size();
-//        for (int i = 0; i < size; i++)
-//        {
-//            JavaRPG.log(getName() + ": выполнил действие " + actionQueue.get(0).toString());
-//            performAction();
-//        }
-//    }
 
     /**
      * Завершить ход
@@ -453,16 +411,10 @@ public class Creature extends WorldObject
     public void endTurn()
     {
         JavaRPG.log(getName() + ": сдал ход");
-//        doAllActions();
         stats.setStat("actionPoints", stats.getStat("maxActionPoints"));
         stats.recountStats();
         recountEffects();
     }
-
-//    public Action[] getActions()
-//    {
-//        return actionQueue.toArray(new Action[0]);
-//    }
 
     public boolean equip(Equipment equipment)
     {
