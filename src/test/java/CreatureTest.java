@@ -205,7 +205,7 @@ public class CreatureTest {
     }
 
     @Test
-    public void equipActionTest()
+    public void equipFromInventoryActionTest()
     {
         BodyArmor armor = new BodyArmor("Доспех",1, 1, new Resists(), new Stats());
         location.getPosition(dummy.getPosition()).addItem(armor);
@@ -217,6 +217,19 @@ public class CreatureTest {
 
         dummy.performAction(new EquipAction(dummy, armor));
 
+        dummy.endTurn();
+
+        assertEquals(0,location.getPosition(dummy.getPosition()).getItems().length);
+        assertEquals(0, dummy.getInventory().length);
+        assertEquals(armor, dummy.getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BODY));
+    }
+
+    @Test
+    public void equipFromLocationActionTest()
+    {
+        BodyArmor armor = new BodyArmor("Доспех",1, 1, new Resists(), new Stats());
+        location.getPosition(dummy.getPosition()).addItem(armor);
+        dummy.performAction(new EquipAction(dummy, armor));
         dummy.endTurn();
 
         assertEquals(0,location.getPosition(dummy.getPosition()).getItems().length);

@@ -418,8 +418,10 @@ public class Creature extends WorldObject
 
     public boolean equip(Equipment equipment)
     {
-        if (Arrays.asList(getInventory()).contains(equipment))
+        // Если шмотка есть в инвентаре
+        if (Arrays.asList(getInventory()).contains(equipment)) // Если шмотка есть в инвентаре
         {
+            // Если в слоте куда надеваем уже есть шмотка
             if (equipmentSlots.get(equipment.getSlot()) != null)
             {
                 unEquip(equipmentSlots.get(equipment.getSlot()));
@@ -431,15 +433,17 @@ public class Creature extends WorldObject
         }
         else
         {
+            // Если шмотка лежит в локации
             if (Arrays.asList(getLocation().getPosition(getPosition()).getItems()).contains(equipment))
             {
+                // Если в слоте куда надеваем уже есть шмотка
                 if (equipmentSlots.get(equipment.getSlot()) != null)
                 {
                     unEquip(equipmentSlots.get(equipment.getSlot()));
                 }
                 equipment.onEquip(this);
                 equipmentSlots.replace(equipment.getSlot(), equipment);
-                deleteFromInventory(equipment);
+                this.getLocation().getPosition(this.getPosition()).removeItem(equipment);
                 return true;
             }
             else
@@ -449,7 +453,6 @@ public class Creature extends WorldObject
 
     public void unEquip(Equipment equipment)
     {
-        // TODO: выкладывать в инвентарь снаряжение при снятии
         equipment.onUnEquip(this);
 
         if (getMaxFreeSize() >= equipment.getSize() || getFreeWeight() >= equipment.getWeight())
