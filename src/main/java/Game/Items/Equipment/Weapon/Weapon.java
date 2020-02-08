@@ -19,14 +19,17 @@ public abstract class Weapon extends Equipment
         this.attacks = attacks;
     }
 
-//    // TODO
-//    @Override
-//    public void onEquip(Creature target)
-//    {
-//        target.addStats(getStats());
-//        target.addResists(getResists());
-//        JavaRPG.log(target.getName() + ": надел " + getName());
-//    }
+    // TODO
+    @Override
+    public void onEquip(Creature target)
+    {
+        if(getStats() != null)
+            target.addStats(getStats());
+        if (getResists() != null)
+            target.addResists(getResists());
+        target.recountAttacks();
+        JavaRPG.log(target.getName() + ": надел " + getName());
+    }
 
     public ArrayList<Attack> getAttacks()
     {

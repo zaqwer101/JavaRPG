@@ -2,6 +2,7 @@ package Game.Core;
 
 import Game.Actions.Action;
 import Game.Attacks.Attack;
+import Game.Attacks.MeleeAttack;
 import Game.Effects.Effect;
 import Game.Effects.PeriodicEffect;
 import Game.Core.Resists.DamageType;
@@ -11,6 +12,7 @@ import Game.Items.Equipment.Weapon.Weapon;
 import Game.Items.Inventory;
 import Game.Items.Item;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -24,8 +26,9 @@ public class Creature extends WorldObject
     private Resists resists;
     private Position position;
     private ArrayList<Attack> attacks;          // все атаки существа
-    private ArrayList<Attack> baseAttacks;      // набор атак существа, не зависящий от оружия, но требующих его
-    private ArrayList<Attack> unarmedAttacks;   // набор базовых атак существа, не требующих оружия
+    private ArrayList<Attack> baseArmedAttacks; // набор атак существа, не зависящий от оружия, но требующих его
+    private ArrayList<Attack> baseAttacks;      // набор базовых атак
+    private ArrayList<Attack> unarmedAttacks;   // набор базовых безоружных атак существа
     private Location location;
     private ArrayList<Action> actionQueue;
     private ArrayList<Effect> onAttackEffects, onTakeDamageEffects; // TODO
@@ -38,8 +41,9 @@ public class Creature extends WorldObject
      */
     public void checkBaseStats()
     {
-        this.baseAttacks = new ArrayList<>();
+        this.baseArmedAttacks = new ArrayList<>();
         this.unarmedAttacks = new ArrayList<>();
+        this.baseAttacks = new ArrayList<>();
 
         this.equipmentSlots = new HashMap<>();
         this.actionQueue = new ArrayList<>();
@@ -59,6 +63,7 @@ public class Creature extends WorldObject
             stats.setStat("intelligence", 1);
         if (this.stats.getStat("endurance") <= 0)
             stats.setStat("endurance", 1);
+        recountAttacks();
     }
 
     public Creature(String name, char icon, Position position, Location location)
@@ -280,12 +285,15 @@ public class Creature extends WorldObject
     // пересчитать список доступных атак
     public void recountAttacks()
     {
-        attacks = new ArrayList<>();
+        this.attacks = new ArrayList<>();
         var weapons = getWeapons();
 
         if (weapons.length == 0) // значит без оружия
         {
-            this.attacks.addAll(this.unarmedAttacks);
+            if (unarmedAttacks.size() == 0)
+                attacks.add(new MeleeAttack(getStat("strength")));
+            else
+                this.attacks.addAll(this.unarmedAttacks);
         }
         else
         {
@@ -293,8 +301,9 @@ public class Creature extends WorldObject
             {
                 this.attacks.addAll(weapons[i].getAttacks());
             }
-            this.attacks.addAll(baseAttacks);
+            this.attacks.addAll(baseArmedAttacks);
         }
+        this.attacks.addAll(baseAttacks);
     }
 
     private Weapon[] getWeapons()
@@ -306,7 +315,8 @@ public class Creature extends WorldObject
                 return new Weapon[]{(Weapon) getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND)};
             } else
             {
-                if (getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND).getClass() == Weapon.class)
+                if (getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND) != null &&
+                        getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND).getClass() == Weapon.class)
                 {
                     return new Weapon[]{(Weapon) getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND), (Weapon) getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND)};
                 }

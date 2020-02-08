@@ -28,6 +28,7 @@ public class WeaponTest
     @Test
     public void weaponEquipTest()
     {
+        JavaRPG.log(dummy.getAttacks()[0].getName());
         assertEquals(weapon, location.getPosition(dummy.getPosition()).getItems()[0]);
         dummy.pickUpItem(weapon);
         assertEquals(0, location.getPosition(dummy.getPosition()).getItems().length);
@@ -36,9 +37,23 @@ public class WeaponTest
         dummy.equip(weapon);
         assertEquals(0, dummy.getInventory().length);
         assertEquals(weapon, dummy.getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND));
+        assertEquals(1, dummy.getAttacks().length);
+        JavaRPG.log(dummy.getAttacks()[0].getName());
+
 
         dummy.unEquip(dummy.getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND));
         assertEquals(null, dummy.getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND));
         assertEquals(weapon, dummy.getInventory()[0]);
+
+
+    }
+
+    @Test
+    public void weaponAttackTest()
+    {
+        dummy.pickUpItem(weapon);
+        dummy.equip(weapon);
+
+
     }
 }
