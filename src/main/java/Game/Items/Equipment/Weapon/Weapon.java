@@ -9,7 +9,7 @@ import Game.Items.Equipment.Equipment;
 
 import java.util.ArrayList;
 
-public class Weapon extends Equipment
+public abstract class Weapon extends Equipment
 {
     private ArrayList<Attack> attacks;
     private boolean isTwoHanded;
@@ -19,15 +19,14 @@ public class Weapon extends Equipment
         this.attacks = attacks;
     }
 
-    // TODO
-    @Override
-    public void onEquip(Creature target)
-    {
-        target.addStats(getStats());
-        target.addResists(getResists());
-
-        JavaRPG.log(target.getName() + ": надел " + getName());
-    }
+//    // TODO
+//    @Override
+//    public void onEquip(Creature target)
+//    {
+//        target.addStats(getStats());
+//        target.addResists(getResists());
+//        JavaRPG.log(target.getName() + ": надел " + getName());
+//    }
 
     public ArrayList<Attack> getAttacks()
     {

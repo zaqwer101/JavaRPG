@@ -28,15 +28,19 @@ public class Equipment extends Item
 
     public void onEquip(Creature target)
     {
-        target.addStats(stats);
-        target.addResists(resists);
+        if(stats != null)
+            target.addStats(stats);
+        if(resists != null)
+            target.addResists(resists);
         JavaRPG.log(target.getName() + ": надел " + getName());
     }
 
     public void onUnEquip(Creature target)
     {
-        target.subStats(stats);
-        target.subResists(resists);
+        if(stats != null)
+            target.subStats(stats);
+        if(resists != null)
+            target.subResists(resists);
         JavaRPG.log(target.getName() + ": снял " + getName());
     }
 
