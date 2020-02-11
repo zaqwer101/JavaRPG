@@ -39,13 +39,11 @@ public class WeaponTest
         assertEquals(weapon, dummy.getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND));
         assertEquals(1, dummy.getAttacks().length);
         JavaRPG.log(dummy.getAttacks()[0].getName());
-
+        assertEquals("Атака мечом", dummy.getAttacks()[0].getName());
 
         dummy.unEquip(dummy.getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND));
         assertEquals(null, dummy.getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND));
         assertEquals(weapon, dummy.getInventory()[0]);
-
-
     }
 
     @Test
@@ -53,7 +51,5 @@ public class WeaponTest
     {
         dummy.pickUpItem(weapon);
         dummy.equip(weapon);
-
-
     }
 }

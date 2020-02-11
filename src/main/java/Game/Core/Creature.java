@@ -63,7 +63,6 @@ public class Creature extends WorldObject
             stats.setStat("intelligence", 1);
         if (this.stats.getStat("endurance") <= 0)
             stats.setStat("endurance", 1);
-        recountAttacks();
     }
 
     public Creature(String name, char icon, Position position, Location location)
@@ -90,8 +89,8 @@ public class Creature extends WorldObject
         stats.setStat("baseHp", 0);
         stats.setStat("hp", stats.getStat("maxHp"));
         stats.setStat("actionPoints", stats.getStat("maxActionPoints"));
-
         stats.recountStats();
+        recountAttacks();
     }
 
     public Creature(String name, char icon, Position position, Stats stats, Location location)
@@ -316,16 +315,17 @@ public class Creature extends WorldObject
             } else
             {
                 if (getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND) != null &&
-                        getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND).getClass() == Weapon.class)
+                        getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND).getClass() == Weapon.class) // если оружие есть и в левой руке
                 {
                     return new Weapon[]{(Weapon) getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND), (Weapon) getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND)};
+                } else // если в левой руке оружия нет, есть только в правой
+                {
+                    return new Weapon[] { (Weapon) getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND)};
                 }
             }
         }
         else
             return new Weapon[] {};
-
-        return new Weapon[] {};
     }
 
     /**
@@ -439,6 +439,7 @@ public class Creature extends WorldObject
             equipment.onEquip(this);
             equipmentSlots.replace(equipment.getSlot(), equipment);
             deleteFromInventory(equipment);
+            recountAttacks();
             return true;
         }
         else
@@ -454,6 +455,7 @@ public class Creature extends WorldObject
                 equipment.onEquip(this);
                 equipmentSlots.replace(equipment.getSlot(), equipment);
                 this.getLocation().getPosition(this.getPosition()).removeItem(equipment);
+                recountAttacks();
                 return true;
             }
             else

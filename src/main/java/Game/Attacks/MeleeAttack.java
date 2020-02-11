@@ -20,4 +20,13 @@ public class MeleeAttack extends Attack
                 ), damageAmount
         );
     }
+
+    public MeleeAttack(int damageAmount, String name)
+    {
+        super(name, 1, new ArrayList<Effect>(),
+                new ArrayList<Effect>(
+                        Arrays.asList(new InstantDamage("Физический урон", DamageType.PHYSICAL, damageAmount))
+                ), damageAmount
+        );
+    }
 }
