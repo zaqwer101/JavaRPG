@@ -46,4 +46,5 @@ public abstract class Attack
     {
         return attackDistance;
     }
+    public int getDamage() { return damageAmount; };
 }

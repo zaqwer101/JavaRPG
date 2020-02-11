@@ -1,5 +1,7 @@
+import Game.Actions.AttackAction;
 import Game.Core.*;
 import Game.Effects.InstantDamage;
+import Game.Effects.PeriodicStatsEffect;
 import Game.Items.Equipment.Armor.BodyArmor;
 import Game.Items.Equipment.Equipment;
 import Game.Items.Equipment.Weapon.ShortSword;
@@ -49,7 +51,19 @@ public class WeaponTest
     @Test
     public void weaponAttackTest()
     {
+        var additionalStats = new Stats();
+        additionalStats.setStat("strength", 100);
+        target.addEffect(new PeriodicStatsEffect(10, "Чтоб не сдох", additionalStats));
+        target.endTurn();
+        target.heal(10000);
+        assertEquals(target.getHp()[1], target.getHp()[0]); // смотрим, что полные хп
+        JavaRPG.log("Сейчас здоровья: " + target.getHp()[0]);
+
         dummy.pickUpItem(weapon);
         dummy.equip(weapon);
+        dummy.performAction(new AttackAction(dummy, target, 0, dummy.getAttacks()[0]));
+
+        assertEquals(target.getHp()[1] - ((Weapon)(dummy.getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND))).getAttacks().get(0).getDamage(),
+                target.getHp()[0]); // проверяем, что удар достиг цели
     }
 }
