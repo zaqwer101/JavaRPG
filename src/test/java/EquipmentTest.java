@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class EquipmentTest
 {
-    Stats equipmentStats;
+    Stats equipmentStats, equipmentRequirements;
     Equipment equipment;
     Creature dummy;
     Location location;
@@ -18,7 +18,8 @@ public class EquipmentTest
     public void init()
     {
         location = new Location(10, 10);
-        this.equipmentStats = new Stats();
+        equipmentRequirements = new Stats();
+        equipmentStats = new Stats();
         equipmentStats.setStat("strength",      10);
         equipmentStats.setStat("agility",       10);
         equipmentStats.setStat("intelligence",  10);
@@ -28,7 +29,7 @@ public class EquipmentTest
     @Test
     public void armorStatsTest()
     {
-        equipment = new BodyArmor("Доспех", 1, 5, new Resists(), equipmentStats);
+        equipment = new BodyArmor("Доспех", 1, 5, new Resists(), equipmentStats, equipmentRequirements);
         assertEquals(1, dummy.getStat("strength"));
         assertEquals(1, dummy.getStat("agility"));
         assertEquals(1, dummy.getStat("intelligence"));
@@ -56,7 +57,7 @@ public class EquipmentTest
     {
         Resists resists = new Resists();
         resists.setResist(Resists.DamageType.PHYSICAL, 90);
-        equipment = new BodyArmor("Доспех", 10, 1, resists, equipmentStats);
+        equipment = new BodyArmor("Доспех", 10, 1, resists, equipmentStats, equipmentRequirements);
         location.getPosition(dummy.getPosition()).addItem(equipment); // кладём предмет в локацию, чтобы можно было надеть оттуда
         // Creature tester = new Creature("Dummy", '!', new Position(1, 1), location);
 

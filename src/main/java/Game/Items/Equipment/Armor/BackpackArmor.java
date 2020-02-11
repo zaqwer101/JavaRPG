@@ -8,9 +8,9 @@ import Game.Items.Item;
 public class BackpackArmor extends Armor
 {
     Inventory inventory;
-    public BackpackArmor(String name, int weight, int size, Resists resists, Stats stats, int inventorySize)
+    public BackpackArmor(String name, int weight, int size, Resists resists, Stats stats, Stats requirements, int inventorySize)
     {
-        super(name, weight, size, EquipmentSlot.EQUIPMENT_BACKPACK, resists, stats);
+        super(name, weight, size, EquipmentSlot.EQUIPMENT_BACKPACK, resists, stats, requirements);
         inventory = new Inventory(inventorySize);
     }
 

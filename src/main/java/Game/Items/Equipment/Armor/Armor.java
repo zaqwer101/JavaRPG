@@ -6,8 +6,8 @@ import Game.Items.Equipment.Equipment;
 
 public abstract class Armor extends Equipment
 {
-    Armor(String name, int weight, int size, EquipmentSlot slot, Resists resists, Stats stats)
+    Armor(String name, int weight, int size, EquipmentSlot slot, Resists resists, Stats stats, Stats requirements)
     {
-        super(name, weight, size, slot, resists, stats);
+        super(name, weight, size, slot, resists, stats, requirements);
     }
 }

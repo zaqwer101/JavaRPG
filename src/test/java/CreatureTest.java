@@ -23,9 +23,11 @@ public class CreatureTest {
     Creature dummy;
     Creature target;
     Location location;
+    Stats equipmentRequirements;
     @Before
     public void init()
     {
+        equipmentRequirements = new Stats();
         location = new Location(10, 10);
         dummy = new Creature("Dummy", '$', new Position(2, 2), location);
         target = new Creature("Target", 'T', new Position(3, 3), location);
@@ -207,7 +209,7 @@ public class CreatureTest {
     @Test
     public void equipFromInventoryActionTest()
     {
-        BodyArmor armor = new BodyArmor("Доспех",1, 1, new Resists(), new Stats());
+        BodyArmor armor = new BodyArmor("Доспех",1, 1, new Resists(), new Stats(), new Stats());
         location.getPosition(dummy.getPosition()).addItem(armor);
         assertEquals(1,location.getPosition(dummy.getPosition()).getItems().length);
 
@@ -227,7 +229,7 @@ public class CreatureTest {
     @Test
     public void equipFromLocationActionTest()
     {
-        BodyArmor armor = new BodyArmor("Доспех",1, 1, new Resists(), new Stats());
+        BodyArmor armor = new BodyArmor("Доспех",1, 1, new Resists(), new Stats(), new Stats());
         location.getPosition(dummy.getPosition()).addItem(armor);
         dummy.performAction(new EquipAction(dummy, armor));
         dummy.endTurn();

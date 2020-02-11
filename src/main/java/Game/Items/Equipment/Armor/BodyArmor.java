@@ -5,8 +5,8 @@ import Game.Core.Stats;
 
 public class BodyArmor extends Armor
 {
-    public BodyArmor(String name, int weight, int size, Resists resists, Stats stats)
+    public BodyArmor(String name, int weight, int size, Resists resists, Stats stats, Stats requirements)
     {
-        super(name, weight, size, EquipmentSlot.EQUIPMENT_BODY, resists, stats);
+        super(name, weight, size, EquipmentSlot.EQUIPMENT_BODY, resists, stats, requirements);
     }
 }

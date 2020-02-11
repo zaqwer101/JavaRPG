@@ -431,21 +431,7 @@ public class Creature extends WorldObject
         // Если шмотка есть в инвентаре
         if (Arrays.asList(getInventory()).contains(equipment)) // Если шмотка есть в инвентаре
         {
-            // Если в слоте куда надеваем уже есть шмотка
-            if (equipmentSlots.get(equipment.getSlot()) != null)
-            {
-                unEquip(equipmentSlots.get(equipment.getSlot()));
-            }
-            equipment.onEquip(this);
-            equipmentSlots.replace(equipment.getSlot(), equipment);
-            deleteFromInventory(equipment);
-            recountAttacks();
-            return true;
-        }
-        else
-        {
-            // Если шмотка лежит в локации
-            if (Arrays.asList(getLocation().getPosition(getPosition()).getItems()).contains(equipment))
+            if (equipment.checkRequirements(this)) // Если можем надеть шмотку
             {
                 // Если в слоте куда надеваем уже есть шмотка
                 if (equipmentSlots.get(equipment.getSlot()) != null)
@@ -454,9 +440,33 @@ public class Creature extends WorldObject
                 }
                 equipment.onEquip(this);
                 equipmentSlots.replace(equipment.getSlot(), equipment);
-                this.getLocation().getPosition(this.getPosition()).removeItem(equipment);
+                deleteFromInventory(equipment);
                 recountAttacks();
                 return true;
+            }
+            else
+                return false;
+        }
+        else
+        {
+            // Если шмотка лежит в локации
+            if (Arrays.asList(getLocation().getPosition(getPosition()).getItems()).contains(equipment))
+            {
+                if (equipment.checkRequirements(this)) // Если можем надеть шмотку
+                {
+                    // Если в слоте куда надеваем уже есть шмотка
+                    if (equipmentSlots.get(equipment.getSlot()) != null)
+                    {
+                        unEquip(equipmentSlots.get(equipment.getSlot()));
+                    }
+                    equipment.onEquip(this);
+                    equipmentSlots.replace(equipment.getSlot(), equipment);
+                    this.getLocation().getPosition(this.getPosition()).removeItem(equipment);
+                    recountAttacks();
+                    return true;
+                }
+                else
+                    return false;
             }
             else
                 return false;

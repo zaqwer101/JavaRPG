@@ -15,14 +15,16 @@ public class WeaponTest
     Location location;
     Creature dummy, target;
     Weapon weapon;
+    Stats weaponRequirements;
 
     @Before
     public void before()
     {
+        weaponRequirements = new Stats();
         location = new Location(10, 10);
         dummy = new Creature("Dummy", '$', new Position(2, 2), location);
         target = new Creature("Target", 'T', new Position(3, 3), location);
-        weapon = new ShortSword("Sword", 1, 1, Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND, null, null, 10);
+        weapon = new ShortSword("Sword", 1, 1, Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND, null, null, weaponRequirements, 10);
 
         dummy.getLocation().getPosition(dummy.getPosition()).addItem(weapon);
     }
@@ -65,5 +67,11 @@ public class WeaponTest
 
         assertEquals(target.getHp()[1] - ((Weapon)(dummy.getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND))).getAttacks().get(0).getDamage(),
                 target.getHp()[0]); // проверяем, что удар достиг цели
+    }
+
+    @Test
+    public void twoHandedWeaponEquipTest()
+    {
+
     }
 }

@@ -6,6 +6,8 @@ import Game.Core.Resists;
 import Game.Core.Stats;
 import Game.Items.Item;
 
+import java.util.Arrays;
+
 public class Equipment extends Item
 {
     public static enum EquipmentSlot
@@ -16,14 +18,15 @@ public class Equipment extends Item
 
     private EquipmentSlot slot;
     private Resists resists;
-    private Stats stats;
+    private Stats stats, requirements;
 
-    public Equipment(String name, int weight, int size, EquipmentSlot slot, Resists resists, Stats stats)
+    public Equipment(String name, int weight, int size, EquipmentSlot slot, Resists resists, Stats stats, Stats requirements)
     {
         super(name, weight, size);
         this.resists = resists;
         this.slot = slot;
         this.stats = stats;
+        this.requirements = requirements;
     }
 
     public void onEquip(Creature target)
@@ -57,5 +60,20 @@ public class Equipment extends Item
     public Resists getResists()
     {
         return resists;
+    }
+
+    public boolean checkRequirements(Creature target)
+    {
+        for (var stat : Stats.allStats)
+        {
+            if (!Arrays.asList(Stats.nonFoldingStats).contains(stat))
+            {
+                if (requirements.getStat(stat) > target.getStat(stat))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

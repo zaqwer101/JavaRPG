@@ -14,8 +14,8 @@ public abstract class Weapon extends Equipment
     private ArrayList<Attack> attacks;
     private boolean isTwoHanded;
 
-    public Weapon(String name, int weight, int size, EquipmentSlot slot, Resists resists, Stats stats, ArrayList<Attack> attacks) {
-        super(name, weight, size, slot, resists, stats);
+    public Weapon(String name, int weight, int size, EquipmentSlot slot, Resists resists, Stats stats, Stats requirements, ArrayList<Attack> attacks) {
+        super(name, weight, size, slot, resists, stats, requirements);
         this.attacks = attacks;
     }
 

@@ -19,7 +19,7 @@ public class InventoryTest
     {
         int itemsInLocationCount = 10;
         location = new Location(10, 10);
-        backpack = new BackpackArmor("Рюкзак", 1, 1, new Resists(), new Stats(), 50);
+        backpack = new BackpackArmor("Рюкзак", 1, 1, new Resists(), new Stats(), new Stats(), 50);
         dummy = new Creature("Dummy", '$', new Position(1, 1), location);
         item = new Item("KEK", 5, 20);
         for (int i = 0; i < itemsInLocationCount; i++)

@@ -11,8 +11,8 @@ import java.util.List;
 
 public class ShortSword extends Weapon
 {
-    public ShortSword(String name, int weight, int size, EquipmentSlot slot, Resists resists, Stats stats, int damage)
+    public ShortSword(String name, int weight, int size, EquipmentSlot slot, Resists resists, Stats stats, Stats requirements, int damage)
     {
-        super(name, weight, size, slot, resists, stats, new ArrayList<Attack>(List.of(new MeleeAttack(damage, "Атака мечом"))));
+        super(name, weight, size, slot, resists, stats, requirements, new ArrayList<Attack>(List.of(new MeleeAttack(damage, "Атака мечом"))));
     }
 }
