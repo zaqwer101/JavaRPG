@@ -89,7 +89,7 @@ public class Creature extends WorldObject
         stats.setStat("baseHp", 0);
         stats.setStat("hp", stats.getStat("maxHp"));
         stats.setStat("actionPoints", stats.getStat("maxActionPoints"));
-        stats.recountStats();
+        this.recountStats();
         recountAttacks();
     }
 
@@ -104,7 +104,7 @@ public class Creature extends WorldObject
         this.stats = stats;
         this.checkBaseStats();
         effects = new ArrayList<>();
-        this.stats.recountStats();
+        this.recountStats();
         onAttackEffects = new ArrayList<>();
         onTakeDamageEffects = new ArrayList<>();
         stats.setStat("hp", stats.getStat("maxHp"));
@@ -118,7 +118,7 @@ public class Creature extends WorldObject
 
     Stats getStats()
     {
-        stats.recountStats();
+        this.recountStats();
         return stats;
     }
 
@@ -135,7 +135,7 @@ public class Creature extends WorldObject
     public void addStats(Stats stats)
     {
         this.stats = this.stats.add(stats);
-        this.stats.recountStats();
+        this.recountStats();
     }
 
     /**
@@ -159,7 +159,7 @@ public class Creature extends WorldObject
     public void subStats(Stats stats)
     {
         this.stats = this.stats.sub(stats);
-        this.stats.recountStats();
+        this.recountStats();
     }
 
     public Resists getResists()
@@ -223,6 +223,24 @@ public class Creature extends WorldObject
 
             } else
                 JavaRPG.log(this.getName() + ": " + effects.get(i).getName() + " осталось " + effects.get(i).getDuration() + " ходов");
+        }
+    }
+
+    private void recountStats()
+    {
+        stats.recountStats();
+        recountEquipment();
+    }
+
+    private void recountEquipment()
+    {
+        for (var slot : Equipment.EquipmentSlot.values())
+        {
+            if (getEquipment(slot) != null &&
+                    !getEquipment(slot).checkRequirements(this))
+            {
+                unEquip(getEquipment(slot));
+            }
         }
     }
 
@@ -422,7 +440,7 @@ public class Creature extends WorldObject
     {
         JavaRPG.log(getName() + ": сдал ход");
         stats.setStat("actionPoints", stats.getStat("maxActionPoints"));
-        stats.recountStats();
+        this.recountStats();
         recountEffects();
     }
 
@@ -487,7 +505,6 @@ public class Creature extends WorldObject
         }
 
         equipmentSlots.replace(equipment.getSlot(), null);
-
     }
 
     public int getCurrentWeight()
@@ -509,7 +526,10 @@ public class Creature extends WorldObject
 
     public Equipment getEquipment(Equipment.EquipmentSlot slot)
     {
-        return equipmentSlots.get(slot);
+        if (equipmentSlots == null) // Fixme: вроде костыль
+            return null;
+        else
+            return equipmentSlots.get(slot);
     }
 
     public boolean addToInventory(Item item)
