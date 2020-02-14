@@ -24,14 +24,13 @@ public class WeaponTest
         location = new Location(10, 10);
         dummy = new Creature("Dummy", '$', new Position(2, 2), location);
         target = new Creature("Target", 'T', new Position(3, 3), location);
-        weapon = new ShortSword("Sword", 1, 1, Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND, null, null, weaponRequirements, 10);
-
         dummy.getLocation().getPosition(dummy.getPosition()).addItem(weapon);
     }
 
     @Test
     public void weaponEquipTest()
     {
+        weapon = new ShortSword("Sword", 1, 1, Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND, null, null, weaponRequirements, 10);
         JavaRPG.log(dummy.getAttacks()[0].getName());
         assertEquals(weapon, location.getPosition(dummy.getPosition()).getItems()[0]);
         dummy.pickUpItem(weapon);
@@ -53,6 +52,7 @@ public class WeaponTest
     @Test
     public void weaponAttackTest()
     {
+        weapon = new ShortSword("Sword", 1, 1, Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND, null, null, weaponRequirements, 10);
         var additionalStats = new Stats();
         additionalStats.setStat("strength", 100);
         target.addEffect(new PeriodicStatsEffect(10, "Чтоб не сдох", additionalStats));
