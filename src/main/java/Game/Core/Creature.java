@@ -8,6 +8,7 @@ import Game.Effects.PeriodicEffect;
 import Game.Core.Resists.DamageType;
 import Game.Items.Equipment.Armor.BackpackArmor;
 import Game.Items.Equipment.Equipment;
+import Game.Items.Equipment.Weapon.ITwoHanded;
 import Game.Items.Equipment.Weapon.Weapon;
 import Game.Items.Inventory;
 import Game.Items.Item;
@@ -447,9 +448,10 @@ public class Creature extends WorldObject
 
     public boolean equip(Equipment equipment)
     {
+        Equipment.EquipmentSlot slot = equipment.getSlot();
         boolean isInInventory = false, isInLocation = false;
         // Если шмотка есть в инвентаре
-        if (Arrays.asList(getInventory()).contains(equipment)) // Если шмотка есть в инвентаре
+        if (Arrays.asList(getInventory()).contains(equipment))
                 isInInventory = true;
         // Если шмотка лежит в локации
         else
@@ -462,7 +464,44 @@ public class Creature extends WorldObject
 
         if (equipment.checkRequirements(this))
         {
-            equipmentSlots.replace(equipment.getSlot(), equipment);
+            // если предмет надевается в руки
+            if (equipment.getSlot() == Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND ||
+                equipment.getSlot() == Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND)
+            {
+                // если в обе руки (не только оружие) и существо не может носить двуручные в одной руке
+                if (equipment instanceof ITwoHanded && !canEquipTwoHandedInOneHand())
+                {
+                    // тогда обе руки должны быть свободны
+                    if (getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND) != null ||
+                        getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND)  != null)
+                        return false;
+                }
+                // если одноручное, то надеваем в любую руку
+                else
+                {
+                    // если нужный слот занят
+                    if ((equipment.getSlot() == Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND && getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND) != null) ||
+                            (equipment.getSlot() == Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND && getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND) != null))
+                    {
+                        // если предмет для правой руки, но она занята, берём в левую
+                        if (equipment.getSlot() == Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND && getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND) != null && getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND) == null)
+                        {
+                            slot = Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND;
+                        } else
+                        {
+                            // если предмет для левой руки, но она занята, берём в правую
+                            if (equipment.getSlot() == Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND && getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND) != null && getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND) == null)
+                            {
+
+                            } else
+                                // если обе руки заняты, не берём
+                                return false;
+                        }
+                    }
+                }
+            }
+
+            equipmentSlots.replace(slot, equipment);
             equipment.onEquip(this);
             recountAttacks();
         }
@@ -721,5 +760,10 @@ public class Creature extends WorldObject
         } else {
             return new Weapon[] { weapon1, null };
         }
+    }
+
+    public boolean canEquipTwoHandedInOneHand()
+    {
+        return false;
     }
 }
