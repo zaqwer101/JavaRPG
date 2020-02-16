@@ -305,7 +305,7 @@ public class Creature extends WorldObject
         this.attacks = new ArrayList<>();
         var weapons = getWeapons();
 
-        if (weapons.length == 0) // значит без оружия
+        if (weapons[0] == null) // значит без оружия
         {
             if (unarmedAttacks.size() == 0)
                 attacks.add(new MeleeAttack(getStat("strength")));
@@ -314,37 +314,38 @@ public class Creature extends WorldObject
         }
         else
         {
-            for (int i = 0; i < weapons.length; i++) // если длина == 2, то два оружия, получаем атаки обоих
+            for (int i = 0; i < weapons.length; i++)
             {
-                this.attacks.addAll(weapons[i].getAttacks());
+                if (weapons[i] != null)
+                    this.attacks.addAll(weapons[i].getAttacks());
             }
             this.attacks.addAll(baseArmedAttacks);
         }
         this.attacks.addAll(baseAttacks);
     }
-
-    private Weapon[] getWeapons()
-    {
-        if (getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND) != null) // если в правой руке нет оружия - его нет совсем
-        {
-            if (((Weapon) getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND)).isTwoHanded())
-            {
-                return new Weapon[]{(Weapon) getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND)};
-            } else
-            {
-                if (getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND) != null &&
-                        getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND).getClass() == Weapon.class) // если оружие есть и в левой руке
-                {
-                    return new Weapon[]{(Weapon) getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND), (Weapon) getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND)};
-                } else // если в левой руке оружия нет, есть только в правой
-                {
-                    return new Weapon[] { (Weapon) getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND)};
-                }
-            }
-        }
-        else
-            return new Weapon[] {};
-    }
+//
+//    private Weapon[] getWeapons()
+//    {
+//        if (getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND) != null) // если в правой руке нет оружия - его нет совсем
+//        {
+//            if (((Weapon) getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND)).isTwoHanded())
+//            {
+//                return new Weapon[]{(Weapon) getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND)};
+//            } else
+//            {
+//                if (getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND) != null &&
+//                        getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND).getClass() == Weapon.class) // если оружие есть и в левой руке
+//                {
+//                    return new Weapon[]{(Weapon) getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND), (Weapon) getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND)};
+//                } else // если в левой руке оружия нет, есть только в правой
+//                {
+//                    return new Weapon[] { (Weapon) getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND)};
+//                }
+//            }
+//        }
+//        else
+//            return new Weapon[] {};
+//    }
 
     /**
      * Телепортация существа
@@ -456,8 +457,8 @@ public class Creature extends WorldObject
                 {
                     unEquip(equipmentSlots.get(equipment.getSlot()));
                 }
-                equipment.onEquip(this);
                 equipmentSlots.replace(equipment.getSlot(), equipment);
+                equipment.onEquip(this);
                 deleteFromInventory(equipment);
                 recountAttacks();
                 return true;
@@ -712,5 +713,28 @@ public class Creature extends WorldObject
         equipmentSlots = null;
         position = null;
         location = null;
+    }
+
+    /**
+     * Получить надетое оружие в обеих руках
+     * @return массив оружий, если 0 элемент == null, то оружие не надето
+     */
+    public Weapon[] getWeapons()
+    {
+        Weapon[] weapons = new Weapon[2];
+        Weapon weapon1 = (Weapon)getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND);
+        var weapon2 = (Weapon)getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND);
+
+        if (weapon1 == null)
+        {
+            if (weapon2 == null)
+            {
+                return new Weapon[] { null, null };
+            } else {
+                return new Weapon[] { weapon2, null };
+            }
+        } else {
+            return new Weapon[] { weapon1, null };
+        }
     }
 }
