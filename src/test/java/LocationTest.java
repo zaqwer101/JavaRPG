@@ -1,6 +1,7 @@
 import Game.Core.Creature;
 import Game.Core.Location;
 import Game.Core.Position;
+import Game.Items.Item;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -46,6 +47,44 @@ public class LocationTest
         }
         assertEquals(' ', location.getPosition(2, 2).getIcon());
         assertEquals('$', location.getPosition(3, 3).getIcon());
+    }
 
+    @Test
+    public void changeIconTest()
+    {
+        Item item = new Item("Item", 1, 1);
+        Creature dummy = new Creature("Dummy", '$', new Position(0,0), location);
+        location.getPosition(1,1).addItem(item);
+        assertEquals(item.getIcon(), location.getPosition(1, 1).getIcon());
+
+        try
+        {
+            dummy.teleport(new Position(1, 1));
+            dummy.endTurn();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            fail();
+        }
+
+        assertEquals(dummy.getIcon(), location.getPosition(1, 1).getIcon());
+
+        try
+        {
+            dummy.teleport(new Position(0, 0));
+            dummy.endTurn();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            fail();
+        }
+
+        assertEquals(item.getIcon(), location.getPosition(1, 1).getIcon());
+
+        location.getPosition(1,1).removeItem(item);
+
+        assertEquals(' ', location.getPosition(1, 1).getIcon());
     }
 }
