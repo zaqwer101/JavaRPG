@@ -447,49 +447,34 @@ public class Creature extends WorldObject
 
     public boolean equip(Equipment equipment)
     {
+        boolean isInInventory = false, isInLocation = false;
         // Если шмотка есть в инвентаре
         if (Arrays.asList(getInventory()).contains(equipment)) // Если шмотка есть в инвентаре
-        {
-            if (equipment.checkRequirements(this)) // Если можем надеть шмотку
-            {
-                // Если в слоте куда надеваем уже есть шмотка
-                if (equipmentSlots.get(equipment.getSlot()) != null)
-                {
-                    unEquip(equipmentSlots.get(equipment.getSlot()));
-                }
-                equipmentSlots.replace(equipment.getSlot(), equipment);
-                equipment.onEquip(this);
-                deleteFromInventory(equipment);
-                recountAttacks();
-                return true;
-            }
-            else
-                return false;
-        }
+                isInInventory = true;
+        // Если шмотка лежит в локации
         else
         {
-            // Если шмотка лежит в локации
             if (Arrays.asList(getLocation().getPosition(getPosition()).getItems()).contains(equipment))
-            {
-                if (equipment.checkRequirements(this)) // Если можем надеть шмотку
-                {
-                    // Если в слоте куда надеваем уже есть шмотка
-                    if (equipmentSlots.get(equipment.getSlot()) != null)
-                    {
-                        unEquip(equipmentSlots.get(equipment.getSlot()));
-                    }
-                    equipment.onEquip(this);
-                    equipmentSlots.replace(equipment.getSlot(), equipment);
-                    this.getLocation().getPosition(this.getPosition()).removeItem(equipment);
-                    recountAttacks();
-                    return true;
-                }
-                else
-                    return false;
-            }
+                isInLocation = true;
             else
-                return false;
+                return false; // шмотки нигде не оказалось
         }
+
+        if (equipment.checkRequirements(this))
+        {
+            equipmentSlots.replace(equipment.getSlot(), equipment);
+            equipment.onEquip(this);
+            recountAttacks();
+        }
+        else
+            return false;
+
+        if (isInInventory)
+            deleteFromInventory(equipment);
+        if (isInLocation)
+            this.getLocation().getPosition(this.getPosition()).removeItem(equipment);
+
+        return true;
     }
 
     public void unEquip(Equipment equipment)
