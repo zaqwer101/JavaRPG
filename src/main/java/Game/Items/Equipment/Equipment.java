@@ -64,16 +64,21 @@ public class Equipment extends Item
 
     public boolean checkRequirements(Creature target)
     {
-        for (var stat : Stats.allStats)
+        if (requirements != null)
         {
-            if (!Arrays.asList(Stats.nonFoldingStats).contains(stat))
+            for (var stat : Stats.allStats)
             {
-                if (requirements.getStat(stat) > target.getStat(stat))
+                if (!Arrays.asList(Stats.nonFoldingStats).contains(stat))
                 {
-                    return false;
+                    if (requirements.getStat(stat) > target.getStat(stat))
+                    {
+                        return false;
+                    }
                 }
             }
+            return true;
         }
-        return true;
+        else
+            return true;
     }
 }

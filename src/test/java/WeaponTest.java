@@ -21,7 +21,7 @@ public class WeaponTest
     public void before()
     {
         weaponRequirements = new Stats();
-        weapon = new ShortSword("Sword", 1, 1, Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND, null, null, weaponRequirements, 10);
+        weapon = new ShortSword("Sword", 1, 1, null, null, weaponRequirements, 10);
         location = new Location(10, 10);
         dummy = new Creature("Dummy", '$', new Position(2, 2), location);
         target = new Creature("Target", 'T', new Position(3, 3), location);

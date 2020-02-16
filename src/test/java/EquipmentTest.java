@@ -3,6 +3,7 @@ import Game.Effects.InstantDamage;
 import Game.Effects.PeriodicStatsEffect;
 import Game.Items.Equipment.Armor.BodyArmor;
 import Game.Items.Equipment.Equipment;
+import Game.Items.Equipment.Weapon.ShortSword;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class EquipmentTest
 {
     Stats equipmentStats, equipmentRequirements;
-    Equipment equipment;
+    Equipment equipment1, equipment2;
     Creature dummy;
     Location location;
 
@@ -30,26 +31,26 @@ public class EquipmentTest
     @Test
     public void armorStatsTest()
     {
-        equipment = new BodyArmor("Доспех", 1, 5, new Resists(), equipmentStats, equipmentRequirements);
+        equipment1 = new BodyArmor("Доспех", 1, 5, new Resists(), equipmentStats, equipmentRequirements);
         assertEquals(1, dummy.getStat("strength"));
         assertEquals(1, dummy.getStat("agility"));
         assertEquals(1, dummy.getStat("intelligence"));
-        location.getPosition(dummy.getPosition()).addItem(equipment); // кладём предмет в локацию, чтобы можно было надеть оттуда
+        location.getPosition(dummy.getPosition()).addItem(equipment1); // кладём предмет в локацию, чтобы можно было надеть оттуда
 
-        dummy.equip(equipment);
+        dummy.equip(equipment1);
         assertEquals(11, dummy.getStat("strength"));
         assertEquals(11, dummy.getStat("agility"));
         assertEquals(11, dummy.getStat("intelligence"));
-        assertEquals(equipment, dummy.getEquipment(equipment.getSlot()));
+        assertEquals(equipment1, dummy.getEquipment(equipment1.getSlot()));
 
-        dummy.unEquip(equipment);
+        dummy.unEquip(equipment1);
 
         assertEquals(1, dummy.getStat("strength"));
         assertEquals(1, dummy.getStat("agility"));
         assertEquals(1, dummy.getStat("intelligence"));
 
-        assertEquals(equipment, dummy.getInventory()[0]);
-        assertNull  (dummy.getEquipment(equipment.getSlot()));
+        assertEquals(equipment1, dummy.getInventory()[0]);
+        assertNull  (dummy.getEquipment(equipment1.getSlot()));
 
     }
 
@@ -58,12 +59,12 @@ public class EquipmentTest
     {
         Resists resists = new Resists();
         resists.setResist(Resists.DamageType.PHYSICAL, 90);
-        equipment = new BodyArmor("Доспех", 10, 1, resists, equipmentStats, equipmentRequirements);
-        location.getPosition(dummy.getPosition()).addItem(equipment); // кладём предмет в локацию, чтобы можно было надеть оттуда
+        equipment1 = new BodyArmor("Доспех", 10, 1, resists, equipmentStats, equipmentRequirements);
+        location.getPosition(dummy.getPosition()).addItem(equipment1); // кладём предмет в локацию, чтобы можно было надеть оттуда
 
         assertEquals(8, dummy.getHp()[0]);
 
-        dummy.equip(equipment);
+        dummy.equip(equipment1);
         new InstantDamage("ХУЯК", Resists.DamageType.PHYSICAL, 10).apply(dummy);
 
         assertEquals(7, dummy.getHp()[0]);
@@ -74,9 +75,9 @@ public class EquipmentTest
     {
         equipmentRequirements.setStat("strength", 100);
         equipmentRequirements.setStat("intelligence", 100);
-        equipment = new BodyArmor("Доспех", 10, 1, null, null, equipmentRequirements);
-        dummy.addToInventory(equipment);
-        assertFalse(dummy.equip(equipment));
+        equipment1 = new BodyArmor("Доспех", 10, 1, null, null, equipmentRequirements);
+        dummy.addToInventory(equipment1);
+        assertFalse(dummy.equip(equipment1));
         assertNull(dummy.getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BODY));
 
         Stats buffStats = new Stats();
@@ -85,8 +86,8 @@ public class EquipmentTest
         dummy.addEffect(new PeriodicStatsEffect(1, "Чтоб броня не спадала", buffStats));
         dummy.endTurn();
 
-        assertTrue(dummy.equip(equipment));
-        assertEquals(equipment, dummy.getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BODY));
+        assertTrue(dummy.equip(equipment1));
+        assertEquals(equipment1, dummy.getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BODY));
 
         assertEquals(1, dummy.getEffects()[0].getDuration());
         dummy.endTurn();
@@ -98,4 +99,38 @@ public class EquipmentTest
         assertNull(dummy.getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BODY)); // Броня должна упасть
 
     }
+
+    @Test
+    public void equipTest()
+    {
+        equipment1 = new ShortSword("Меч 1", 1, 1, null, null, null, 10);
+        equipment2 = new ShortSword("Меч 2", 1, 1, null, null, null, 10);
+        Equipment equipment3 = new ShortSword("Меч 3", 1, 1, null, null, null, 10);
+
+        dummy.addToInventory(equipment1);
+        dummy.addToInventory(equipment2);
+        dummy.addToInventory(equipment3);
+
+        // в две руки по одноручному
+        assertTrue(dummy.equip(equipment1));
+        assertEquals(2, dummy.getInventory().length);
+        assertTrue(dummy.equip(equipment2));
+        assertEquals(1, dummy.getInventory().length);
+
+        // третье надеть нельзя
+        assertFalse(dummy.equip(equipment3));
+
+        assertEquals(1, dummy.getInventory().length);
+        dummy.deleteFromInventory(equipment3);
+
+        equipment1 = new BodyArmor("Броня 1", 1, 1, null, null, null);
+        equipment2 = new BodyArmor("Броня 2", 1, 1, null, null, null);
+        location.getPosition(dummy.getPosition()).addItem(equipment1);
+        dummy.addToInventory(equipment2);
+
+        assertTrue(dummy.equip(equipment1));
+        assertFalse(dummy.equip(equipment2));
+        assertEquals(dummy.getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BODY), equipment1);
+    }
+
 }

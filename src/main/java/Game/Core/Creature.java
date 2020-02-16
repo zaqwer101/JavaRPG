@@ -501,6 +501,8 @@ public class Creature extends WorldObject
                 }
             }
 
+            if (getEquipment(slot) != null)
+                return false;
             equipmentSlots.replace(slot, equipment);
             equipment.onEquip(this);
             recountAttacks();
