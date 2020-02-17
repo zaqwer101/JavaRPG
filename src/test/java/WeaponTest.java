@@ -1,11 +1,9 @@
 import Game.Actions.AttackAction;
 import Game.Core.*;
-import Game.Effects.InstantDamage;
 import Game.Effects.PeriodicStatsEffect;
-import Game.Items.Equipment.Armor.BodyArmor;
 import Game.Items.Equipment.Equipment;
-import Game.Items.Equipment.Weapon.LongSword;
-import Game.Items.Equipment.Weapon.ShortSword;
+import Game.Items.Equipment.Weapon.Swords.LongSword;
+import Game.Items.Equipment.Weapon.Swords.ShortSword;
 import Game.Items.Equipment.Weapon.Weapon;
 import org.junit.Before;
 import org.junit.Test;
