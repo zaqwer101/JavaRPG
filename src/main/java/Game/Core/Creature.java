@@ -468,6 +468,13 @@ public class Creature extends WorldObject
             if (equipment.getSlot() == Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND ||
                 equipment.getSlot() == Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND)
             {
+                // если уже надето двуручное, то ничего больше надеть нельзя
+                if (getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND) instanceof ITwoHanded ||
+                        getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND) instanceof ITwoHanded)
+                {
+                    return false;
+                }
+
                 // если в обе руки (не только оружие) и существо не может носить двуручные в одной руке
                 if (equipment instanceof ITwoHanded && !canEquipTwoHandedInOneHand())
                 {
