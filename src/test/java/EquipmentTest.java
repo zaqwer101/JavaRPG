@@ -133,4 +133,16 @@ public class EquipmentTest
         assertEquals(dummy.getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BODY), equipment1);
     }
 
+    @Test
+    public void unEquipTest()
+    {
+        equipment1 = new BodyArmor("Armor", 1, 1, null, null, null);
+        dummy.addToInventory(equipment1);
+        assertTrue(dummy.equip(equipment1));
+
+        dummy.unEquip(equipment1);
+        assertNull(dummy.getEquipment(equipment1.getSlot()));
+        assertNull(dummy.getEquipment(Equipment.EquipmentSlot.EQUIPMENT_BODY));
+    }
+
 }

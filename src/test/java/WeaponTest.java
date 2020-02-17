@@ -4,6 +4,7 @@ import Game.Effects.InstantDamage;
 import Game.Effects.PeriodicStatsEffect;
 import Game.Items.Equipment.Armor.BodyArmor;
 import Game.Items.Equipment.Equipment;
+import Game.Items.Equipment.Weapon.LongSword;
 import Game.Items.Equipment.Weapon.ShortSword;
 import Game.Items.Equipment.Weapon.Weapon;
 import org.junit.Before;
@@ -72,6 +73,26 @@ public class WeaponTest
     @Test
     public void twoHandedWeaponEquipTest()
     {
+        weapon = new LongSword("Long sword", 1, 1, null, null, null, 10);
+        dummy.addToInventory(weapon);
+        assertTrue(dummy.equip(weapon));
 
+        var weapon2 = new LongSword("Long sword", 1, 1, null, null, null, 10);
+        dummy.addToInventory(weapon2);
+        assertFalse(dummy.equip(weapon2));
+        dummy.unEquip(weapon);
+        dummy.deleteFromInventory(weapon);
+        dummy.deleteFromInventory(weapon2);
+
+        weapon = new ShortSword("Short sword", 1, 1, null, null, null, 10);
+        dummy.addToInventory(weapon2);
+        dummy.addToInventory(weapon);
+
+        assertTrue(dummy.equip(weapon));
+        assertFalse(dummy.equip(weapon2));
+        dummy.unEquip(weapon);
+
+        assertTrue(dummy.equip(weapon2));
+        assertFalse(dummy.equip(weapon));
     }
 }

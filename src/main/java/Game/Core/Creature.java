@@ -522,6 +522,7 @@ public class Creature extends WorldObject
     {
         equipment.onUnEquip(this);
 
+        // убрать снаряжение в инвентарь или выбросить в локации
         if (getMaxFreeSize() >= equipment.getSize() || getFreeWeight() >= equipment.getWeight())
         {
             addToInventory(equipment);
@@ -531,7 +532,12 @@ public class Creature extends WorldObject
             location.getPosition(position).addItem(equipment);
         }
 
-        equipmentSlots.replace(equipment.getSlot(), null);
+        if (getEquipment(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND) == equipment)
+            equipmentSlots.replace(Equipment.EquipmentSlot.EQUIPMENT_LEFTHAND, null);
+        else if (getEquipment(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND) == equipment)
+            equipmentSlots.replace(Equipment.EquipmentSlot.EQUIPMENT_RIGHTHAND, null);
+        else
+            equipmentSlots.replace(equipment.getSlot(), null);
     }
 
     public int getCurrentWeight()
