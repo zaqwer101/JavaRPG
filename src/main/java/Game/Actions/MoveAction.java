@@ -91,7 +91,5 @@ public class MoveAction extends Action
             return false;
         }
         return false;
-
-        // TODO сделать так чтобы при невозможности выполнить действия возвращалось false
     }
 }

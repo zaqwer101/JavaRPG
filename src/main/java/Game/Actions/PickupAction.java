@@ -15,8 +15,6 @@ public class PickupAction extends Action
     @Override
     public boolean use()
     {
-        user.pickUpItem(item);
-        // TODO сделать так чтобы при невозможности выполнить действия возвращалось false
-        return true;
+        return user.pickUpItem(item);
     }
 }

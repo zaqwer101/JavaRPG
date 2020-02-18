@@ -3,9 +3,9 @@ package Game.Core;
 import Game.Actions.Action;
 import Game.Attacks.Attack;
 import Game.Attacks.MeleeAttack;
+import Game.Core.Resists.DamageType;
 import Game.Effects.Effect;
 import Game.Effects.PeriodicEffect;
-import Game.Core.Resists.DamageType;
 import Game.Items.Equipment.Armor.BackpackArmor;
 import Game.Items.Equipment.Equipment;
 import Game.Items.Equipment.Weapon.ITwoHanded;
@@ -13,7 +13,6 @@ import Game.Items.Equipment.Weapon.Weapon;
 import Game.Items.Inventory;
 import Game.Items.Item;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -566,7 +565,7 @@ public class Creature extends WorldObject
 
     public Equipment getEquipment(Equipment.EquipmentSlot slot)
     {
-        if (equipmentSlots == null) // Fixme: вроде костыль
+        if (equipmentSlots == null)
             return null;
         else
             return equipmentSlots.get(slot);

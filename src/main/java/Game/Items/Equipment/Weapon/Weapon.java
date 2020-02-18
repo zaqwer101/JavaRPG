@@ -19,7 +19,6 @@ public abstract class Weapon extends Equipment
         this.attacks = attacks;
     }
 
-    // TODO
     @Override
     public void onEquip(Creature target)
     {
