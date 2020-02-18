@@ -32,6 +32,8 @@ public class Creature extends WorldObject
     private Location location;
     private ArrayList<Action> actionQueue;
     private ArrayList<Effect> onAttackEffects, onTakeDamageEffects; // TODO
+    private Party party; // группа, в которой существо состоит
+
     /* Дефолтное существо имеет всех статов по 1
     = 8 hp
      */
@@ -779,5 +781,29 @@ public class Creature extends WorldObject
     public boolean canEquipTwoHandedInOneHand()
     {
         return false;
+    }
+
+    public Party getParty()
+    {
+        return party;
+    }
+
+    public boolean joinParty(Party party)
+    {
+        if (party.__addToParty(this))
+        {
+            this.party = party;
+            return true;
+        } else
+            return false;
+    }
+
+    public void leaveParty()
+    {
+        if (party != null)
+        {
+            party.__deleteFromParty(this);
+            party = null;
+        }
     }
 }
